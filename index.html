@@ -78,6 +78,17 @@
   .result-body { font-size: 0.925rem; line-height: 1.7; color: var(--text); }
   .result-body strong { font-weight: 600; }
   .result-details { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.08); }
+.category-note {
+  background: #fff8e1;
+  border-left: 3px solid #f59e0b;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.85rem;
+  color: #78350f;
+  margin-bottom: 0.875rem;
+  line-height: 1.5;
+}
+
   .detail-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 5px 0; font-size: 0.875rem; gap: 1rem; }
   .detail-label { color: var(--text-muted); flex-shrink: 0; }
   .detail-val { font-weight: 500; text-align: right; }
@@ -124,7 +135,7 @@
   .modal-section h4 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.5rem; }
   .modal-section ul { list-style: none; padding: 0; }
   .modal-section ul li { padding: 4px 0; padding-left: 16px; position: relative; font-size: 0.875rem; }
-  .modal-section ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 0.75rem; top: 5px; }
+  .modal-section ul li::before { content: '\u2192'; position: absolute; left: 0; color: var(--green); font-size: 0.75rem; top: 5px; }
   .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
   .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--gray-border); background: var(--white); font-family: inherit; font-size: 0.825rem; font-weight: 500; cursor: pointer; transition: all 0.15s; color: var(--text-muted); }
   .filter-btn:hover { border-color: var(--green); color: var(--green-dark); }
@@ -168,22 +179,6 @@
   /* DISCLAIMER */
   .disclaimer { background: var(--amber-light); border: 1px solid var(--amber); border-radius: var(--radius-sm); padding: 0.875rem 1.125rem; font-size: 0.8rem; color: var(--amber-dark); margin-bottom: 1.5rem; line-height: 1.5; }
   .disclaimer strong { font-weight: 600; }
-
-  /* VERIFIED DATE STYLES */
-  .verified-banner { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); padding: 0.75rem 1.125rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.82rem; }
-  .verified-left { display: flex; align-items: center; gap: 8px; color: var(--text-muted); }
-  .verified-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); flex-shrink: 0; }
-  .verified-right { font-size: 0.78rem; color: var(--text-muted); }
-  .verified-right a { color: var(--blue); text-decoration: none; }
-  .verified-right a:hover { text-decoration: underline; }
-  .state-verified { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
-  .state-verified-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .dot-stale { background: var(--amber); }
-  .dot-ok { background: var(--green); }
-  .modal-verified-bar { background: var(--gray-light); border-radius: var(--radius-sm); padding: 0.6rem 0.875rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
-  .modal-verified-bar a { color: var(--blue); text-decoration: none; font-size: 0.78rem; }
-  .modal-verified-bar a:hover { text-decoration: underline; }
-  .overdue { color: var(--amber-dark); font-weight: 600; }
 
   @media (max-width: 600px) {
     .form-row { grid-template-columns: 1fr; }
@@ -243,6 +238,7 @@
           <option value="Colorado">Colorado</option>
           <option value="Connecticut">Connecticut</option>
           <option value="Delaware">Delaware</option>
+          <option value="District of Columbia">District of Columbia</option>
           <option value="Florida">Florida</option>
           <option value="Georgia">Georgia</option>
           <option value="Hawaii">Hawaii</option>
@@ -291,21 +287,68 @@
         <label>Purchase Category</label>
         <select id="sel-category">
           <option value="">— Select category —</option>
-          <option value="Office Supplies">Office Supplies</option>
-          <option value="Computer Equipment & Software">Computer Equipment & Software</option>
-          <option value="Food & Beverages (for events)">Food & Beverages (for events)</option>
-          <option value="Catering Services">Catering Services</option>
-          <option value="Hotel / Lodging">Hotel / Lodging</option>
-          <option value="Vehicle / Transportation">Vehicle / Transportation</option>
-          <option value="Furniture & Fixtures">Furniture & Fixtures</option>
-          <option value="Cleaning Supplies">Cleaning Supplies</option>
-          <option value="Printing & Publications">Printing & Publications</option>
-          <option value="Utilities (Electric, Gas, Water)">Utilities (Electric, Gas, Water)</option>
-          <option value="Construction / Renovation Materials">Construction / Renovation Materials</option>
-          <option value="Medical / Healthcare Supplies">Medical / Healthcare Supplies</option>
-          <option value="Educational Materials">Educational Materials</option>
-          <option value="Clothing / Uniforms">Clothing / Uniforms</option>
-          <option value="Telecommunications">Telecommunications</option>
+          <optgroup label="— Donor Relations &amp; Meetings —">
+            <option value="Donor Appreciation Gifts &amp; Awards">Donor Appreciation Gifts &amp; Awards</option>
+            <option value="Donor Event / Gala Expenses">Donor Event / Gala Expenses</option>
+            <option value="Donor Meals (Restaurant / Catered)">Donor Meals (Restaurant / Catered)</option>
+            <option value="Meeting Meals &amp; Refreshments">Meeting Meals &amp; Refreshments</option>
+            <option value="Flowers &amp; Floral Arrangements">Flowers &amp; Floral Arrangements</option>
+            <option value="Recognition Plaques &amp; Trophies">Recognition Plaques &amp; Trophies</option>
+          </optgroup>
+          <optgroup label="— Travel &amp; Transportation —">
+            <option value="Hotel / Lodging (Business Travel)">Hotel / Lodging (Business Travel)</option>
+            <option value="Airline Tickets / Flights">Airline Tickets / Flights</option>
+            <option value="Car Rental">Car Rental</option>
+            <option value="Ground Transportation (Taxi, Rideshare, Bus)">Ground Transportation (Taxi, Rideshare, Bus)</option>
+            <option value="Mileage / Fuel Reimbursement">Mileage / Fuel Reimbursement</option>
+            <option value="Parking &amp; Tolls">Parking &amp; Tolls</option>
+            <option value="Conference / Event Registration Fees">Conference / Event Registration Fees</option>
+          </optgroup>
+          <optgroup label="— Printing &amp; Communications —">
+            <option value="Printing &amp; Publications">Printing &amp; Publications</option>
+            <option value="Donor Newsletters &amp; Annual Reports">Donor Newsletters &amp; Annual Reports</option>
+            <option value="Marketing &amp; Promotional Materials">Marketing &amp; Promotional Materials</option>
+            <option value="Postage &amp; Shipping">Postage &amp; Shipping</option>
+            <option value="Advertising Services">Advertising Services</option>
+            <option value="Photography &amp; Videography">Photography &amp; Videography</option>
+            <option value="Graphic Design Services">Graphic Design Services</option>
+          </optgroup>
+          <optgroup label="— Office &amp; Operations —">
+            <option value="Office Supplies">Office Supplies</option>
+            <option value="Computer Equipment &amp; Software">Computer Equipment &amp; Software</option>
+            <option value="Software Subscriptions / SaaS">Software Subscriptions / SaaS</option>
+            <option value="Furniture &amp; Fixtures">Furniture &amp; Fixtures</option>
+            <option value="Cleaning Supplies">Cleaning Supplies</option>
+            <option value="Telecommunications">Telecommunications</option>
+            <option value="Utilities (Electric, Gas, Water)">Utilities (Electric, Gas, Water)</option>
+          </optgroup>
+          <optgroup label="— Events &amp; Programs —">
+            <option value="Food &amp; Beverages (for events)">Food &amp; Beverages (for events)</option>
+            <option value="Catering Services">Catering Services</option>
+            <option value="Event Venue Rental">Event Venue Rental</option>
+            <option value="Audio/Visual Equipment &amp; Rentals">Audio/Visual Equipment &amp; Rentals</option>
+            <option value="Staffing / Temporary Workers">Staffing / Temporary Workers</option>
+          </optgroup>
+          <optgroup label="— Facilities &amp; Assets —">
+            <option value="Construction / Renovation Materials">Construction / Renovation Materials</option>
+            <option value="Vehicle / Transportation">Vehicle / Transportation</option>
+          </optgroup>
+          <optgroup label="— Program &amp; Mission —">
+            <option value="Medical / Healthcare Supplies">Medical / Healthcare Supplies</option>
+            <option value="Educational Materials">Educational Materials</option>
+            <option value="Clothing / Uniforms">Clothing / Uniforms</option>
+          </optgroup>
+          <optgroup label="— Professional Services —">
+            <option value="Legal Services (Attorney / Law Firm)">Legal Services (Attorney / Law Firm)</option>
+            <option value="Accounting &amp; Audit Services (CPA)">Accounting &amp; Audit Services (CPA)</option>
+            <option value="Management Consulting">Management Consulting</option>
+            <option value="Financial Advisory / Investment Services">Financial Advisory / Investment Services</option>
+            <option value="HR / Payroll Services">HR / Payroll Services</option>
+            <option value="IT Consulting &amp; Managed Services">IT Consulting &amp; Managed Services</option>
+            <option value="Architecture &amp; Engineering Services">Architecture &amp; Engineering Services</option>
+            <option value="Lobbying &amp; Government Relations">Lobbying &amp; Government Relations</option>
+            <option value="Insurance Premiums">Insurance Premiums</option>
+          </optgroup>
         </select>
       </div>
     </div>
@@ -326,7 +369,7 @@
         <input type="number" id="inp-amount" placeholder="e.g. 250" min="0" />
       </div>
     </div>
-    <button class="btn-check" onclick="checkExemption()">Check Exemption Status →</button>
+    <button class="btn-check" onclick="checkExemption()">Check Exemption Status \u2192</button>
 
     <div id="result-card" class="result-card">
       <div class="result-header">
@@ -339,15 +382,8 @@
     </div>
   </div>
 
-  <div class="verified-banner">
-    <div class="verified-left">
-      <div class="verified-dot"></div>
-      <span>State data last verified: <strong>March 2026</strong> — researched from state revenue agency websites and Tax Foundation. Some states may have changed since verification.</span>
-    </div>
-    <div class="verified-right">Verify with: <a href="https://www.streamlinedsalestax.org" target="_blank">streamlinedsalestax.org</a> &nbsp;|&nbsp; <a href="https://www.taxfoundation.org" target="_blank">taxfoundation.org</a></div>
-  </div>
   <div class="disclaimer">
-    <strong>⚠ Important Notice:</strong> TaxClear provides general guidance based on publicly available tax regulations. Tax law is complex and changes frequently. Always verify exemption status with your state revenue agency or a qualified tax professional before making purchases. This tool does not constitute legal or tax advice.
+    <strong>\u26a0 Important Notice:</strong> TaxClear provides general guidance based on publicly available tax regulations. Tax law is complex and changes frequently. Always verify exemption status with your state revenue agency or a qualified tax professional before making purchases. This tool does not constitute legal or tax advice.
   </div>
 </div>
 
@@ -366,7 +402,7 @@
   <div class="states-grid" id="states-grid"></div>
   <div id="state-modal" style="display:none" class="state-detail-modal" onclick="closeModal(event)">
     <div class="modal-inner">
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeModal()">\u2715</button>
       <div class="modal-state-name" id="modal-state-name"></div>
       <div class="modal-status-row" id="modal-status-row"></div>
       <div class="modal-body" id="modal-body"></div>
@@ -397,22 +433,22 @@
   <h2 style="font-size:1.4rem;font-weight:600;margin-bottom:1.25rem">Help & Guidance</h2>
   <div class="help-grid">
     <div class="help-card">
-      <div class="help-icon">📋</div>
+      <div class="help-icon">\ud83d\udccb</div>
       <h3>What documentation do I need?</h3>
       <p>Most states require a completed exemption certificate (e.g. Form ST-5, ST-119) presented to the vendor before purchase. Keep copies on file for 3–7 years depending on your state.</p>
     </div>
     <div class="help-card">
-      <div class="help-icon">🔑</div>
+      <div class="help-icon">\ud83d\udd11</div>
       <h3>How do I get an exemption number?</h3>
       <p>Register with your state's department of revenue. Most states issue a unique exemption number or certificate to qualifying 501(c)(3) organizations. Some states use your federal EIN.</p>
     </div>
     <div class="help-card">
-      <div class="help-icon">⚠️</div>
+      <div class="help-icon">\u26a0\ufe0f</div>
       <h3>When does exemption NOT apply?</h3>
       <p>Purchases for personal use, meals at restaurants (in many states), hotel stays for personal travel, and items resold commercially are often taxable even for nonprofits.</p>
     </div>
     <div class="help-card">
-      <div class="help-icon">🏛️</div>
+      <div class="help-icon">\ud83c\udfdb\ufe0f</div>
       <h3>What if I paid tax by mistake?</h3>
       <p>File a refund claim with the state revenue agency. Most states allow 3 years to claim a refund. You may need to provide your exemption certificate and purchase receipts.</p>
     </div>
@@ -425,58 +461,58 @@
 </main>
 
 <script>
-const SITE_VERIFIED = "March 2026";
 const STATE_DATA = {
-  "Alabama": { status: "conditional", verified: "April 2025", source: "https://www.revenue.alabama.gov", rule: "Charitable orgs must apply to Dept. of Revenue. Hotels & food often taxable.", details: "Alabama requires charitable organizations to apply for and receive a specific exemption certificate from the Alabama Department of Revenue. The exemption covers tangible personal property used directly in charitable activities. Notable exceptions: hotel stays, food purchased at restaurants, and entertainment items remain taxable.", requirements: ["Form STE-1 from Dept. of Revenue", "Federal 501(c)(3) determination letter", "Certificate must be presented at point of sale"], categories: { taxable: ["Hotel/Lodging", "Restaurant meals", "Entertainment"], exempt: ["Office supplies", "Equipment for programs", "Educational materials"] } },
-  "Alaska": { status: "exempt", verified: "April 2025", source: "https://www.tax.alaska.gov", rule: "No state sales tax. Local jurisdictions vary.", details: "Alaska has no statewide sales tax, making most nonprofit purchases free from state-level sales tax. However, many Alaskan municipalities and boroughs impose their own local sales taxes (ranging from 1% to 7.5%). Nonprofits should verify local rules in each municipality.", requirements: ["No state form required", "Check local borough/city rules", "May need local exemption certificate"], categories: { taxable: ["Varies by municipality"], exempt: ["Most purchases (state level)"] } },
-  "Arizona": { status: "conditional", verified: "April 2025", source: "https://azdor.gov", rule: "Charitable orgs must register with Dept. of Revenue for exemption.", details: "Arizona provides sales tax exemptions for qualifying nonprofit organizations, but only for purchases directly related to their exempt function. The organization must register and obtain an exemption number from the Arizona Department of Revenue.", requirements: ["Register with AZ DOR", "Obtain exemption number", "Transaction Privilege Tax exemption form"], categories: { taxable: ["Food for events in some cases", "Lodging"], exempt: ["Office equipment", "Program materials", "Medical supplies (for health nonprofits)"] } },
-  "Arkansas": { status: "conditional", verified: "April 2025", source: "https://www.dfa.arkansas.gov", rule: "Most nonprofits are NOT automatically exempt. Must qualify.", details: "Arkansas has narrow nonprofit sales tax exemptions. Only specific types of organizations qualify, including schools, churches, and hospitals. Most general 501(c)(3) organizations are NOT automatically exempt and must petition for exemption from the Arkansas DFA.", requirements: ["Petition Arkansas DFA for exemption", "Documentation of qualifying activities", "Annual renewal may be required"], categories: { taxable: ["General office supplies for most nonprofits", "Most tangible goods"], exempt: ["Church purchases", "Hospital supplies", "Educational institution purchases"] } },
-  "California": { status: "conditional", verified: "April 2025", source: "https://www.cdtfa.ca.gov", rule: "No blanket exemption. Only specific categories like food/medicine.", details: "California does not have a general nonprofit sales tax exemption. Nonprofits pay sales tax like everyone else on most purchases. However, there are exemptions for items like food (for direct distribution), and specific health and welfare organizations may qualify for limited exemptions.", requirements: ["No blanket exemption available", "Apply for specific category exemptions", "BOE-230 form for qualified exemptions"], categories: { taxable: ["Office supplies", "Equipment", "Furniture", "Hotel stays"], exempt: ["Food for direct distribution (specific rules)", "Certain medical items"] } },
-  "Colorado": { status: "exempt", verified: "April 2025", source: "https://tax.colorado.gov", rule: "501(c)(3) orgs are broadly exempt with valid certificate.", details: "Colorado provides a broad sales tax exemption for 501(c)(3) organizations. The organization must provide vendors with a completed exemption certificate (Form DR 0563). This exemption applies to most tangible personal property and taxable services used directly in the nonprofit's charitable, religious, or educational mission.", requirements: ["Form DR 0563 (Exemption Certificate)", "Federal 501(c)(3) status", "Present certificate at time of purchase"], categories: { taxable: ["Personal use items", "Items not for charitable mission"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
-  "Connecticut": { status: "exempt", verified: "April 2025", source: "https://portal.ct.gov/DRS", rule: "Charitable & religious orgs broadly exempt with ST-5.", details: "Connecticut provides sales and use tax exemptions for qualifying charitable and religious organizations. The organization must apply for exempt status with the Connecticut DRS and receive a Form ST-5 (Certificate of Exemption).", requirements: ["Apply to CT DRS for exempt status", "Receive and use Form ST-5", "Must be used for organizational purposes only"], categories: { taxable: ["Meals at restaurants (often taxable)", "Alcohol"], exempt: ["Office supplies", "Computer equipment", "Educational materials", "Clothing"] } },
-  "Delaware": { status: "exempt", verified: "April 2025", source: "https://revenue.delaware.gov", rule: "No state sales tax at all.", details: "Delaware imposes no state sales tax, making this a non-issue for nonprofit purchases. There are no local sales taxes either, so all purchases in Delaware are free from sales tax regardless of buyer status.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
-  "Florida": { status: "conditional", verified: "April 2025", source: "https://floridarevenue.com", rule: "Must apply for Consumer's Certificate of Exemption (Form DR-5).", details: "Florida exempts qualifying nonprofit organizations from sales and use tax, but only after the organization applies for and receives a Consumer's Certificate of Exemption (Form DR-5) from the Florida Department of Revenue. The certificate must be presented to vendors.", requirements: ["Form DR-5 application", "Copy of IRS determination letter", "Certificate valid for 5 years (renewable)", "Present certificate to vendor"], categories: { taxable: ["Hotel stays (unless for org business)", "Meals at restaurants", "Entertainment"], exempt: ["Office supplies", "Equipment", "Furniture", "Program materials"] } },
-  "Georgia": { status: "conditional", verified: "April 2025", source: "https://dor.georgia.gov", rule: "Only specific types qualify. Most 501(c)(3)s must apply.", details: "Georgia exempts qualifying nonprofit organizations but requires a specific application process. Religious, educational, and certain charitable organizations are eligible. The exemption covers purchases used directly in the organization's exempt activities.", requirements: ["Application to GA DOR", "Copy of IRS 501(c)(3) letter", "ST-5 form for purchases"], categories: { taxable: ["Items for personal use", "Restaurant meals"], exempt: ["Office supplies for operations", "Educational materials", "Program equipment"] } },
-  "Hawaii": { status: "taxable", verified: "April 2025", source: "https://tax.hawaii.gov", rule: "Hawaii's GET applies to most transactions. Very limited exemptions.", details: "Hawaii's General Excise Tax (GET) is a unique tax that applies at nearly every level of economic activity. Unlike typical sales taxes, it's technically a tax on the seller, but costs are typically passed to buyers. Nonprofits have very limited GET exemptions.", requirements: ["Very limited; consult Hawaii DOR"], categories: { taxable: ["Most purchases"], exempt: ["Very limited; some specific charitable activities"] } },
-  "Idaho": { status: "exempt", verified: "April 2025", source: "https://tax.idaho.gov", rule: "501(c)(3) orgs broadly exempt with proper certificate.", details: "Idaho provides a broad sales tax exemption for 501(c)(3) organizations. The exemption applies to purchases used directly in the organization's charitable, educational, or religious activities. A valid exemption certificate must be provided to vendors.", requirements: ["ST-101 exemption certificate", "Federal 501(c)(3) status required", "Present certificate at purchase"], categories: { taxable: ["Personal items", "Items not for organizational use"], exempt: ["Office supplies", "Equipment", "Program materials"] } },
-  "Illinois": { status: "exempt", verified: "March 2026", source: "https://tax.illinois.gov", rule: "Charitable orgs broadly exempt. Must register with IL DOR. Food tax eliminated Jan 2026.", details: "Illinois provides a broad sales tax exemption for qualifying charitable organizations. The organization must register with the Illinois Department of Revenue and receive an E-number (exemption number). Both state and local sales taxes are typically covered. UPDATE (January 2026): Illinois eliminated its 1% state sales tax on food for human consumption — nonprofits purchasing food for events or programs benefit from this change. Note: local governments may still charge their own 1% grocery tax.", requirements: ["Register with IL DOR", "Obtain E-number (exemption identification number)", "Must present exemption number at point of sale"], categories: { taxable: ["Items for personal use of employees"], exempt: ["Office supplies", "Furniture", "Equipment", "Program materials", "Food & beverages (state-level 1% tax eliminated Jan 2026)"] } },
-  "Indiana": { status: "exempt", verified: "April 2025", source: "https://www.in.gov/dor", rule: "Charitable, educational, religious orgs broadly exempt.", details: "Indiana provides a broad sales tax exemption for charitable, educational, and religious organizations. The organization must complete Form ST-105 (General Sales Tax Exemption Certificate) and present it to vendors.", requirements: ["Form ST-105 (General Sales Tax Exemption Certificate)", "Must state nonprofit purpose on certificate"], categories: { taxable: ["Restaurant meals (subject to food & beverage tax)", "Items for personal use"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies"] } },
-  "Iowa": { status: "exempt", verified: "April 2025", source: "https://tax.iowa.gov", rule: "501(c)(3) orgs broadly exempt after obtaining exemption certificate.", details: "Iowa provides a broad sales tax exemption for qualifying nonprofit organizations. Purchases must be for use in the organization's exempt activities. A completed Iowa Sales Tax Exemption Certificate (Form 31-014) must be provided to vendors.", requirements: ["Form 31-014 (Sales Tax Exemption Certificate)", "Federal 501(c)(3) or 501(c)(4) status", "Present certificate to vendors"], categories: { taxable: ["Personal items", "Concession sales"], exempt: ["Office supplies", "Equipment", "Educational materials"] } },
-  "Kansas": { status: "exempt", rule: "Broadly exempt for educational, religious, and charitable orgs.", details: "Kansas provides a broad sales tax exemption for nonprofit organizations including educational, religious, and charitable organizations. The organization must obtain a Kansas Exemption Certificate (ST-28) and present it to vendors.", requirements: ["ST-28 Exemption Certificate", "Must be a qualifying nonprofit type", "Present certificate at purchase"], categories: { taxable: ["Items not for organizational use"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
-  "Kentucky": { status: "conditional", rule: "Limited exemptions. Only charitable care institutions qualify broadly.", details: "Kentucky has a narrower nonprofit exemption. Charitable organizations providing direct charitable care (hospitals, food banks, homeless shelters) have broader exemptions, while general 501(c)(3) organizations may have more limited exemptions.", requirements: ["Form 51A126 (Sales and Use Tax Exemption Certificate)", "Must be a qualifying organization type", "Describe specific exempt purpose"], categories: { taxable: ["General office supplies for many nonprofits", "Food at events"], exempt: ["Charitable care materials", "Hospital supplies", "Educational materials for schools"] } },
-  "Louisiana": { status: "conditional", rule: "Nonprofits must apply for exemption. Parish-level taxes may still apply.", details: "Louisiana exempts qualifying nonprofit organizations from state sales tax, but local parish sales taxes often still apply. The organization must obtain Form R-1064 from the Louisiana Department of Revenue and individual parish exemptions may also be required.", requirements: ["Form R-1064 application", "State exemption certificate", "Separate parish exemptions may be needed"], categories: { taxable: ["Purchases subject to parish sales taxes", "Food at restaurants"], exempt: ["Purchases at state level with certificate"] } },
-  "Maine": { status: "exempt", verified: "March 2026", source: "https://www.maine.gov/revenue/taxes/sales-use-service-provider-tax/tax-exempt-organizations", rule: "NEW (Jan 2025): All 501(c)(3) orgs now have blanket exemption. Must get certificate via Maine Tax Portal.", details: "UPDATED January 2025: Maine passed a landmark blanket sales tax exemption for ALL 501(c)(3) nonprofit organizations, effective January 1, 2025. Maine was previously the only New England state without a broad nonprofit exemption. Purchases must be used primarily for the organization's exempt mission. Important: organizations must still apply for and receive a state-issued exemption certificate through the Maine Tax Portal — an IRS determination letter alone is NOT sufficient proof.", requirements: ["Apply via Maine Tax Portal at maine.gov/revenue", "Paper applications can be emailed to salesapp.MRS@maine.gov", "Receive Maine-issued exemption certificate (NOT the same as IRS letter)", "Present certificate to every vendor at point of sale"], categories: { taxable: ["Personal use items", "Items not used primarily for organizational mission"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials", "Furniture", "Most mission-related purchases"] } },
-  "Maryland": { status: "exempt", rule: "Charitable orgs broadly exempt with Form ST-209.", details: "Maryland provides a broad sales tax exemption for charitable, educational, and religious organizations. The organization must obtain a letter of exemption from the Maryland Comptroller and use Form ST-209 (Exemption Certificate) for purchases.", requirements: ["Letter of exemption from MD Comptroller", "Form ST-209 for purchases", "Must be used for organizational activities"], categories: { taxable: ["Meals at restaurants", "Personal items"], exempt: ["Office supplies", "Computers", "Furniture", "Program materials"] } },
-  "Massachusetts": { status: "exempt", rule: "501(c)(3) orgs broadly exempt. Must present ST-2 certificate.", details: "Massachusetts provides a broad sales tax exemption for qualifying 501(c)(3) organizations. The organization must obtain Form ST-2 (Certificate of Exemption) from the Massachusetts DOR. This form must be presented to vendors at time of purchase.", requirements: ["Form ST-2 (Certificate of Exemption) from MA DOR", "Active 501(c)(3) status", "Present at point of purchase"], categories: { taxable: ["Meals and restaurant food", "Motor vehicles in most cases"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Educational materials"] } },
-  "Michigan": { status: "exempt", rule: "Nonprofit orgs broadly exempt with Form 3372.", details: "Michigan provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must complete Form 3372 (Michigan Sales and Use Tax Certificate of Exemption) and present it to vendors.", requirements: ["Form 3372 Certificate of Exemption", "Must be a qualifying nonprofit", "Present to vendor at purchase"], categories: { taxable: ["Restaurant meals", "Items for personal use"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies"] } },
-  "Minnesota": { status: "exempt", rule: "501(c)(3) orgs broadly exempt. Must apply for ST-3 certificate.", details: "Minnesota provides a broad sales tax exemption for qualifying charitable, educational, and religious organizations. The organization must apply for and obtain Form ST-3 (Certificate of Exemption) from the Minnesota DOR.", requirements: ["Form ST-3 Certificate of Exemption", "Application to MN DOR required", "5-year certificate (renewable)", "Present to vendors"], categories: { taxable: ["Meals and prepared food", "Hotel stays for non-business"], exempt: ["Office supplies", "Computer equipment", "Educational materials", "Program equipment"] } },
-  "Mississippi": { status: "taxable", rule: "Very limited exemptions. Most nonprofits are not exempt.", details: "Mississippi has one of the most restrictive approaches to nonprofit sales tax exemptions. Only a narrow set of organizations (hospitals, certain schools, churches) are exempt. Most general 501(c)(3) organizations must pay sales tax.", requirements: ["Very limited availability; consult MS DOR"], categories: { taxable: ["Most purchases for most nonprofits"], exempt: ["Hospital and medical purchases", "Church purchases", "Some educational institution purchases"] } },
-  "Missouri": { status: "conditional", rule: "Religious, educational, charitable care orgs may qualify.", details: "Missouri provides exemptions for specific types of nonprofits. Organizations must apply to the Missouri DOR and demonstrate that purchases are used exclusively for charitable, educational, or religious purposes.", requirements: ["Application to MO DOR", "Missouri Exemption Certificate (Form 149)", "Must document exempt purpose"], categories: { taxable: ["General office purchases for many organizations", "Restaurant meals"], exempt: ["Religious organization purchases", "Educational institution materials", "Charitable care supplies"] } },
-  "Montana": { status: "exempt", rule: "No state sales tax.", details: "Montana has no statewide sales tax, so there is no sales tax concern for nonprofit purchases. There are also no local sales taxes in Montana.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
-  "Nebraska": { status: "exempt", rule: "501(c)(3) orgs broadly exempt with Form 13.", details: "Nebraska provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must complete Form 13 (Nebraska Resale or Exempt Sale Certificate) and present it to vendors.", requirements: ["Form 13 (Nebraska Sales/Exempt Certificate)", "Federal 501(c)(3) determination", "Present to vendor"], categories: { taxable: ["Personal use items", "Non-mission purchases"], exempt: ["Office supplies", "Program equipment", "Educational materials"] } },
-  "Nevada": { status: "conditional", rule: "Charitable orgs exempt on qualifying purchases with certificate.", details: "Nevada provides a sales tax exemption for qualifying nonprofit organizations, but the scope is narrower than many states. The organization must obtain an exemption certificate from the Nevada DOR.", requirements: ["Nevada Sales/Use Tax Exemption Certificate", "Application to NV DOR", "Must be used for exempt purposes"], categories: { taxable: ["Hotel stays", "Restaurant meals", "Entertainment"], exempt: ["Office supplies for operations", "Program materials", "Educational items"] } },
-  "New Hampshire": { status: "exempt", rule: "No state sales tax.", details: "New Hampshire has no statewide sales tax, so there is no sales tax concern for nonprofit purchases made in the state.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
-  "New Jersey": { status: "exempt", rule: "Charitable orgs broadly exempt with ST-5 certificate.", details: "New Jersey provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the New Jersey Division of Taxation and receive Form ST-5 (Exempt Organization Certificate).", requirements: ["Form ST-5 from NJ Division of Taxation", "Application and approval required", "Must be used for organizational activities", "Certificate valid for 5 years"], categories: { taxable: ["Meals at restaurants", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Furniture", "Program materials"] } },
-  "New Mexico": { status: "conditional", rule: "Gross Receipts Tax applies broadly. Limited nonprofit exemptions.", details: "New Mexico's Gross Receipts Tax (GRT) is structurally different from typical sales taxes but affects purchases similarly. Nonprofit exemptions are more limited and specific. Organizations should consult the New Mexico Taxation and Revenue Department.", requirements: ["Consult NM Taxation and Revenue Dept.", "Specific exemptions may apply by category"], categories: { taxable: ["Most purchases for many nonprofits"], exempt: ["Specific purchases by qualifying hospitals, schools"] } },
-  "New York": { status: "exempt", rule: "501(c)(3) orgs broadly exempt with Form ST-119.1.", details: "New York provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply for and receive Form ST-119 (Exempt Organization Certificate) and use Form ST-119.1 for purchases.", requirements: ["Form ST-119 (Organization Certificate) from NY DOR", "Form ST-119.1 presented at purchases", "Annual renewal required for some categories"], categories: { taxable: ["Hotel occupancy (often taxable)", "Restaurant meals"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Educational materials", "Program supplies"] } },
-  "North Carolina": { status: "conditional", rule: "Nonprofits are NOT automatically exempt. Must qualify for specific exemptions.", details: "North Carolina does not provide a general nonprofit sales tax exemption. Instead, specific types of purchases or organizations may qualify for exemptions. The NCDOR has a defined list of qualifying organizations.", requirements: ["E-595E Streamlined Sales Tax Certificate", "Qualifying organization type required", "Must list specific purchases/exemption type"], categories: { taxable: ["General purchases for most nonprofits", "Restaurant meals", "Hotel stays"], exempt: ["Specific charitable care items", "Religious organization purchases (some)", "Hospital supplies"] } },
-  "North Dakota": { status: "exempt", rule: "Nonprofit charitable orgs broadly exempt with certificate.", details: "North Dakota provides a broad sales tax exemption for qualifying nonprofit charitable organizations. The organization must provide vendors with a completed North Dakota Certificate of Exemption.", requirements: ["North Dakota Certificate of Exemption", "Federal 501(c)(3) status", "Present to vendors"], categories: { taxable: ["Personal use items"], exempt: ["Office supplies", "Program equipment", "Educational materials"] } },
-  "Ohio": { status: "conditional", rule: "Must apply for Ohio exemption certificate. Covers qualifying purchases.", details: "Ohio provides a sales tax exemption for qualifying nonprofit organizations, but the organization must apply to the Ohio Department of Taxation and receive a certificate. The exemption covers purchases used directly in the organization's exempt activities.", requirements: ["STEC-B (Blanket Exemption Certificate)", "Registration with Ohio DOR", "Must be used for organizational activities"], categories: { taxable: ["Restaurant meals", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
-  "Oklahoma": { status: "exempt", verified: "April 2025", source: "https://www.ok.gov/tax", rule: "501(c)(3) orgs broadly exempt with OTC exemption certificate.", details: "Oklahoma provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must obtain an exemption certificate from the Oklahoma Tax Commission (OTC).", requirements: ["OTC Exemption Certificate", "Application to Oklahoma Tax Commission", "Must be renewed periodically"], categories: { taxable: ["Personal use items", "Restaurant meals"], exempt: ["Office supplies", "Equipment", "Program materials"] } },
-  "Oregon": { status: "exempt", verified: "April 2025", source: "https://www.oregon.gov/dor", rule: "No state sales tax.", details: "Oregon has no statewide sales tax, so there is no sales tax concern for nonprofit purchases in Oregon.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
-  "Pennsylvania": { status: "exempt", verified: "April 2025", source: "https://www.revenue.pa.gov", rule: "Charitable, educational, religious orgs broadly exempt with REV-72.", details: "Pennsylvania provides a broad sales tax exemption for charitable, educational, and religious organizations. The organization must apply to the Pennsylvania DOR using Form REV-72 and receive approval.", requirements: ["Form REV-72 application to PA DOR", "Approval required before claiming exemption", "Present exemption form at purchases"], categories: { taxable: ["Meals and food (often taxable)", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies", "Utilities"] } },
-  "Rhode Island": { status: "conditional", verified: "April 2025", source: "https://tax.ri.gov", rule: "Limited nonprofit exemptions. Must apply for specific categories.", details: "Rhode Island has limited nonprofit sales tax exemptions. Only specific types of organizations (hospitals, schools, churches) and specific purchase types may qualify. General nonprofits should verify their eligibility.", requirements: ["Application to RI DOR", "Qualifying organization type required", "Category-specific documentation"], categories: { taxable: ["General purchases for many nonprofits"], exempt: ["Hospital medical supplies", "Educational institution materials", "Church purchases"] } },
-  "South Carolina": { status: "exempt", verified: "April 2025", source: "https://dor.sc.gov", rule: "Charitable orgs broadly exempt after obtaining ST-387 certificate.", details: "South Carolina provides a broad sales tax exemption for qualifying nonprofit charitable organizations. The organization must apply to the South Carolina DOR and receive Form ST-387 (Nonprofit Exemption Certificate).", requirements: ["Form ST-387 application to SC DOR", "Approval required", "Certificate must be presented to vendors"], categories: { taxable: ["Hotel stays", "Restaurant meals", "Personal items"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
-  "South Dakota": { status: "conditional", verified: "April 2025", source: "https://dor.sd.gov", rule: "Specific nonprofits exempt. General 501(c)(3)s must verify.", details: "South Dakota provides sales tax exemptions for specific types of nonprofit organizations. The scope is narrower than many states, and organizations should verify their eligibility with the South Dakota DOR.", requirements: ["Application to SD DOR", "Must be a qualifying organization type", "Exemption certificate required"], categories: { taxable: ["Many purchases for general nonprofits"], exempt: ["Qualifying hospital and medical purchases", "Educational institution materials"] } },
-  "Tennessee": { status: "conditional", verified: "April 2025", source: "https://www.tn.gov/revenue", rule: "Narrowly defined exempt categories. Must apply to TN DOR.", details: "Tennessee has a narrower nonprofit sales tax exemption. Only specific types of organizations and purchases qualify. The state provides exemptions primarily for hospitals, educational institutions, and specific charitable care organizations.", requirements: ["Application to Tennessee DOR", "Approval required for exemption status", "Category-specific certificates"], categories: { taxable: ["General office supplies for most nonprofits", "Restaurant meals", "Hotel stays"], exempt: ["Hospital medical supplies", "Educational institution materials", "Specified charitable care items"] } },
-  "Texas": { status: "exempt", verified: "April 2025", source: "https://comptroller.texas.gov", rule: "501(c)(3) orgs broadly exempt. Must obtain Comptroller's exemption.", details: "Texas provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the Texas Comptroller and receive an exemption. Sales tax exemption certificates (Form 01-339) are used for purchases.", requirements: ["Apply to Texas Comptroller for exemption", "Form 01-339 (Texas Sales/Use Tax Exemption Certificate)", "Must present to vendors for each purchase"], categories: { taxable: ["Meals at taxable restaurants (some rules apply)", "Hotel occupancy tax still applies", "Personal items"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Program materials", "Educational materials"] } },
-  "Utah": { status: "conditional", verified: "April 2025", source: "https://tax.utah.gov", rule: "Charitable orgs exempt on qualifying purchases. Apply with TC-721.", details: "Utah provides sales tax exemptions for qualifying nonprofit organizations. The organization must complete Form TC-721 (Utah Sales Tax Exemption Certificate) and present it to vendors.", requirements: ["Form TC-721 (Sales Tax Exemption Certificate)", "Federal 501(c)(3) status", "Present to vendors"], categories: { taxable: ["Restaurant meals", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Program materials"] } },
-  "Vermont": { status: "exempt", verified: "April 2025", source: "https://tax.vermont.gov", rule: "Charitable orgs broadly exempt with Vermont exemption certificate.", details: "Vermont provides a broad sales tax exemption for qualifying charitable organizations. The organization must register with the Vermont DOR and obtain an exemption certificate.", requirements: ["Vermont Sales Tax Exemption Certificate", "Registration with VT DOR", "Present to vendors"], categories: { taxable: ["Meals (meals tax applies)", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies"] } },
-  "Virginia": { status: "exempt", verified: "April 2025", source: "https://www.tax.virginia.gov", rule: "Broadly exempt for charitable, educational, religious orgs with ST-13A.", details: "Virginia provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the Virginia Department of Taxation and, once approved, use Form ST-13A for purchases.", requirements: ["Application to VA Department of Taxation", "Form ST-13A (Certificate of Exemption)", "Approval required before claiming exemption"], categories: { taxable: ["Restaurant meals", "Hotel stays", "Motor fuels"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Educational materials", "Program supplies"] } },
-  "Washington": { status: "conditional", verified: "March 2026", source: "https://dor.wa.gov/taxes-rates/retail-sales-tax/services-newly-subject-retail-sales-tax", rule: "MAJOR UPDATE Oct 2025: IT services, custom software, website design, advertising, and staffing now taxable under ESSB 5814.", details: "Washington State has no general nonprofit sales tax exemption — nonprofits are taxed like any other purchaser. MAJOR CHANGE (ESSB 5814, effective October 1, 2025): The law now taxes many services that were previously untaxed. Newly taxable for nonprofits include: IT services (help desk, system integration, hosting, data processing), custom software development, website design, advertising services, temporary staffing services, and live presentations/seminars/workshops. General office supplies, furniture, and hardware remain taxable as before. Only narrow exemptions apply.", requirements: ["No general exemption available", "Apply for specific category exemptions only", "Review all IT, software, and staffing vendor contracts for new tax obligations", "Check dor.wa.gov for full ESSB 5814 guidance"], categories: { taxable: ["Office supplies", "Computers & hardware", "Furniture", "IT services & help desk (NEW Oct 2025)", "Custom software & website design (NEW Oct 2025)", "Advertising services (NEW Oct 2025)", "Temporary staffing (NEW Oct 2025)", "Seminars & live presentations (NEW Oct 2025)"], exempt: ["Certain medical equipment", "Specific charitable activity items (by application only)"] } },
-  "West Virginia": { status: "conditional", verified: "April 2025", source: "https://tax.wv.gov", rule: "Must apply for exemption. Limited scope for general nonprofits.", details: "West Virginia provides limited nonprofit sales tax exemptions. Organizations must apply to the WV State Tax Division and demonstrate qualifying status. The scope of exemptions is narrower than many other states.", requirements: ["Application to WV State Tax Division", "Qualifying status must be demonstrated", "Certificate required for purchases"], categories: { taxable: ["General purchases for many nonprofits"], exempt: ["Hospital and medical purchases", "Educational institution materials", "Church purchases"] } },
-  "Wisconsin": { status: "exempt", verified: "April 2025", source: "https://www.revenue.wi.gov", rule: "501(c)(3) orgs broadly exempt with CES certificate.", details: "Wisconsin provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the Wisconsin DOR for a Certificate of Exempt Status (CES). The CES must be presented to vendors.", requirements: ["Apply to WI DOR for CES (Certificate of Exempt Status)", "CES must be renewed every 5 years", "Present CES to all vendors"], categories: { taxable: ["Restaurant meals (food sold prepared)", "Hotel stays (room tax)", "Personal items"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Program materials", "Educational materials"] } },
-  "Wyoming": { status: "exempt", verified: "April 2025", source: "https://revenue.wyo.gov", rule: "Charitable orgs broadly exempt with exemption certificate.", details: "Wyoming provides a broad sales tax exemption for qualifying nonprofit charitable organizations. The organization must obtain an exemption certificate from the Wyoming DOR.", requirements: ["Wyoming Sales Tax Exemption Certificate", "Federal 501(c)(3) status", "Present to vendors"], categories: { taxable: ["Personal use items", "Hotel stays"], exempt: ["Office supplies", "Equipment", "Program materials"] } }
+  "Alabama": { status: "taxable", verified: "April 2026 (live-searched AL DOR)", source: "https://www.revenue.alabama.gov/sales-use/tax-exempt-entities/", rule: "NO general exemption. Alabama law does not provide exemptions to churches or charitable/civic/nonprofit organizations. All purchases taxable.", details: "AL DOR confirmed: Alabama law does not provide a sales or use tax exemption to churches or charitable, civic, or other nonprofit organizations. These organizations must pay sales or use tax on ALL purchases. Only specifically listed statutory organizations qualify.", requirements: ["General 501(c)(3)s: NO exemption — pay tax on all purchases", "Verify if org is specifically listed in AL statute at revenue.alabama.gov", "AL also has significant local sales taxes (rates vary by city/county)"], categories: { taxable: [], exempt: [] } },
+  "Alaska": { status: "exempt", verified: "April 2026", source: "https://tax.alaska.gov", rule: "No state sales tax. Alaska has no statewide sales tax.", details: "Alaska has no statewide sales tax. Some local jurisdictions have local option sales taxes.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Arizona": { status: "taxable", verified: "April 2026 (live-searched AZ DOR)", source: "https://azdor.gov/transaction-privilege-tax/non-profit-and-qualifying-healthcare", rule: "NO general exemption for nonprofit purchases. Arizona TPT taxes SELLERS not buyers. Only hospitals and specific healthcare orgs qualify for purchase exemptions.", details: "AZ DOR confirmed: Arizona does NOT provide a general exemption for nonprofit purchases. Arizona's Transaction Privilege Tax (TPT) is a tax on the seller (not buyer), so exemptions primarily apply to SALES BY nonprofits. When a nonprofit acts as a customer, vendors may pass the tax on to them. Only licensed nonprofit hospitals and qualifying healthcare organizations can obtain an exemption letter for purchases.", requirements: ["General 501(c)(3)s: NO purchase exemption available", "Only qualifying hospitals and healthcare orgs: apply to ADOR for exemption letter", "Use Form 5000HC (Healthcare Exemption Certificate) for qualifying healthcare orgs only"], categories: { taxable: [], exempt: [] } },
+  "Arkansas": { status: "conditional", verified: "April 2026 (live-searched AR DFA)", source: "https://www.dfa.arkansas.gov/excise-tax/sales-and-use-tax/", rule: "NEW 2025 LAW: Small nonprofits under $200K budget may now qualify. Larger orgs still limited. Churches, hospitals, schools broadly exempt.", details: "AR DFA confirmed (2025 law): New exemption for 'qualified nonprofit organizations' — 501(c)(3) orgs that existed before Jan 1, 2025, with annual operating budget under $200,000, performing charitable community-based services. EXCLUSIONS even for qualifying orgs: motor vehicles, computers, mobile phones, televisions, construction materials, household appliances, ATVs, alcoholic beverages, tobacco. Larger nonprofits (over $200K budget) must be specifically listed in statute (schools, churches, hospitals).", requirements: ["Small nonprofits (under $200K budget): petition AR DFA for exemption", "Provide proof of 501(c)(3) status and community-based services", "Larger orgs: must be specifically listed in statute", "Computers, phones, TVs: excluded even for qualifying orgs"], categories: { taxable: ["Computer equipment", "Mobile phones", "Televisions", "Motor vehicles", "Construction materials"], exempt: ["Mission-related supplies for qualifying small nonprofits", "Church purchases", "Hospital supplies"] } },
+  "California": { status: "taxable", verified: "April 2026", source: "https://www.cdtfa.ca.gov/industry/nonprofit.html", rule: "No general exemption for nonprofit purchases. Very limited exemptions.", details: "California does not provide a general sales tax exemption for nonprofit purchases. Only very specific types of purchases qualify.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Colorado": { status: "exempt", verified: "April 2026 (live-searched CO DOR)", source: "https://tax.colorado.gov/nonprofit-organizations", rule: "501(c)(3) broadly exempt. Purchases over $250 must be paid with org check/card. Home-rule cities (Denver, Aurora, etc.) require separate local certificates.", details: "CO DOR confirmed: Broad exemption for 501(c)(3) organizations. IMPORTANT PAYMENT RULE: Purchases over $250 must be made with the organization's own check or credit card — not personal funds later reimbursed. Apply with Form DR 0715 from CO DOR. CAUTION: Colorado has many home-rule cities (Denver, Aurora, Colorado Springs, etc.) that administer their own local sales tax independently — separate city exemption may be required.", requirements: ["Apply for DR 0715 (Application for Sales Tax Exemption) from CO DOR", "Present Form DR 0563 (Exemption Certificate) to vendors", "Purchases over $250: MUST be paid with org's own check or org-issued credit card", "Home-rule cities: check Denver, Aurora, Colorado Springs requirements separately"], categories: { taxable: [], exempt: [] } },
+  "Connecticut": { status: "exempt", verified: "April 2026 (live-searched CT DOR)", source: "https://portal.ct.gov/drs/sales-tax/tax-exemption-programs-for-nonprofit-organizations", rule: "501(c)(3) broadly exempt. No permit required since 1995 — present IRS determination letter. Meals/lodging can be exempt if org is billed directly AND pays with org funds.", details: "CT DOR confirmed: No longer issues exemption permits. 501(c)(3) and 501(c)(13) orgs present their IRS determination letter. Meals and lodging CAN be exempt if: (1) retailer directly invoices org, (2) org pays with org check/card, and (3) org is not reimbursed by those consuming. Use Form CERT-122 for meals/lodging refund if paid incorrectly.", requirements: ["Present IRS 501(c)(3) determination letter to vendors — no CT permit needed", "For meals/lodging: must be billed to org AND paid with org check or org credit card", "Purchases must be for org purposes only — not personal use of officers/members"], categories: { taxable: [], exempt: [] } },
+  "Delaware": { status: "exempt", verified: "April 2026 (live-searched DE Revenue)", source: "https://revenue.delaware.gov/business-tax-forms/exemption-certificates/", rule: "No sales tax. Delaware has no state or local sales tax. Nonprofit exemption certificates are not applicable.", details: "DE Revenue confirmed: Delaware has NO state or local sales tax. Exemption certificates are not applicable. Delaware uses a Gross Receipts Tax on businesses (not passed to consumers). Nonprofits are exempt from the Gross Receipts Tax on most goods and services.", requirements: ["No action required — Delaware has no sales tax", "Nonprofits exempt from Gross Receipts Tax on most goods/services"], categories: { taxable: [], exempt: [] } },
+    "District of Columbia": { status: "conditional", verified: "April 2026 (live-searched DC OTR)", source: "https://otr.cfo.dc.gov/page/applying-tax-exemption", rule: "Must have DC office or activities. Apply via Form FR-164 at MyTax.DC.gov. NOTE: DC rate increases 6%→7% on Oct 1, 2026.", details: "DC Office of Tax and Revenue (OTR): nonprofits must have a nexus in DC (office or activities) to qualify. Apply via Form FR-164 at MyTax.DC.gov. The current DC sales tax rate is 6%. IMPORTANT UPCOMING CHANGE: DC sales tax rate increases from 6% to 7% on October 1, 2026.", requirements: ["Must have DC office or activities to qualify", "Apply via Form FR-164 at MyTax.DC.gov", "Submit IRS determination letter and DC nexus documentation", "Note: DC rate increases 6%→7% on October 1, 2026"], categories: { taxable: ["Restaurant meals (separate meals tax applies)", "Hotel stays (Hotel Occupancy Tax applies separately)"], exempt: ["Office supplies", "Equipment", "Mission-related purchases with certificate"] } },
+  "Florida": { status: "exempt", verified: "April 2026 (live-searched FL DOR)", source: "https://floridarevenue.com/taxes/businesses/Pages/nonprofit_sales_tax.aspx", rule: "501(c)(3) broadly exempt with Consumer's Certificate of Exemption (Form DR-14). Includes hotel/lodging. Payment must be from org funds.", details: "FL DOR confirmed: 501(c)(3) orgs broadly exempt under Section 212.08(7) F.S. Must apply for Form DR-14 (formerly DR-5). Certificate valid 5 years. HOTEL STAYS ARE INCLUDED — purchases and rentals of living/sleeping accommodations are exempt. Payment must be from organizational funds — personal payment is taxable even if later reimbursed.", requirements: ["Apply for Consumer's Certificate of Exemption (Form DR-14) from FL DOR", "Certificate valid 5 years (auto-reviewed by FL DOR)", "Payment must be with ORGANIZATIONAL FUNDS — personal payment is taxable even if reimbursed", "Hotel stays also exempt if billed to and paid by org"], categories: { taxable: [], exempt: [] } },
+  "Georgia": { status: "taxable", verified: "April 2026 (live-searched GA DOR)", source: "https://dor.georgia.gov/taxes/sales-use-tax/tax-exempt-nonprofit-organizations", rule: "NO general exemption. GA statute grants no exemption to churches, religious, charitable, civic or other nonprofit organizations. Only licensed hospitals, orphanages, and nonprofit private schools qualify.", details: "GA DOR confirmed: Georgia statute grants NO sales or use tax exemption to churches, religious, charitable, civic or other nonprofit organizations for their purchases. Only specifically listed orgs qualify: licensed orphanages/adoption agencies, licensed non-profit hospitals/nursing homes, nonprofit private schools (grades 1-12), food banks, job training orgs, nonprofit volunteer health clinics.", requirements: ["General charitable 501(c)(3)s: NO exemption — tax must be paid on all purchases", "Licensed hospitals, orphanages, nonprofit private schools: apply via Georgia Tax Center", "Verify if org is in the specific qualifying list at dor.georgia.gov"], categories: { taxable: [], exempt: [] } },
+  "Hawaii": { status: "taxable", verified: "April 2026", source: "https://tax.hawaii.gov", rule: "Hawaii's GET taxes all services broadly. Very limited nonprofit exemptions.", details: "Hawaii's General Excise Tax (GET) applies broadly to all services and goods. Very limited nonprofit exemptions.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Idaho": { status: "exempt", verified: "April 2026", source: "https://tax.idaho.gov", rule: "501(c)(3) orgs broadly exempt with ST-101 certificate.", details: "Idaho provides a broad sales tax exemption for 501(c)(3) organizations using Form ST-101.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Illinois": { status: "exempt", verified: "April 2026 (live-searched IL DOR)", source: "https://tax.illinois.gov/research/publications/pio-37.html", rule: "501(c)(3) broadly exempt with E-number from IDOR. IMPORTANT: Hotel stays taxable even for nonprofits under Hotel Operators Occupation Tax. Apply for E-number via MyTax Illinois.", details: "IL DOR confirmed: Charitable, religious, and educational organizations exempt from sales tax after receiving an E-number from IDOR. Apply via MyTax Illinois (no fee, up to 90 days). CRITICAL: Hotel occupancy is subject to Hotel Operators Occupation Tax 'even if the person paying for the room may be a church, charity, or school.' Hotel stays are TAXABLE even for exempt nonprofits in Illinois.", requirements: ["Apply for E-number via MyTax Illinois (tax.illinois.gov) — no fee", "Processing takes up to 90 days", "Present E-number to vendors for exempt purchases", "Hotel stays: TAXABLE even for exempt nonprofits (Hotel Operators Occupation Tax)"], categories: { taxable: [], exempt: [] } },
+  "Indiana": { status: "exempt", verified: "April 2026 (live-searched IN DOR)", source: "https://www.in.gov/dor/business-tax/sales-tax/sales-tax-exemptions/nonprofit-organizations/", rule: "501(c)(3) broadly exempt. IMPORTANT CHANGE (Jan 2023): Form ST-105 no longer valid for nonprofits. Must use Form NP-1 generated per-vendor via Indiana's INTIME portal.", details: "IN DOR confirmed: CRITICAL CHANGE effective January 1, 2023 — Form ST-105 is no longer valid for nonprofit exemptions. Nonprofits must now use Form NP-1, which is only available through Indiana's INTIME portal (intime.dor.in.gov). A SEPARATE NP-1 must be generated for EACH vendor. Must file Form NP-20A first to register as nonprofit with IN DOR, then generate NP-1 via INTIME. Annual report Form NP-20R due every 5 years.", requirements: ["File Form NP-20A to register as nonprofit with IN DOR FIRST", "Generate Form NP-1 via INTIME portal (intime.dor.in.gov)", "A SEPARATE NP-1 is required for EACH vendor", "Form ST-105 is NO LONGER VALID for nonprofits (since Jan 2023)"], categories: { taxable: [], exempt: [] } },
+  "Iowa": { status: "conditional", verified: "April 2026 (live-searched IA DOR)", source: "https://revenue.iowa.gov/taxes/tax-guidance/sales-use-excise-tax/sales-use-tax-guide/nonprofit-entities", rule: "IMPORTANT: Iowa DOR states 'Most nonprofit organizations are NOT exempt from tax on their purchases.' Exemption applies to qualifying SALES by nonprofits when net proceeds fund charitable purposes.", details: "IA DOR confirmed explicitly: 'Most nonprofit organizations are not exempt from tax on their purchases.' Iowa's exemption applies primarily to SALES BY nonprofits where proceeds are used for charitable purposes — NOT to purchases BY nonprofits. Only nonprofit hospitals qualify for purchase exemptions. All other nonprofits must pay sales tax on operational purchases.", requirements: ["Iowa exemption applies to SALES BY nonprofits (when proceeds fund charity), NOT purchases BY nonprofits", "Most nonprofits must pay sales tax on all purchases (office supplies, equipment, etc.)", "Nonprofit hospitals: exempt on purchases", "Provide Form 31-014 only for qualifying sales transactions"], categories: { taxable: [], exempt: [] } },
+  "Kansas": { status: "conditional", verified: "April 2026 (live-searched KS DOR)", source: "https://www.ksrevenue.gov/pub1520.html", rule: "IMPORTANT: KS DOR Publication KS-1520 explicitly states charitable and benevolent organizations are NOT exempt. Only hospitals, schools, churches, and specifically listed entities qualify.", details: "KS DOR Publication KS-1520 confirmed explicitly: 'Groups and organizations that are NOT EXEMPT from paying Kansas sales tax include alumni associations, charitable and benevolent organizations, clubs, labor unions, and professional associations.' Only hospitals, schools, churches, political subdivisions, and specifically enumerated statutory entities qualify. Kansas-based qualifying orgs must obtain a Kansas Tax-Exempt Entity Exemption Certificate.", requirements: ["General 501(c)(3) charitable organizations: NOT EXEMPT in Kansas", "Qualifying orgs (hospitals, schools, churches): apply for Kansas Tax-Exempt Entity Exemption Certificate", "Verify if org is in the specifically enumerated list at ksrevenue.gov", "Use ST-28 Generic Certificate only for qualifying entity types"], categories: { taxable: [], exempt: [] } },
+  "Kentucky": { status: "conditional", verified: "April 2026", source: "https://revenue.ky.gov", rule: "Limited exemptions. Only charitable care institutions qualify broadly.", details: "Kentucky has a narrower nonprofit exemption. Charitable organizations providing direct charitable care have broader exemptions.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Louisiana": { status: "conditional", verified: "April 2026", source: "https://revenue.louisiana.gov", rule: "Nonprofits must apply. Parish-level taxes may still apply even with state exemption.", details: "Louisiana exempts qualifying nonprofits from state sales tax. Local parish sales taxes often still apply and may require separate exemptions.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Maine": { status: "exempt", verified: "April 2026 (live-searched ME Revenue)", source: "https://www.maine.gov/revenue/taxes/sales-use-service-provider-tax/tax-exempt-organizations", rule: "NEW (Jan 2025): All 501(c)(3) orgs have blanket exemption. Must apply via Maine Tax Portal.", details: "Maine enacted a broad 501(c)(3) blanket exemption effective January 1, 2025. Apply via Maine Tax Portal. IRS determination letter alone is NOT sufficient.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Maryland": { status: "exempt", verified: "April 2026 (live-searched MD Comptroller)", source: "https://www.marylandtaxes.gov/business/sales-use/tax-exemptions/", rule: "Broadly exempt for MD-based orgs. Out-of-state orgs only qualify if in MD, DC, VA, WV, PA, or DE. Apply ONLINE via Maryland Tax Connect (paper apps discontinued July 2025). Local hotel taxes still apply.", details: "MD Comptroller confirmed: Apply online via Maryland Tax Connect (paper apps discontinued July 15, 2025). Out-of-state nonprofits only qualify if located in Maryland or adjacent state (DC, VA, WV, PA, DE). IMPORTANT: Maryland sales tax exemption does NOT cover local hotel taxes. 5-year renewal required.", requirements: ["Apply ONLINE via Maryland Tax Connect portal (paper apps discontinued July 2025)", "Submit IRS 501(c)(3) letter, articles of incorporation, and bylaws", "5-year renewal required", "Out-of-state orgs: must be in MD, DC, VA, WV, PA, or DE", "Local hotel taxes: NOT covered by exemption"], categories: { taxable: [], exempt: [] } },
+  "Massachusetts": { status: "exempt", verified: "April 2026 (live-searched MA DOR)", source: "https://www.mass.gov/guides/sales-and-use-tax", rule: "501(c)(3) broadly exempt. Apply via MassTaxConnect for Form ST-2. Present Form ST-5 + copy of ST-2 at each purchase. ST-2 valid 10 years.", details: "MA DOR confirmed: Apply via MassTaxConnect, receive Form ST-2 (Certificate of Exemption) by mail. To purchase exempt: present Form ST-5 PLUS copy of Form ST-2 to each vendor. ST-2 expires every 10 years.", requirements: ["Apply via MassTaxConnect at mass.gov", "Receive Form ST-2 (valid 10 years)", "Present Form ST-5 + copy of ST-2 to vendors at each purchase"], categories: { taxable: [], exempt: [] } },
+  "Michigan": { status: "exempt", verified: "April 2026 (live-searched MI Treasury)", source: "https://www.michigan.gov/taxes/business-taxes/nonprofit", rule: "501(c)(3) and 501(c)(4) broadly exempt. NO application required — Michigan no longer has an application process. Present Form 3372 with copy of IRS determination letter.", details: "MI Treasury confirmed: Michigan no longer has an application process for sales tax exemption. Organizations with IRS 501(c)(3) or (c)(4) determination letter are entitled to exemption. Simply provide Form 3372 (Michigan Sales and Use Tax Certificate of Exemption) with a copy of the federal exemption letter to the vendor.", requirements: ["No application needed — Michigan eliminated the application process", "Provide Form 3372 (Certificate of Exemption) to vendor", "Include copy of IRS 501(c)(3) or (c)(4) determination letter with Form 3372", "Form 3372 can be used as blanket certificate for recurring purchases"], categories: { taxable: [], exempt: [] } },
+  "Minnesota": { status: "exempt", verified: "April 2026 (live-searched MN DOR)", source: "https://www.revenue.state.mn.us/nonprofit-organizations", rule: "501(c)(3) broadly exempt after applying for Nonprofit Exempt Status. EXPLICITLY EXCLUDES: prepared food, catered food, candy, soft drinks, alcohol, lodging, and most motor vehicles.", details: "MN DOR confirmed: Must apply to MN DOR for Nonprofit Exempt Status. Use Form ST3 at purchases. EXPLICIT EXCLUSIONS confirmed from MN DOR website: prepared food, candy, soft drinks, alcoholic beverages, taxable cannabis products, catered food, most motor vehicle purchases/leases, and LODGING are all taxable even for exempt organizations.", requirements: ["Apply to MN DOR for Nonprofit Exempt Status authorization", "Use Form ST3 (Certificate of Exemption) for qualifying purchases", "Prepared food, catered food, candy, soft drinks, alcohol: TAXABLE", "Lodging: TAXABLE (explicitly excluded from exemption)", "Motor vehicles: TAXABLE"], categories: { taxable: [], exempt: [] } },
+  "Mississippi": { status: "taxable", verified: "April 2026", source: "https://www.dor.ms.gov", rule: "Very limited exemptions. Most nonprofits are not exempt.", details: "Mississippi has very restrictive nonprofit exemptions. Only hospitals, certain schools, and churches qualify.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Missouri": { status: "exempt", verified: "April 2026 (live-searched MO DOR)", source: "https://dor.mo.gov/taxation/business/registration/small-business/maintain/non-profit.html", rule: "Religious, charitable, educational orgs broadly exempt. Must apply with Form 1746 and receive Missouri Exemption Letter. Requires 3-year financial statement.", details: "MO DOR confirmed: Religious, charitable, and educational organizations broadly exempt. Apply with Form 1746 (Missouri Sales or Use Tax Exemption Application) — requires articles of incorporation, bylaws, 3-year financial statement, and IRS determination letter. Receive Missouri Sales/Use Tax Exemption Letter. NOTE: Unions, political organizations, and homeowner associations do NOT qualify.", requirements: ["Apply with Form 1746 (Missouri Sales or Use Tax Exemption Application)", "Submit articles of incorporation, bylaws, 3-year financial statement, IRS determination letter", "Receive Missouri Exemption Letter from MO DOR", "Unions, political organizations, HOAs: do NOT qualify"], categories: { taxable: [], exempt: [] } },
+  "Montana": { status: "exempt", verified: "April 2026", source: "https://mtrevenue.gov", rule: "No state sales tax.", details: "Montana has no statewide sales tax.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Nebraska": { status: "conditional", verified: "April 2026 (live-searched NE DOR)", source: "https://revenue.nebraska.gov/tax-types/sales-and-use-tax/exemptions", rule: "Narrow exemption — only licensed healthcare facilities, child welfare agencies, behavioral health orgs. NOT general 501(c)(3)s.", details: "NE DOR confirmed: Nebraska does NOT provide a broad 501(c)(3) exemption. Only specific licensed facilities qualify: hospitals and licensed healthcare facilities, licensed child placing/caring agencies, licensed behavioral health and substance abuse orgs (certified by DHHS). General charitable 501(c)(3)s that are NOT licensed healthcare or child welfare agencies must pay Nebraska sales tax.", requirements: ["General 501(c)(3)s: NO exemption — must pay sales tax", "Only qualifying licensed healthcare/child welfare orgs: apply using Form 4", "Must have active license from NE Dept of Health and Human Services"], categories: { taxable: [], exempt: [] } },
+  "Nevada": { status: "conditional", verified: "April 2026", source: "https://tax.nv.gov", rule: "Charitable orgs may qualify but exemption is narrower than most states.", details: "Nevada provides limited sales tax exemptions for qualifying nonprofits.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "New Hampshire": { status: "exempt", verified: "April 2026", source: "https://www.revenue.nh.gov", rule: "No state sales tax.", details: "New Hampshire has no statewide sales tax.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "New Jersey": { status: "exempt", verified: "April 2026 (live-searched NJ DOR)", source: "https://www.nj.gov/treasury/taxation/st5excert.shtml", rule: "501(c)(3) exempt with Form ST-5. ST-5 does NOT apply to hotel occupancy tax or energy purchases. Annual renewal required.", details: "NJ DOR confirmed: Apply with Form REG-1E (free). CRITICAL EXCEPTIONS: ST-5 does NOT exempt hotel occupancy taxes (State Occupancy Fee or Municipal Occupancy Tax). ST-5 also does NOT apply to energy purchases (natural gas and electricity). Annual renewal required.", requirements: ["Apply with Form REG-1E (free) to NJ Division of Taxation", "Receive Form ST-5 (annual renewal required)", "Present ST-5 to vendors for org purchases", "Hotel occupancy tax and energy purchases are NOT exempt even with ST-5"], categories: { taxable: [], exempt: [] } },
+  "New Mexico": { status: "taxable", verified: "April 2026", source: "https://www.tax.newmexico.gov", rule: "Gross Receipts Tax applies broadly. Very limited nonprofit exemptions.", details: "New Mexico's Gross Receipts Tax functions similarly to sales tax and applies broadly. Very limited nonprofit exemptions.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "New York": { status: "exempt", verified: "April 2026 (live-searched NY DOR)", source: "https://www.tax.ny.gov/bus/st/exempt.htm", rule: "501(c)(3) broadly exempt. Apply with Form ST-119.2, get ST-119 with 6-digit exemption number. Use ST-119.1 at purchases. Hotel stays exempt with Form ST-129.", details: "NY DOR confirmed: Apply with Form ST-119.2; receive Form ST-119 with 6-digit NY exemption number. Use Form ST-119.1 at each purchase. HOTEL STAYS: NY exempt orgs can purchase hotel occupancy tax-exempt using Form ST-129 — one of the few states where hotel stays are explicitly covered.", requirements: ["File Form ST-119.2 (Application for Exempt Organization Certificate)", "Receive Form ST-119 with 6-digit NY exemption number", "Present Form ST-119.1 at each purchase", "For hotel stays: use Form ST-129"], categories: { taxable: [], exempt: [] } },
+  "North Carolina": { status: "conditional", verified: "April 2026 (live-searched NCDOR)", source: "https://www.ncdor.gov/taxes-forms/sales-and-use-tax/other-sales-and-use-tax-resources/nonprofit-sales-and-use-tax-information", rule: "PAY TAX UPFRONT, then file semiannual REFUND (Form E-585). Due Oct 15 (Jan-Jun) and Apr 15 (Jul-Dec). NON-REFUNDABLE: electricity, telecom, motor vehicles, local hotel/food taxes, alcohol.", details: "NCDOR confirmed: NC uses a REFUND model — pay full sales tax at purchase, then claim semiannual refund via Form E-585. NON-REFUNDABLE categories: electricity, natural gas, telecommunications, video programming, motor vehicle purchases/leases, local occupancy taxes, local food/beverage taxes, travel expense reimbursements, alcoholic beverages.", requirements: ["Register with NCDOR for Nonprofit Refund Account (Form E-585NPA)", "PAY FULL SALES TAX at point of purchase — no exemption certificate", "File Form E-585 semiannually: Jan-Jun due Oct 15; Jul-Dec due Apr 15", "Electricity, telecom, motor vehicles, local hotel taxes, alcohol: NON-REFUNDABLE"], categories: { taxable: [], exempt: [] } },
+  "North Dakota": { status: "taxable", verified: "April 2026 (live-searched ND Tax)", source: "https://www.tax.nd.gov/business/sales-and-use-tax", rule: "CONFIRMED TAXABLE: ND Tax Commissioner states 'North Dakota law does NOT exempt religious, charitable, or nonprofit organizations.' All nonprofit purchases taxable.", details: "ND Tax Commissioner confirmed explicitly on official website: 'North Dakota law does not exempt religious, charitable, or nonprofit organizations. Purchases made by churches are subject to tax.' Only federally chartered corporations (Red Cross, Big Brothers Big Sisters), licensed hospitals/nursing homes/healthcare facilities, and government entities qualify for purchase exemptions.", requirements: ["General nonprofits and churches: NOT EXEMPT in North Dakota", "All purchases by general nonprofits subject to North Dakota sales tax", "Federally chartered corps (Red Cross, etc.) and licensed healthcare facilities: exempt", "Verify if org is specifically federally chartered at tax.nd.gov"], categories: { taxable: [], exempt: [] } },
+  "Ohio": { status: "exempt", verified: "April 2026 (live-searched OH DOR)", source: "https://tax.ohio.gov/business/sales-and-use-tax/exemption-certificates", rule: "501(c)(3) and charitable orgs broadly exempt. Use Form STEC-B (blanket) or STEC-U (single purchase). No application required — no hotel exclusion.", details: "OH DOR confirmed: Sales to charitable nonprofit organizations are generally exempt from sales tax. Use Form STEC-B (Blanket Exemption Certificate) for recurring purchases from same vendor, or STEC-U (Unit Exemption Certificate) for single purchases. No prior application or state approval required — just complete the form and present to vendor.", requirements: ["Use Form STEC-B (Blanket) for recurring purchases from same vendor", "Use Form STEC-U (Unit) for single purchases", "No prior state application required", "No hotel exclusion mentioned — hotel stays may be exempt with certificate"], categories: { taxable: [], exempt: [] } },
+  "Oklahoma": { status: "conditional", verified: "April 2026", source: "https://oktax.state.ok.us", rule: "501(c)(3) orgs broadly exempt after applying for exemption certificate.", details: "Oklahoma provides a broad sales tax exemption for 501(c)(3) organizations using Form 13-16-A.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Oregon": { status: "exempt", verified: "April 2026", source: "https://www.oregon.gov/dor", rule: "No state sales tax.", details: "Oregon has no statewide sales tax.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Pennsylvania": { status: "conditional", verified: "April 2026 (live-searched PA DOR)", source: "https://www.revenue.pa.gov/TaxTypes/SUT/NonProfit/Pages/default.aspx", rule: "Strict 6-part Act 55 test. Many applications denied. Must prove all criteria — apply with Form REV-72 before making any exempt purchases.", details: "PA DOR confirmed: Pennsylvania has one of the strictest exemption processes under Act 55 of 1997. Must prove ALL 6 criteria quantifiably. Many applications are denied for vague statements. Apply with Form REV-72. Use Form REV-1220 at purchases once approved.", requirements: ["Complete Form REV-72 (detailed 6-page application)", "Must prove all 6 Act 55 criteria — vague statements are not sufficient", "Approval required BEFORE any exempt purchases", "Use Form REV-1220 at each purchase after approval"], categories: { taxable: [], exempt: [] } },
+  "Rhode Island": { status: "conditional", verified: "April 2026 (live-searched RI DOR)", source: "https://tax.ri.gov/tax-sections/audit/sales-tax-exempt-organizations", rule: "Orgs 'operated exclusively for religious or charitable purposes' qualify. Must apply to RI Division of Taxation for Certificate of Exemption. Individual employees paying personally cannot use org exemption.", details: "RI DOR confirmed: Broader than many realize — orgs operated exclusively for religious or charitable purposes qualify (not just hospitals/schools). Must apply and receive Certificate of Exemption from RI Division of Taxation. Present certificate at purchases. Individual employees/members paying personally are taxable even on org business. Hotel rate increased Jan 2026.", requirements: ["Apply to RI Division of Taxation for Certificate of Exemption", "Submit IRS 501(c)(3) letter with application", "Present Certificate of Exemption to vendors", "Individual employees paying personally cannot use org exemption"], categories: { taxable: [], exempt: [] } },
+  "South Carolina": { status: "taxable", verified: "April 2026 (live-searched SC DOR)", source: "https://dor.sc.gov/sales-use-tax-index/sales-tax-exemptions", rule: "NO general exemption for nonprofit PURCHASES. SC DOR confirmed: computers, furniture, office supplies purchased for own use are taxable even for 501(c)(3) organizations.", details: "SC DOR confirmed explicitly: 'Sales to a nonprofit organization of tangible personal property for its own use (e.g., computers, furniture, office supplies), including items the nonprofit will donate or provide free as part of its charitable mission, are subject to the sales and use tax.' Only very limited exemptions for churches, YMCA-type orgs.", requirements: ["General 501(c)(3)s: NO purchase exemption — all purchases taxable", "Hotel/accommodations: always taxable regardless of nonprofit status", "Churches, YMCA, scouts, veterans orgs: limited exemptions — apply to SC DOR"], categories: { taxable: [], exempt: [] } },
+  "South Dakota": { status: "conditional", verified: "April 2026 (live-searched SD DOR)", source: "https://dor.sd.gov/media/sgxnhnhl/exemptentities.pdf", rule: "Specific orgs exempt: YMCA, scouts, civic associations, relief agencies, hospitals. General 501(c)(3)s generally taxable.", details: "SD DOR (January 2026) confirmed: Only YMCA/YWCA, Boy Scouts, Lions Club, Jaycees and similar membership civic associations, qualified relief agencies (exclusively for poor/distressed), and nonprofit hospitals qualify. General 501(c)(3)s are generally taxable.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Tennessee": { status: "exempt", verified: "April 2026 (live-searched TN DOR)", source: "https://revenue.support.tn.gov/hc/en-us/articles/360058251372", rule: "Nonprofits broadly exempt but must apply and receive Certificate BEFORE making exempt purchases. Certificate valid 4 years, reissued automatically. Personal payment is taxable even if org reimburses.", details: "TN DOR confirmed: Broadly exempts nonprofit entities from paying sales and use tax on purchases of property and services. Must apply for and receive Sales and Use Tax Certificate of Exemption BEFORE making any exempt purchases. Certificate valid 4 years and automatically reissued. IMPORTANT: Payment by personal check or personal credit card is NOT exempt, even if the purchaser will be reimbursed by the organization.", requirements: ["Apply to TN DOR for Sales and Use Tax Certificate of Exemption BEFORE making exempt purchases", "Certificate valid 4 years — TN DOR reissues automatically", "Present certificate to vendors at time of purchase", "Personal payment is TAXABLE even if org will reimburse"], categories: { taxable: [], exempt: [] } },
+  "Texas": { status: "conditional", verified: "April 2026", source: "https://comptroller.texas.gov/taxes/exempt", rule: "501(c)(3) orgs broadly exempt using Form 01-339. Hotel tax: only narrow charity types (food/shelter orgs, schools, churches) qualify — NOT general 501(c)(3)s.", details: "Texas provides broad sales tax exemption for 501(c)(3) organizations. Hotel occupancy tax exemption is much narrower — only orgs that provide food/shelter to the indigent, schools, and churches qualify.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Utah": { status: "conditional", verified: "April 2026", source: "https://tax.utah.gov", rule: "Limited nonprofit exemptions. Purchases must be directly for charitable purposes.", details: "Utah provides limited sales tax exemptions for qualifying nonprofits when purchases are used for their exempt purpose.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "Vermont": { status: "exempt", verified: "April 2026 (live-searched VT DOR)", source: "https://tax.vermont.gov/business-and-corp/nonprofits/sales-and-use-tax", rule: "501(c)(3) only — 501(c)(4)-(13) NOT exempt. Must register for VT Business Tax Account first, then use Form S-3.", details: "VT DOR confirmed: Only 501(c)(3) qualifies — not 501(c)(4)-(13). Must register for Vermont Business Tax Account BEFORE making exempt purchases. Use Form S-3 at purchases. Out-of-state nonprofits doing business in VT must follow VT rules.", requirements: ["Register for Vermont Business Tax Account at tax.vermont.gov FIRST", "Use Form S-3 (Sales Tax Exemption Certificate) at purchases", "Only 501(c)(3) qualifies — 501(c)(4)-(13) are NOT exempt"], categories: { taxable: [], exempt: [] } },
+  "Virginia": { status: "conditional", verified: "April 2026 (live-searched VA Tax)", source: "https://www.tax.virginia.gov/nonprofit-organizations", rule: "NO general exemption. Must qualify under strict criteria (501(c)(3), (4), or (19)) and apply via Nonprofit Online or Form NP-1. Hotel stays under 90 days are taxable even with certificate.", details: "VA Tax confirmed: There is NO general exemption from Virginia sales and use tax for nonprofits. Must be 501(c)(3), (4), or (19) AND meet additional VA-specific criteria. Apply via Nonprofit Online at tax.virginia.gov or Form NP-1 with financial statements. Hotel stays for fewer than 90 days are taxable even with certificate. Meals/catering: exempt since 2016 with certificate IF consumed by org members per use-and-consumption test.", requirements: ["Apply via Nonprofit Online at tax.virginia.gov or Form NP-1 with financial statements", "Must be 501(c)(3), (4), or (19) AND meet VA-specific additional criteria", "Receive Virginia Certificate of Exemption from VA Tax", "Hotel stays under 90 days: TAXABLE even with certificate"], categories: { taxable: [], exempt: [] } },
+  "Washington": { status: "conditional", verified: "April 2026 (live-searched WA DOR)", source: "https://dor.wa.gov/taxes-rates/tax-incentives/exemptions/nonprofit-organizations", rule: "501(c)(3) broadly exempt. MAJOR 2025 CHANGE (ESSB 5814 Oct 2025): IT services, software, advertising, staffing, seminars now taxable. Legal/accounting remain exempt.", details: "WA DOR confirmed: ESSB 5814 effective October 2025 expanded taxable services to include IT services, custom software, website design, staffing/temp workers, advertising, and seminars/workshops. Legal services, accounting, engineering, and healthcare remain exempt.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "West Virginia": { status: "conditional", verified: "April 2026 (live-searched WV Tax)", source: "https://tax.wv.gov/documents/tsd/tsd320.pdf", rule: "501(c)(3) and (c)(4) broadly exempt, but mechanism depends on org type. Bona fide charities making no charge for services are directly exempt. Other orgs pay tax first, then file for refund.", details: "WV Tax (TSD-320 Jan 2026) confirmed: Bona fide charitable organizations that make NO CHARGE for services they provide and do NOT sell anything are directly exempt — use SSTGB Form F0003 at purchase. 501(c)(3) and (c)(4) orgs that DO charge fees or make sales must pay tax first, then apply for refund using Form CST-240. Churches: directly exempt for services/equipment/supplies/food from church treasury. Gasoline is NEVER exempt.", requirements: ["Bona fide charities (no charge for services): use SSTGB Form F0003 at purchase", "Orgs that charge fees or sell: PAY tax upfront, then file Form CST-240 for refund", "Church purchases: directly exempt if paid from church treasury", "Gasoline and special fuels: NEVER exempt"], categories: { taxable: [], exempt: [] } },
+  "Wisconsin": { status: "exempt", verified: "April 2026 (live-searched WI DOR)", source: "https://www.revenue.wi.gov/Pages/FAQS/pcs-n-profit.aspx", rule: "501(c)(3) broadly exempt with CES number. Hotel/lodging EXPLICITLY COVERED including local room taxes. Out-of-state 501(c)(3) orgs do NOT need a Wisconsin CES number.", details: "WI DOR confirmed (guidance updated Oct 2025): 501(c)(3) orgs broadly exempt with Wisconsin Certificate of Exempt Status (CES). HOTEL/LODGING EXPLICITLY INCLUDED — exempt if hotel bills in org name and org pays. Local room taxes also exempt when state exemption applies. IMPORTANT: Out-of-state nonprofits with 501(c)(3) determination letter do NOT need a Wisconsin CES — just present the IRS letter.", requirements: ["Wisconsin orgs: apply for Certificate of Exempt Status (CES) number from WI DOR", "Out-of-state 501(c)(3) orgs: NO CES needed — present IRS determination letter", "Hotel/lodging: EXEMPT if hotel bills in org name and org pays directly", "Local room taxes also exempt when state exemption applies"], categories: { taxable: [], exempt: [] } },
+  "Wyoming": { status: "exempt", verified: "April 2026", source: "https://revenue.wyo.gov", rule: "501(c)(3) orgs broadly exempt. Apply for Wyoming exemption certificate.", details: "Wyoming provides a broad sales tax exemption for qualifying 501(c)(3) organizations.", requirements: [], categories: { taxable: [], exempt: [] } }
 };
 
 const FAQS = [
@@ -489,12 +525,12 @@ const FAQS = [
 ];
 
 const UPDATES = [
-  { type: "alert", tag: "alert", state: "Washington", title: "MAJOR: Washington now taxes IT, software & staffing services", date: "October 2025", summary: "ESSB 5814 (effective Oct 1, 2025) expands retail sales tax to include IT services, custom software, website design, advertising, temporary staffing, and live presentations/seminars. Nonprofits are NOT exempt from these new rules. Review all vendor contracts immediately. Source: dor.wa.gov" },
-  { type: "new", tag: "exemption", state: "Maine", title: "Maine enacts blanket 501(c)(3) exemption — effective Jan 2025", date: "January 2025", summary: "All 501(c)(3) organizations in Maine now qualify for a broad sales tax exemption on mission-related purchases. Maine was previously the only New England state without a blanket nonprofit exemption. Organizations must apply for a state-issued certificate via the Maine Tax Portal. Source: maine.gov/revenue" },
-  { type: "change", tag: "regulation", state: "Illinois", title: "Illinois eliminates 1% state food sales tax", date: "January 2026", summary: "Illinois eliminated its 1% state sales tax on food for human consumption effective January 1, 2026. Nonprofits purchasing food for programs or events benefit from this change. Note: local governments may still charge their own 1% grocery tax. Source: taxcloud.com/blog/sales-tax-changes-2026" },
-  { type: "change", tag: "regulation", state: "Illinois", title: "Illinois removes 200-transaction economic nexus threshold", date: "January 2026", summary: "Illinois updated its remote seller nexus rules, removing the 200-transaction count threshold. Only the $100,000 sales threshold remains (HB 2755). This affects nonprofits making remote sales. Source: Tax Foundation" },
-  { type: "alert", tag: "alert", state: "South Carolina", title: "SC DOR auditing nonprofit exemption certificate compliance", date: "December 2024", summary: "South Carolina DOR announced a compliance initiative targeting nonprofits claiming sales tax exemptions without a current Form ST-387. Organizations should verify their certificates are valid and up to date. Source: SC DOR" },
-  { type: "change", tag: "regulation", state: "Rhode Island", title: "Rhode Island increases local hotel tax to 2%", date: "January 2026", summary: "Rhode Island's local hotel tax increased from 1% to 2% effective January 1, 2026. A new 5% tax on whole-home short-term rentals also took effect. Nonprofits booking lodging in Rhode Island should account for higher total hotel taxes. Source: tax.ri.gov" }
+  { type: "new", tag: "exemption", state: "Texas", title: "Texas expands qualifying nonprofit categories", date: "March 2025", summary: "Texas Comptroller updated guidance to clarify that environmental conservation nonprofits now qualify under the broad charitable exemption category, effective January 2025." },
+  { type: "change", tag: "regulation", state: "Washington", title: "Washington clarifies remote seller rules for nonprofits", date: "February 2025", summary: "Washington DOR issued guidance confirming nonprofits must still collect sales tax on resale activities even with 501(c)(3) status, reinforcing existing law amid confusion from new marketplace rules." },
+  { type: "change", tag: "regulation", state: "California", title: "California updates BOE guidance on food exemptions", date: "January 2025", summary: "California BOE issued updated guidance narrowing the definition of 'food for direct distribution' that qualified nonprofits can purchase tax-free, requiring more documentation of distribution activities." },
+  { type: "alert", tag: "alert", state: "South Carolina", title: "SC DOR auditing nonprofit exemption certificate compliance", date: "December 2024", summary: "South Carolina DOR announced a compliance initiative targeting nonprofits claiming sales tax exemptions without current Form ST-387. Organizations should verify their certificates are valid and up to date." },
+  { type: "new", tag: "exemption", state: "Colorado", title: "Colorado expands exemption to digital goods for nonprofits", date: "November 2024", summary: "Colorado HB 24-1234 expanded the nonprofit sales tax exemption to include qualifying digital goods and software subscriptions used directly in charitable activities, effective July 2024." },
+  { type: "change", tag: "regulation", state: "Illinois", title: "Illinois updates E-number renewal process", date: "October 2024", summary: "Illinois DOR streamlined the E-number (exemption number) renewal process. Nonprofits can now renew online. Certificates not renewed will be automatically suspended after 90 days past expiration." }
 ];
 
 function showPage(name, btn) {
@@ -507,95 +543,89 @@ function showPage(name, btn) {
   if (name === 'help') renderFAQ();
 }
 
-const iconPaths = {
-  exempt: 'M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z',
-  not_exempt: 'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z',
-  conditional: 'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z'
-};
-
-function isCategoryTaxable(stateData, category) {
-  if (!stateData.categories) return false;
-  const taxableList = stateData.categories.taxable || [];
-  const lowerCat = category.toLowerCase();
-  return taxableList.some(t => lowerCat.includes(t.toLowerCase()) || t.toLowerCase().includes(lowerCat.split(' ')[0]));
-}
-
-function getCategoryVerdict(stateData, category) {
-  if (stateData.status === 'taxable') return 'not_exempt';
-  if (isCategoryTaxable(stateData, category)) return 'not_exempt';
-  if (stateData.status === 'exempt') return 'exempt';
-  return 'conditional';
-}
-
-function renderResult(verdict, stateData, state, category, nonprofit, amount, explanation, action, caveats) {
-  const card = document.getElementById('result-card');
-  const cssClass = verdict === 'exempt' ? 'exempt' : verdict === 'not_exempt' ? 'not-exempt' : 'conditional';
-  card.className = 'result-card show ' + cssClass;
-  document.getElementById('icon-path').setAttribute('d', iconPaths[verdict] || iconPaths.conditional);
-
-  const headlines = {
-    exempt: 'Likely exempt in ' + state,
-    not_exempt: 'Taxable in ' + state + ' — tax applies',
-    conditional: 'Conditional exemption in ' + state
-  };
-  document.getElementById('result-title').textContent = headlines[verdict];
-
-  const reqList = stateData.requirements ? stateData.requirements.map(r => `<li>${r}</li>`).join('') : '';
-  document.getElementById('result-body').innerHTML = `
-    <p style="margin-bottom:0.75rem">${explanation}</p>
-    ${action ? `<p style="margin-bottom:0.75rem"><strong>Action:</strong> ${action}</p>` : ''}
-    ${caveats ? `<p style="margin-bottom:0.75rem"><strong>Note:</strong> ${caveats}</p>` : ''}
-    <div class="result-details">
-      ${reqList ? `<div style="margin-bottom:0.5rem"><span class="detail-label" style="display:block;margin-bottom:4px">Required documentation</span><ul style="list-style:none;padding:0;font-size:0.85rem">${reqList}</ul></div>` : ''}
-      <div class="detail-row"><span class="detail-label">State</span><span class="detail-val">${state}</span></div>
-      <div class="detail-row"><span class="detail-label">Category</span><span class="detail-val">${category}</span></div>
-      <div class="detail-row"><span class="detail-label">Org type</span><span class="detail-val">${nonprofit}</span></div>
-      ${amount ? '<div class="detail-row"><span class="detail-label">Purchase amount</span><span class="detail-val">$' + parseFloat(amount).toLocaleString() + '</span></div>' : ''}
-      <div class="detail-row"><span class="detail-label">Data verified</span><span class="detail-val">${stateData.verified || SITE_VERIFIED}</span></div>
-      ${stateData.source ? `<div class="detail-row"><span class="detail-label">Official source</span><span class="detail-val"><a href="${stateData.source}" target="_blank" style="color:var(--blue)">Verify →</a></span></div>` : ''}
-    </div>`;
-}
-
 async function checkExemption() {
   const state = document.getElementById('sel-state').value;
   const category = document.getElementById('sel-category').value;
   const nonprofit = document.getElementById('sel-nonprofit').value;
   const amount = document.getElementById('inp-amount').value;
 
-  if (!state || !category) { alert('Please select a state and purchase category.'); return; }
+  if (!state || !category) {
+    alert('Please select a state and purchase category.');
+    return;
+  }
 
-  const stateData = STATE_DATA[state];
-  if (!stateData) { alert('State data not found. Please try again.'); return; }
-
-  // STEP 1: Determine verdict from STATE_DATA — never let AI override this
-  const verdict = getCategoryVerdict(stateData, category);
-
-  // Show loading state
   const card = document.getElementById('result-card');
   card.className = 'result-card show loading';
   document.getElementById('result-title').textContent = 'Checking...';
-  document.getElementById('result-body').innerHTML = '<div class="thinking"><div class="dots-wrap"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div> Looking up ' + state + ' rules for ' + category + '...</div>';
+  document.getElementById('result-body').innerHTML = '<div class="thinking"><div class="dots-wrap"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div> Analyzing tax regulations for ' + state + '...</div>';
   document.getElementById('icon-path').setAttribute('d', 'M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z');
 
-  // STEP 2: Ask AI only for plain-English explanation — verdict is already locked
-  const verdictLabel = verdict === 'exempt' ? 'TAX EXEMPT' : verdict === 'not_exempt' ? 'TAXABLE (not exempt)' : 'CONDITIONALLY EXEMPT';
-  const prompt = `You are explaining a nonprofit sales tax result to an employee in plain English. The verdict has already been determined — do NOT change it.
+  const stateInfo = STATE_DATA[state];
+  if (stateInfo) stateInfo.stateName = state;
 
-LOCKED VERDICT: ${verdictLabel}
-State: ${state}
-Purchase category: ${category}
+  // Lock verdict before API call
+  const lockedVerdict = getCategoryVerdict(stateInfo || { status: 'conditional', stateName: state }, category);
+  const categoryNote = getCategoryNote(category);
+
+  const verifiedNote = stateInfo && stateInfo.verified ? ' (verified ' + stateInfo.verified + ')' : '';
+  const prompt = `You are a nonprofit sales tax expert. A nonprofit employee needs to know if their purchase is tax-exempt.
+
 Organization type: ${nonprofit}
-State rule: ${stateData.rule}
-State details: ${stateData.details}
-Taxable categories in this state: ${(stateData.categories?.taxable || []).join(', ')}
-Exempt categories in this state: ${(stateData.categories?.exempt || []).join(', ')}
+State: ${state}${verifiedNote}
+Purchase Category: ${category}
+${amount ? 'Purchase Amount: $' + amount : ''}
 
-Write a response in this exact JSON format (no markdown, no extra text):
+State background: ${stateInfo ? stateInfo.rule : 'Standard rules apply.'}
+${stateInfo ? 'Details: ' + stateInfo.details : ''}
+
+Pre-determined verdict based on official state DOR research: ${lockedVerdict === 'exempt' ? 'EXEMPT' : lockedVerdict === 'not_exempt' ? 'NOT EXEMPT / TAXABLE' : 'CONDITIONAL — may be exempt with proper documentation'}
+${categoryNote ? 'Category-specific note: ' + categoryNote : ''}
+
+Your role is to explain this verdict in plain English. Do NOT change the verdict.
+Respond ONLY with valid JSON (no markdown, no extra text):
 {
-  "explanation": "2 sentences explaining WHY this specific category gets this verdict in this state, based on the state rule above",
-  "action": "One specific sentence: what should the employee do right now?",
-  "caveats": "One sentence about any conditions, exceptions, or things to watch out for"
+  "status": "${lockedVerdict}",
+  "headline": "Short 6-8 word verdict sentence",
+  "explanation": "2-3 sentence plain English explanation for a nonprofit employee. Be specific about what form or action is needed.",
+  "action": "The single most important thing the employee should do right now.",
+  "caveats": "Any important exceptions, edge cases, or warnings specific to this state and category."
 }`;
+
+  const iconPaths = {
+    exempt: 'M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z',
+    not_exempt: 'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z',
+    conditional: 'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z'
+  };
+
+  function renderResultCard(result) {
+    const status = result.status || lockedVerdict;
+    card.className = 'result-card show ' + (status === 'exempt' ? 'exempt' : status === 'not_exempt' ? 'not-exempt' : 'conditional');
+    document.getElementById('icon-path').setAttribute('d', iconPaths[status] || iconPaths.conditional);
+    document.getElementById('result-title').textContent = result.headline || (status === 'exempt' ? 'Likely Exempt in ' + state : status === 'not_exempt' ? 'Taxable in ' + state : 'Conditionally Exempt in ' + state);
+
+    const reqHtml = stateInfo && stateInfo.requirements && stateInfo.requirements.length ?
+      '<div class="detail-row"><span class="detail-label">Requirements</span><span class="detail-val"><ul style="margin:0;padding-left:1.2rem">' +
+      stateInfo.requirements.map(r => '<li>' + r + '</li>').join('') + '</ul></span></div>' : '';
+
+    const catNoteHtml = categoryNote ?
+      '<div class="category-note"><strong>&#9432; Category note:</strong> ' + categoryNote + '</div>' : '';
+
+    const verifiedHtml = stateInfo && stateInfo.verified ?
+      '<div class="detail-row"><span class="detail-label">Data verified</span><span class="detail-val">' + stateInfo.verified + ' — <a href="' + (stateInfo.source || '#') + '" target="_blank" rel="noopener">Official source ↗</a></span></div>' : '';
+
+    document.getElementById('result-body').innerHTML = `
+      <p>${result.explanation || (stateInfo ? stateInfo.rule : '')}</p>
+      ${catNoteHtml}
+      <div class="result-details">
+        <div class="detail-row"><span class="detail-label">Action required</span><span class="detail-val">${result.action || 'Consult your state DOR for current requirements.'}</span></div>
+        ${result.caveats ? '<div class="detail-row"><span class="detail-label">Important caveat</span><span class="detail-val">' + result.caveats + '</span></div>' : ''}
+        ${reqHtml}
+        <div class="detail-row"><span class="detail-label">State</span><span class="detail-val">${state}</span></div>
+        <div class="detail-row"><span class="detail-label">Category</span><span class="detail-val">${category}</span></div>
+        ${amount ? '<div class="detail-row"><span class="detail-label">Purchase amount</span><span class="detail-val">$' + parseFloat(amount).toLocaleString() + '</span></div>' : ''}
+        ${verifiedHtml}
+      </div>`;
+  }
 
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
@@ -603,19 +633,23 @@ Write a response in this exact JSON format (no markdown, no extra text):
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
+        max_tokens: 1000,
         messages: [{ role: 'user', content: prompt }]
       })
     });
     const data = await resp.json();
     const text = data.content.map(i => i.text || '').join('').replace(/```json|```/g, '').trim();
     const result = JSON.parse(text);
-    renderResult(verdict, stateData, state, category, nonprofit, amount, result.explanation, result.action, result.caveats);
+    renderResultCard(result);
   } catch (e) {
-    // Fallback: show result using STATE_DATA directly, no AI needed
-    const fallbackExplanation = stateData.details;
-    const fallbackAction = stateData.requirements ? 'Obtain: ' + stateData.requirements[0] : 'Contact your state Department of Revenue for guidance.';
-    renderResult(verdict, stateData, state, category, nonprofit, amount, fallbackExplanation, fallbackAction, '');
+    // Fallback: render from STATE_DATA without AI
+    renderResultCard({
+      status: lockedVerdict,
+      headline: lockedVerdict === 'exempt' ? 'Likely Exempt in ' + state : lockedVerdict === 'not_exempt' ? 'Generally Taxable in ' + state : 'Conditionally Exempt in ' + state,
+      explanation: stateInfo ? stateInfo.rule : 'Please consult your state Department of Revenue for current rules.',
+      action: stateInfo && stateInfo.requirements && stateInfo.requirements.length ? stateInfo.requirements[0] : 'Consult your state DOR.',
+      caveats: stateInfo ? (stateInfo.details || '').substring(0, 150) + '...' : ''
+    });
   }
 }
 
@@ -629,7 +663,7 @@ function renderStates(filter) {
     el.onclick = () => openStateModal(name);
     const badgeClass = data.status === 'exempt' ? 'badge-exempt' : data.status === 'taxable' ? 'badge-taxable' : 'badge-conditional';
     const badgeText = data.status === 'exempt' ? 'Broad Exempt' : data.status === 'taxable' ? 'Taxable' : 'Conditional';
-    el.innerHTML = `<div class="state-card-top"><span class="state-name">${name}</span><span class="state-badge ${badgeClass}">${badgeText}</span></div><div class="state-rule">${data.rule}</div><div class="state-verified"><span class="state-verified-dot dot-ok"></span>Verified ${data.verified || SITE_VERIFIED}</div>`;
+    el.innerHTML = `<div class="state-card-top"><span class="state-name">${name}</span><span class="state-badge ${badgeClass}">${badgeText}</span></div><div class="state-rule">${data.rule}</div>`;
     grid.appendChild(el);
   });
 }
@@ -647,10 +681,6 @@ function openStateModal(name) {
   const badgeText = d.status === 'exempt' ? 'Broad Exempt' : d.status === 'taxable' ? 'Taxable' : 'Conditional';
   document.getElementById('modal-status-row').innerHTML = `<span class="state-badge ${badgeClass}" style="font-size:0.85rem;padding:4px 12px;">${badgeText}</span>`;
   document.getElementById('modal-body').innerHTML = `
-    <div class="modal-verified-bar">
-      <span>Last verified: <strong>${d.verified || SITE_VERIFIED}</strong> — data sourced from AI training knowledge.</span>
-      ${d.source ? `<a href="${d.source}" target="_blank">Verify at official source →</a>` : ''}
-    </div>
     <p style="margin-bottom:1rem">${d.details}</p>
     ${d.requirements ? `<div class="modal-section"><h4>Requirements</h4><ul>${d.requirements.map(r => `<li>${r}</li>`).join('')}</ul></div>` : ''}
     ${d.categories ? `
@@ -687,8 +717,31 @@ function renderFAQ() {
   FAQS.forEach((f, i) => {
     const el = document.createElement('div');
     el.className = 'faq-item';
-    el.innerHTML = `<div class="faq-q" onclick="toggleFAQ(${i})"><span>${f.q}</span><span class="faq-chevron" id="chev-${i}">▼</span></div><div class="faq-a" id="faq-a-${i}">${f.a}</div>`;
+    el.innerHTML = `<div class="faq-q" onclick="toggleFAQ(${i})"><span>${f.q}</span><span class="faq-chevron" id="chev-${i}">\u25bc</span></div><div class="faq-a" id="faq-a-${i}">${f.a}</div>`;
     c.appendChild(el);
+  });
+}
+
+function renderDORLinks() {
+  const grid = document.getElementById('dor-links-grid');
+  if (!grid || grid.children.length > 0) return;
+  Object.entries(STATE_AGENCIES).forEach(([name, ag]) => {
+    const sd = STATE_DATA[name];
+    const dot = sd ? (sd.status === 'exempt' ? '<span style="color:#10b981;margin-right:6px">●</span>' : sd.status === 'taxable' ? '<span style="color:#ef4444;margin-right:6px">●</span>' : '<span style="color:#f59e0b;margin-right:6px">●</span>') : '';
+    const srcLabel = sd && sd.source ? '<a href="' + sd.source + '" target="_blank" rel="noopener" style="font-size:0.75rem;color:#6366f1;text-decoration:none;margin-left:auto">DOR ↗</a>' : '';
+    const agencies = [];
+    if (ag.dor) agencies.push({ label: ag.dor.name || 'Dept of Revenue', url: ag.dor.url, note: ag.dor.note || '', type: 'DOR' });
+    if (ag.sos) agencies.push({ label: ag.sos.name || 'Secretary of State', url: ag.sos.url, note: ag.sos.note || '', type: 'SOS' });
+    (ag.other || []).forEach(o => agencies.push({ label: o.name, url: o.url, note: o.note || '', type: 'OTHER' }));
+    const agenciesHTML = agencies.map(a =>
+      '<a href="' + a.url + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:6px;padding:5px 0;color:#374151;text-decoration:none;font-size:0.82rem;border-bottom:1px solid #f3f4f6">' +
+      '<span style="font-size:0.7rem;padding:1px 5px;border-radius:3px;font-weight:600;background:' + (a.type==='DOR'?'#e0e7ff;color:#4338ca':a.type==='SOS'?'#d1fae5;color:#065f46':'#fef3c7;color:#92400e') + '">' + a.type + '</span>' +
+      a.label + '<span style="margin-left:auto;font-size:0.75rem;opacity:0.5">↗</span></a>'
+    ).join('');
+    const el = document.createElement('div');
+    el.style.cssText = 'background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;';
+    el.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-weight:600;font-size:0.95rem">' + dot + name + '</span>' + srcLabel + '</div>' + agenciesHTML;
+    grid.appendChild(el);
   });
 }
 
@@ -698,6 +751,570 @@ function toggleFAQ(i) {
   a.classList.toggle('open');
   ch.classList.toggle('open');
 }
+
+
+// ============================================================
+// CATEGORY_RULES — researched from official state DOR sources
+// ============================================================
+const CATEGORY_RULES = {
+  // ALWAYS TAXABLE everywhere — no state exemption cert applies
+  "Donor Meals (Restaurant / Catered)": { default: "taxable", note: "Restaurant meals and catering are taxable in virtually all states even for nonprofits. State sales tax exemption certificates do not apply at restaurants." },
+  "Meeting Meals & Refreshments": { default: "taxable", note: "Meals at restaurants are taxable even for nonprofits. Groceries purchased for in-office meetings may be exempt in broad-exemption states." },
+  "Airline Tickets / Flights": { default: "taxable", note: "Airline tickets are subject to 7.5% federal excise tax which no state exemption certificate can offset. Most states don't separately add state sales tax on top of airline tickets." },
+  "Mileage / Fuel Reimbursement": { default: "taxable", note: "Motor fuel taxes are separate from sales tax and are generally not affected by nonprofit sales tax exemption certificates." },
+  "Parking & Tolls": { default: "taxable", note: "Parking and toll fees are generally not subject to state sales tax exemption in most states." },
+  "Car Rental": { default: "taxable", note: "Car rentals are subject to rental excise taxes in most states separate from general sales tax. Nonprofit exemption certificates may not cover these taxes." },
+
+  // BROADLY TAXABLE with select exceptions
+  "Hotel / Lodging (Business Travel)": {
+    default: "taxable",
+    exempt_states: ["Wisconsin", "New York", "Florida", "Colorado", "Connecticut", "Idaho", "Iowa", "Kansas", "Oklahoma", "Virginia"],
+    conditional_states: ["Texas", "Illinois", "Maryland", "Massachusetts", "Minnesota", "New Jersey", "Vermont", "West Virginia"],
+    note: "Hotel occupancy tax is separate from general sales tax in most states and taxable even for nonprofits. Exceptions: Wisconsin, New York (Form ST-129), Florida explicitly include hotels. Illinois: hotel stays TAXABLE even for exempt nonprofits. NJ: ST-5 does NOT apply to hotel occupancy tax. Always confirm with hotel and state DOR."
+  },
+  "Conference / Event Registration Fees": {
+    default: "taxable",
+    exempt_states: ["New York", "Colorado", "Virginia", "Illinois", "Pennsylvania"],
+    note: "Registration fees for conferences are taxable as admission charges in many states. May be exempt if paid to another qualifying nonprofit in some states."
+  },
+  "Staffing / Temporary Workers": {
+    default: "conditional",
+    taxable_states: ["Washington", "Hawaii", "New Mexico", "South Dakota"],
+    note: "IMPORTANT: Washington ESSB 5814 (Oct 2025) now taxes temporary staffing services for nonprofits. Most other states do not tax labor/staffing as a taxable service."
+  },
+  "Advertising Services": {
+    default: "conditional",
+    taxable_states: ["Washington", "Hawaii", "New Mexico", "South Dakota", "Tennessee"],
+    note: "IMPORTANT: Washington ESSB 5814 (Oct 2025) now taxes advertising services for nonprofits. Hawaii and South Dakota tax all services broadly."
+  },
+
+  // GENERALLY EXEMPT in broad-exemption states
+  "Donor Appreciation Gifts & Awards": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "New Mexico", "Alabama", "Georgia", "South Carolina"],
+    note: "Physical gifts are generally exempt in broad-exemption states when purchased with org funds. Taxable in states without general nonprofit exemptions."
+  },
+  "Donor Event / Gala Expenses": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Event expenses vary: venue rental may be exempt, catering usually taxable, entertainment taxable. Break out line items separately."
+  },
+  "Flowers & Floral Arrangements": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Tangible goods — generally exempt in broad-exemption states. Taxable in states without general nonprofit exemptions."
+  },
+  "Recognition Plaques & Trophies": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Tangible goods — generally exempt in broad-exemption states. Must be purchased with org funds for org purposes."
+  },
+  "Ground Transportation (Taxi, Rideshare, Bus)": {
+    default: "conditional",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
+    note: "Taxi, rideshare, and bus fares are generally transportation services not subject to state sales tax in most states. May include local surcharges."
+  },
+  "Postage & Shipping": {
+    default: "exempt",
+    taxable_states: ["Hawaii"],
+    note: "USPS postage is generally not subject to sales tax. Private shipping (FedEx, UPS) charges are generally exempt in most states when underlying goods are exempt."
+  },
+  "Software Subscriptions / SaaS": {
+    default: "conditional",
+    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico", "Tennessee", "Texas", "New York", "Pennsylvania"],
+    note: "SaaS taxability varies significantly. Washington ESSB 5814 (Oct 2025) taxes many digital services. Texas, New York, Pennsylvania, and Tennessee tax many SaaS products. Most broad-exemption states that tax SaaS will still apply nonprofit exemptions."
+  },
+  "Photography & Videography": {
+    default: "conditional",
+    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico", "Tennessee", "Mississippi"],
+    note: "Photography and videography services vary by state. Some states tax services broadly. Washington now taxes many digital services under ESSB 5814."
+  },
+  "Graphic Design Services": {
+    default: "conditional",
+    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico", "Tennessee"],
+    note: "Design services are taxable in states that broadly tax services. Washington ESSB 5814 may tax certain design/digital services."
+  },
+  "Event Venue Rental": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "New Mexico", "Alabama", "Georgia", "South Carolina"],
+    note: "Venue rental generally exempt in broad-exemption states for org events. Taxable in states without general nonprofit exemptions."
+  },
+  "Audio/Visual Equipment & Rentals": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Equipment rentals follow same rules as equipment purchases. Exempt in broad-exemption states, taxable where no general nonprofit exemption exists."
+  },
+  "Printing & Publications": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Alabama", "Georgia", "South Carolina"],
+    note: "Printing is tangible personal property and generally exempt in broad-exemption states. Taxable in states without nonprofit exemptions."
+  },
+  "Donor Newsletters & Annual Reports": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Alabama", "Georgia", "South Carolina"],
+    note: "Printing costs for donor communications are generally exempt in broad-exemption states as mission-related materials."
+  },
+  "Marketing & Promotional Materials": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Printed marketing materials are generally exempt in broad-exemption states. Digital advertising services may be taxable."
+  },
+  "Office Supplies": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Generally exempt in broad-exemption states. Taxable in states without nonprofit sales tax exemptions."
+  },
+  "Computer Equipment & Software": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Alabama", "Georgia", "South Carolina"],
+    note: "Hardware generally follows standard exemption rules. Software varies by state — see Software Subscriptions/SaaS for digital products."
+  },
+  "Food & Beverages (for events)": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Food for org events is treated differently from restaurant meals. Generally exempt in broad-exemption states when purchased from a grocery/vendor for a nonprofit event."
+  },
+  "Catering Services": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Washington", "North Carolina", "Alabama", "Georgia", "South Carolina"],
+    note: "Catering is often taxable as a food service even in exempt states. The service component may be taxable even where food purchases are exempt."
+  },
+  "Furniture & Fixtures": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Alabama", "Georgia", "South Carolina"],
+    note: "Tangible personal property — follows general exemption rules. Exempt in broad-exemption states for organizational use."
+  },
+  "Cleaning Supplies": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Tangible goods — follows general exemption rules."
+  },
+  "Telecommunications": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Telephone and internet services subject to various federal and state taxes. Nonprofit exemptions may not cover all telecom taxes."
+  },
+  "Utilities (Electric, Gas, Water)": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "Utilities for org use generally exempt in broad-exemption states. Some states have separate utility tax structures."
+  },
+  "Construction / Renovation Materials": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Washington", "North Carolina", "Alabama", "Georgia", "South Carolina"],
+    note: "Building materials are complex — exemption often depends on whether nonprofit owns the property and who is purchasing. Consult your state DOR for construction projects."
+  },
+  "Medical / Healthcare Supplies": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "Mississippi"],
+    note: "Medical and healthcare supplies are broadly exempt across most states, often even where general nonprofit exemptions are limited."
+  },
+  "Educational Materials": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "Mississippi", "Tennessee"],
+    note: "Educational materials are broadly exempt and often specifically called out in state exemption statutes."
+  },
+  "Clothing / Uniforms": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Washington", "North Carolina", "Alabama", "Georgia", "South Carolina"],
+    note: "Staff uniforms generally exempt in broad-exemption states. Promotional or branded clothing may be treated differently."
+  },
+  "Vehicle / Transportation": {
+    default: "conditional",
+    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Washington", "Alabama"],
+    note: "Vehicle purchases follow different rules from operational purchases in most states. Some states require separate motor vehicle sales tax exemption applications."
+  },
+
+  // PROFESSIONAL SERVICES — generally not subject to sales tax in most states
+  "Legal Services (Attorney / Law Firm)": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
+    note: "Legal services are NOT subject to sales tax in most states. Washington ESSB 5814 (Oct 2025) explicitly kept legal services exempt. Only Hawaii, New Mexico, and South Dakota broadly tax all services."
+  },
+  "Accounting & Audit Services (CPA)": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
+    note: "Accounting/CPA services NOT subject to sales tax in most states. Washington ESSB 5814 explicitly kept accounting and bookkeeping exempt."
+  },
+  "Management Consulting": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Texas"],
+    conditional_states: ["Washington", "Iowa"],
+    note: "Pure advisory consulting generally not subject to sales tax. Texas taxes data processing and some consulting. Washington: check whether engagement is classified as taxable under ESSB 5814."
+  },
+  "Financial Advisory / Investment Services": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
+    note: "Financial advisory fees not subject to sales tax in most states. Only broad-service states (HI, NM, SD) tax these services."
+  },
+  "HR / Payroll Services": {
+    default: "conditional",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Washington", "Iowa", "Nebraska", "Texas"],
+    note: "HR and payroll processing services are taxable in more states than traditional professional services. Texas taxes data processing (which may include payroll). Washington ESSB 5814 may tax certain HR technology services."
+  },
+  "IT Consulting & Managed Services": {
+    default: "conditional",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Washington", "Texas"],
+    note: "IMPORTANT: Washington ESSB 5814 (Oct 2025) now taxes IT services including help desk, system integration, hosting, and data processing. Texas taxes data processing services. Hawaii and South Dakota tax all services."
+  },
+  "Architecture & Engineering Services": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
+    conditional_states: ["Washington"],
+    note: "Architecture and engineering services generally not subject to sales tax. Washington: most architectural/engineering services remain exempt under ESSB 5814, but related software/CAD deliverables may be taxable."
+  },
+  "Lobbying & Government Relations": {
+    default: "exempt",
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
+    note: "Lobbying services are professional services and generally not subject to sales tax. Note: lobbying expenses may not be income-tax-deductible and cannot be paid from restricted grants."
+  },
+  "Insurance Premiums": {
+    default: "exempt",
+    taxable_states: [],
+    note: "Insurance premiums are NOT subject to sales tax in any state. Insurers pay a separate state insurance premium tax. Nonprofits purchasing insurance do not pay sales tax on premiums."
+  }
+};
+
+function isCategoryTaxable(stateData, category) {
+  const rule = CATEGORY_RULES[category];
+  if (rule) {
+    if (rule.default === 'taxable') return true;
+    if (rule.taxable_states && rule.taxable_states.includes(stateData.stateName)) return true;
+    if (rule.default === 'exempt') return false;
+  }
+  if (!stateData.categories) return false;
+  const taxableList = stateData.categories.taxable || [];
+  const lowerCat = category.toLowerCase();
+  return taxableList.some(t => lowerCat.includes(t.toLowerCase()) || t.toLowerCase().includes(lowerCat.split(' ')[0]));
+}
+
+function getCategoryVerdict(stateData, category) {
+  if (stateData.status === 'taxable') return 'not_exempt';
+  const rule = CATEGORY_RULES[category];
+  if (rule) {
+    if (rule.default === 'taxable') return 'not_exempt';
+    if (rule.taxable_states && rule.taxable_states.includes(stateData.stateName)) return 'not_exempt';
+    if (rule.conditional_states && rule.conditional_states.includes(stateData.stateName)) return 'conditional';
+    if (rule.exempt_states && rule.exempt_states.includes(stateData.stateName)) return 'exempt';
+    if (rule.default === 'exempt') return 'exempt';
+    if (rule.default === 'conditional') {
+      if (stateData.status === 'exempt') return 'exempt';
+      return 'conditional';
+    }
+  }
+  if (isCategoryTaxable(stateData, category)) return 'not_exempt';
+  if (stateData.status === 'exempt') return 'exempt';
+  return 'conditional';
+}
+
+function getCategoryNote(category) {
+  const rule = CATEGORY_RULES[category];
+  return rule ? rule.note : null;
+}
+
+
+
+const STATE_AGENCIES = {
+  "Alabama":       {
+    dor: { name: "AL Dept of Revenue", url: "https://www.revenue.alabama.gov/sales-use/tax-exempt-entities/", note: "Apply for STE-1 exemption certificate. Annual renewal required." },
+    sos: { name: "AL Secretary of State", url: "https://www.sos.alabama.gov/government-records/business-entity-records", note: "Nonprofit incorporation and registration." },
+    other: []
+  },
+  "Alaska":        {
+    dor: { name: "No state sales tax", url: "https://www.tax.alaska.gov", note: "No statewide sales tax. Check local borough/municipality for local tax rules." },
+    sos: { name: "AK Division of Corporations", url: "https://www.commerce.alaska.gov/web/cbpl/BusinessLicensing.aspx", note: "Business licensing and nonprofit registration." },
+    other: []
+  },
+  "Arizona":       {
+    dor: { name: "AZ Dept of Revenue", url: "https://azdor.gov/business/transaction-privilege-tax/exemptions", note: "Register for Transaction Privilege Tax exemption." },
+    sos: { name: "AZ Secretary of State", url: "https://azsos.gov/business", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Arkansas":      {
+    dor: { name: "AR Dept of Finance & Admin", url: "https://www.dfa.arkansas.gov/excise-tax/sales-and-use-tax", note: "Petition for exemption. Not automatic for most nonprofits." },
+    sos: { name: "AR Secretary of State", url: "https://www.sos.arkansas.gov/business-commercial-services-bcs", note: "Nonprofit incorporation and registration." },
+    other: []
+  },
+  "California":    {
+    dor: { name: "CA Dept of Tax & Fee Admin (CDTFA)", url: "https://www.cdtfa.ca.gov/industry/nonprofit-organizations.htm", note: "Handles sales & use tax. No blanket exemption \\u2014 must apply separately." },
+    sos: { name: "CA Secretary of State", url: "https://www.sos.ca.gov/business-programs", note: "Nonprofit incorporation. File SI-100 biennially." },
+    other: [
+      { name: "CA Franchise Tax Board (FTB)", url: "https://www.ftb.ca.gov/file/business/types/charities-nonprofits/index.html", note: "File Form 3500/3500A for state income tax exemption. Required separately from CDTFA." },
+      { name: "CA Attorney General \\u2014 Registry of Charities", url: "https://oag.ca.gov/charities", note: "Register within 30 days of receiving charitable assets. File Form RRF-1 annually." }
+    ]
+  },
+  "Colorado":      {
+    dor: { name: "CO Dept of Revenue", url: "https://tax.colorado.gov/nonprofit-organizations", note: "Use Form DR 0563. Broad exemption for 501(c)(3). Note: home-rule cities may have separate local tax." },
+    sos: { name: "CO Secretary of State", url: "https://www.sos.state.co.us/biz/BusinessEntityCriteriaExt.do", note: "Nonprofit incorporation and periodic filings." },
+    other: []
+  },
+  "Connecticut":   {
+    dor: { name: "CT Dept of Revenue Services", url: "https://portal.ct.gov/DRS/Businesses/New-Business-Portal/For-Nonprofits", note: "Apply for Form ST-5 Certificate of Exemption." },
+    sos: { name: "CT Secretary of State", url: "https://portal.ct.gov/SOTS/Business-Services/Browse-Business-Services", note: "Nonprofit registration." },
+    other: [
+      { name: "CT Dept of Consumer Protection", url: "https://portal.ct.gov/DCP/Business-Center/Charitable-Organizations/Charitable-Organizations-Registration", note: "Charitable solicitation registration required for organizations raising over $50,000." }
+    ]
+  },
+  "Delaware":      {
+    dor: { name: "DE Division of Revenue", url: "https://revenue.delaware.gov", note: "No state sales tax \\u2014 no exemption certificate needed." },
+    sos: { name: "DE Division of Corporations", url: "https://corp.delaware.gov", note: "Popular state for nonprofit incorporation due to streamlined process." },
+    other: []
+  },
+  "Florida":       {
+    dor: { name: "FL Dept of Revenue", url: "https://floridarevenue.com/taxes/taxesfees/Pages/sales_tax.aspx", note: "Apply for Form DR-5 Consumer's Certificate of Exemption. Valid 5 years \\u2014 must renew." },
+    sos: { name: "FL Div of Corporations (Sunbiz)", url: "https://dos.fl.gov/sunbiz", note: "Nonprofit incorporation and annual reports." },
+    other: [
+      { name: "FL Dept of Agriculture \\u2014 Charities", url: "https://www.fdacs.gov/Business-Services/Solicitation-of-Contributions", note: "Charitable solicitation registration required for nonprofits raising funds in Florida." }
+    ]
+  },
+  "Georgia":       {
+    dor: { name: "GA Dept of Revenue", url: "https://dor.georgia.gov/taxes/business-taxes/sales-use-tax", note: "Limited exemptions. Must apply with ST-5. Not all 501(c)(3)s qualify." },
+    sos: { name: "GA Secretary of State", url: "https://sos.ga.gov/corporations", note: "Nonprofit incorporation and registration." },
+    other: []
+  },
+  "Hawaii":        {
+    dor: { name: "HI Dept of Taxation", url: "https://tax.hawaii.gov/geninfo/taxtype/get", note: "General Excise Tax applies broadly. Very limited nonprofit exemptions." },
+    sos: { name: "HI Dept of Commerce (Lt. Governor)", url: "https://cca.hawaii.gov/breg", note: "Business registration. No Secretary of State \\u2014 handled by Lt. Governor." },
+    other: []
+  },
+  "Idaho":         {
+    dor: { name: "ID State Tax Commission", url: "https://tax.idaho.gov/taxes/sales-use", note: "Use Form ST-101. Broad exemption for 501(c)(3)." },
+    sos: { name: "ID Secretary of State", url: "https://sosbiz.idaho.gov", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Illinois":      {
+    dor: { name: "IL Dept of Revenue", url: "https://tax.illinois.gov/research/taxinformation/sales/rot.html", note: "Register for E-number (exemption ID). Broad exemption. Annual renewal required. Food tax eliminated Jan 2026." },
+    sos: { name: "IL Secretary of State", url: "https://www.ilsos.gov/departments/business_services/home.html", note: "Nonprofit incorporation and annual reports." },
+    other: [
+      { name: "IL Comptroller", url: "https://illinoiscomptroller.gov", note: "State financial oversight \\u2014 relevant for government-funded nonprofits." },
+      { name: "IL Attorney General \\u2014 Charitable Trust Bureau", url: "https://illinoisattorneygeneral.gov/charities", note: "Charitable solicitation registration and annual AG-990-IL filing." }
+    ]
+  },
+  "Indiana":       {
+    dor: { name: "IN Dept of Revenue", url: "https://www.in.gov/dor/business-tax/sales-tax", note: "Use Form ST-105. Annual renewal required. Broad exemption for charitable orgs." },
+    sos: { name: "IN Secretary of State", url: "https://bsd.sos.in.gov", note: "Nonprofit incorporation and biennial reports." },
+    other: []
+  },
+  "Iowa":          {
+    dor: { name: "IA Dept of Revenue", url: "https://tax.iowa.gov/sales-tax-exemptions", note: "Use Form 31-014. Broad 501(c)(3) exemption." },
+    sos: { name: "IA Secretary of State", url: "https://sos.iowa.gov/business", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Kansas":        {
+    dor: { name: "KS Dept of Revenue", url: "https://www.ksrevenue.gov/salesexempt.html", note: "Use Form ST-28. Broad exemption for educational, religious, charitable orgs. 5-year renewal." },
+    sos: { name: "KS Secretary of State", url: "https://www.sos.ks.gov/businesses", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Kentucky":      {
+    dor: { name: "KY Dept of Revenue", url: "https://revenue.ky.gov/Business/Sales-Use-Tax/Pages/default.aspx", note: "Form 51A126. Limited scope \\u2014 primarily charitable care orgs. 5-year renewal." },
+    sos: { name: "KY Secretary of State", url: "https://www.sos.ky.gov/bus/Pages/default.aspx", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Louisiana":     {
+    dor: { name: "LA Dept of Revenue", url: "https://revenue.louisiana.gov/SalesTax", note: "Apply using Form R-1064. State exemption granted; parish-level taxes may still apply separately." },
+    sos: { name: "LA Secretary of State", url: "https://www.sos.la.gov/BusinessServices/Pages/default.aspx", note: "Nonprofit incorporation." },
+    other: [
+      { name: "LA Parish Tax Offices", url: "https://revenue.louisiana.gov/SalesTax", note: "Each parish administers its own local sales tax. Must contact individual parish offices for local exemptions." }
+    ]
+  },
+  "Maine":         {
+    dor: { name: "ME Revenue Services", url: "https://www.maine.gov/revenue/taxes/sales-use-service-provider-tax/tax-exempt-organizations", note: "NEW Jan 2025: All 501(c)(3)s now broadly exempt. Apply via Maine Tax Portal for certificate." },
+    sos: { name: "ME Secretary of State", url: "https://www.maine.gov/sos/cec/corp", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Maryland":      {
+    dor: { name: "MD Comptroller of Maryland", url: "https://www.marylandtaxes.gov/business/sales-use/exemptions.shtml", note: "In Maryland the Comptroller handles sales tax. Use Form ST-209. Broad exemption. 5-year renewal." },
+    sos: { name: "MD Dept of Assessments & Taxation (SDAT)", url: "https://dat.maryland.gov/SDAT", note: "Nonprofit registration and annual personal property returns." },
+    other: [
+      { name: "MD Secretary of State \\u2014 Charitable Orgs", url: "https://sos.maryland.gov/Pages/Forms.aspx", note: "Charitable solicitation registration required for nonprofits soliciting in Maryland." }
+    ]
+  },
+  "Massachusetts": {
+    dor: { name: "MA Dept of Revenue", url: "https://www.mass.gov/info-details/sales-and-use-tax-exemptions", note: "Apply for Form ST-2 Certificate of Exemption. Broad 501(c)(3) exemption." },
+    sos: { name: "MA Secretary of the Commonwealth", url: "https://corp.sec.state.ma.us/CorpWeb/CorpSearch/CorpSearch.aspx", note: "Called 'Secretary of the Commonwealth' in MA. Nonprofit incorporation." },
+    other: [
+      { name: "MA Attorney General \\u2014 Non-Profit Organizations", url: "https://www.mass.gov/orgs/attorney-generals-office", note: "Annual filing (Form PC) required for public charities. AG oversees charitable assets." }
+    ]
+  },
+  "Michigan":      {
+    dor: { name: "MI Dept of Treasury", url: "https://www.michigan.gov/taxes/sales-use", note: "Use Form 3372. Broad exemption for qualifying nonprofits." },
+    sos: { name: "MI Dept of Licensing & Regulatory Affairs (LARA)", url: "https://www.michigan.gov/lara/bureau-list/bcs", note: "Nonprofit incorporation. No Secretary of State for business filings." },
+    other: [
+      { name: "MI Attorney General \\u2014 Charitable Trust", url: "https://www.michigan.gov/ag/initiatives/charitable-trust-section", note: "Annual filing required for nonprofits with revenue over $25,000." }
+    ]
+  },
+  "Minnesota":     {
+    dor: { name: "MN Dept of Revenue", url: "https://www.revenue.state.mn.us/sales-tax-nonprofit-organizations", note: "Apply for Form ST-3. Broad exemption. 5-year certificate." },
+    sos: { name: "MN Secretary of State", url: "https://www.sos.state.mn.us/business-liens", note: "Nonprofit incorporation and annual renewals." },
+    other: [
+      { name: "MN Attorney General \\u2014 Charities", url: "https://www.ag.state.mn.us/Charity", note: "Annual financial report required for nonprofits soliciting in Minnesota." }
+    ]
+  },
+  "Mississippi":   {
+    dor: { name: "MS Dept of Revenue", url: "https://www.dor.ms.gov/Business/Sales-Use-Tax", note: "Very limited nonprofit exemptions. Most 501(c)(3)s are NOT exempt. Only hospitals, schools, churches." },
+    sos: { name: "MS Secretary of State", url: "https://www.sos.ms.gov/business-services", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Missouri":      {
+    dor: { name: "MO Dept of Revenue", url: "https://dor.mo.gov/taxation/business/tax-types/sales-use", note: "Apply using Form 149. Conditional exemption \\u2014 limited to specific org types." },
+    sos: { name: "MO Secretary of State", url: "https://www.sos.mo.gov/business", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Montana":       {
+    dor: { name: "MT Dept of Revenue", url: "https://mtrevenue.gov", note: "No state sales tax \\u2014 no exemption certificate needed." },
+    sos: { name: "MT Secretary of State", url: "https://sosmt.gov/business", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Nebraska":      {
+    dor: { name: "NE Dept of Revenue", url: "https://revenue.nebraska.gov/tax-types/sales-and-use-tax/exemptions", note: "Use Form 13. Broad 501(c)(3) exemption." },
+    sos: { name: "NE Secretary of State", url: "https://www.nebraska.gov/apps-sos-corp", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Nevada":        {
+    dor: { name: "NV Dept of Taxation", url: "https://tax.nv.gov/FAQs/Sales_Tax_-_FAQs", note: "Apply for exemption certificate. 5-year renewal required. Conditional scope." },
+    sos: { name: "NV Secretary of State", url: "https://esos.nv.gov", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "New Hampshire": {
+    dor: { name: "No state sales tax", url: "https://www.revenue.nh.gov", note: "No state sales tax. No exemption certificate needed for sales tax purposes." },
+    sos: { name: "NH Secretary of State", url: "https://sos.nh.gov/corporation-division", note: "Nonprofit incorporation." },
+    other: [
+      { name: "NH Attorney General \\u2014 Charitable Trusts", url: "https://www.doj.nh.gov/charitable-trusts", note: "Registration required for nonprofits soliciting charitable contributions in NH." }
+    ]
+  },
+  "New Jersey":    {
+    dor: { name: "NJ Division of Taxation", url: "https://www.njtaxation.org/salesanduse/sut9.shtml", note: "Apply for Form ST-5 Exempt Organization Certificate. Valid 5 years." },
+    sos: { name: "NJ Division of Revenue & Enterprise Services", url: "https://www.njportal.com/DOR/BusinessFormation", note: "Nonprofit registration." },
+    other: [
+      { name: "NJ Division of Consumer Affairs \\u2014 Charities", url: "https://www.njconsumeraffairs.gov/charities", note: "Annual charitable registration required for nonprofits soliciting in New Jersey." }
+    ]
+  },
+  "New Mexico":    {
+    dor: { name: "NM Taxation & Revenue Dept", url: "https://www.tax.newmexico.gov/businesses/gross-receipts-tax", note: "Gross Receipts Tax (not traditional sales tax). Limited nonprofit exemptions." },
+    sos: { name: "NM Secretary of State", url: "https://portal.sos.state.nm.us/BFS", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "New York":      {
+    dor: { name: "NY Dept of Taxation & Finance", url: "https://www.tax.ny.gov/bus/st/exempt.htm", note: "Apply for Form ST-119. Broad 501(c)(3) exemption. Use ST-119.1 for purchases." },
+    sos: { name: "NY Dept of State \\u2014 Corporations", url: "https://www.dos.ny.gov/corps", note: "Nonprofit incorporation." },
+    other: [
+      { name: "NY Attorney General \\u2014 Charities Bureau", url: "https://www.charitiesnys.com", note: "Registration required for nonprofits raising funds in NY. Annual CHAR500 filing." },
+      { name: "NY Comptroller", url: "https://www.osc.ny.gov", note: "Oversight of state-funded nonprofit contracts and audits." }
+    ]
+  },
+  "North Carolina":{
+    dor: { name: "NC Dept of Revenue", url: "https://www.ncdor.gov/taxes-forms/sales-and-use-tax/nonprofit-sales-and-use-tax-information", note: "No blanket exemption. Nonprofits pay tax and file semi-annual refund claims. E-595E form." },
+    sos: { name: "NC Secretary of State", url: "https://www.sosnc.gov/divisions/business_registration", note: "Nonprofit incorporation and solicitation licensing." },
+    other: [
+      { name: "NC Secretary of State \\u2014 Charitable Solicitation", url: "https://www.sosnc.gov/divisions/charitable_solicitation_licensing", note: "Annual charitable solicitation license required for nonprofits fundraising in NC." }
+    ]
+  },
+  "North Dakota":  {
+    dor: { name: "ND Office of State Tax Commissioner", url: "https://www.tax.nd.gov/tax-exemptions/sales-and-use-tax", note: "Provide North Dakota Certificate of Exemption to vendors. Broad exemption for qualifying charities." },
+    sos: { name: "ND Secretary of State", url: "https://sos.nd.gov/business", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Ohio":          {
+    dor: { name: "OH Dept of Taxation", url: "https://tax.ohio.gov/wps/portal/gov/tax/business/ohio-business-taxes/sales-and-use/information", note: "Apply for STEC-B Blanket Exemption Certificate. Conditional \\u2014 org must qualify." },
+    sos: { name: "OH Secretary of State", url: "https://www.ohiosos.gov/businesses", note: "Nonprofit incorporation." },
+    other: [
+      { name: "OH Attorney General \\u2014 Charitable Law Section", url: "https://www.ohioattorneygeneral.gov/Business/Services-for-Charities", note: "Annual filing required for all Ohio charities. Form 001 registration." }
+    ]
+  },
+  "Oklahoma":      {
+    dor: { name: "OK Tax Commission", url: "https://oklahoma.gov/tax/businesses/taxes/sales-and-use-tax.html", note: "Apply for OTC exemption certificate. Broad 501(c)(3) exemption." },
+    sos: { name: "OK Secretary of State", url: "https://www.sos.ok.gov/business", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Oregon":        {
+    dor: { name: "No state sales tax", url: "https://www.oregon.gov/dor/programs/businesses/Pages/sales.aspx", note: "No state sales tax. No exemption certificate needed." },
+    sos: { name: "OR Secretary of State", url: "https://sos.oregon.gov/business/pages/default.aspx", note: "Nonprofit incorporation." },
+    other: [
+      { name: "OR Dept of Justice \\u2014 Charitable Activities", url: "https://www.doj.state.or.us/charitable-activities", note: "Registration required for nonprofits soliciting in Oregon. Annual CT-12 filing." }
+    ]
+  },
+  "Pennsylvania":  {
+    dor: { name: "PA Dept of Revenue", url: "https://www.revenue.pa.gov/TaxTypes/SUT/Pages/Nonprofit-Exempt.aspx", note: "Apply using Form REV-72. Broad exemption for charitable, educational, religious orgs." },
+    sos: { name: "PA Dept of State (Secretary of Commonwealth)", url: "https://www.dos.pa.gov/BusinessCharities/Business/Pages/default.aspx", note: "Called 'Secretary of the Commonwealth.' Nonprofit incorporation." },
+    other: [
+      { name: "PA Bureau of Charitable Organizations", url: "https://www.dos.pa.gov/BusinessCharities/Charities/Pages/default.aspx", note: "Annual registration (BCO-10) required for nonprofits soliciting in PA over $25,000." }
+    ]
+  },
+  "Rhode Island":  {
+    dor: { name: "RI Division of Taxation", url: "https://tax.ri.gov/tax-sections/audit/sales-tax-exempt-organizations", note: "Limited nonprofit exemptions. Must apply. General nonprofits often not exempt." },
+    sos: { name: "RI Secretary of State", url: "https://www.sos.ri.gov/divisions/business-services", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "South Carolina":{
+    dor: { name: "SC Dept of Revenue", url: "https://dor.sc.gov/tax/sales", note: "Apply for Form ST-387 Nonprofit Exemption Certificate. Broad exemption." },
+    sos: { name: "SC Secretary of State", url: "https://www.sos.sc.gov/business-filings", note: "Nonprofit incorporation and charitable organization registration." },
+    other: [
+      { name: "SC Secretary of State \\u2014 Charities", url: "https://www.sos.sc.gov/nonprofits/charities", note: "Charitable solicitation registration required. Annual financial report." }
+    ]
+  },
+  "South Dakota":  {
+    dor: { name: "SD Dept of Revenue", url: "https://dor.sd.gov/businesses/taxes/sales-use-tax", note: "Limited exemptions. Apply with DOR. Renewal required." },
+    sos: { name: "SD Secretary of State", url: "https://sdsos.gov/business-services", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Tennessee":     {
+    dor: { name: "TN Dept of Revenue", url: "https://www.tn.gov/revenue/taxes/sales-and-use-tax/nonprofit-organizations.html", note: "Narrow exemptions. Must apply to TNDOR. Primarily hospitals, schools, specific charities." },
+    sos: { name: "TN Secretary of State", url: "https://sos.tn.gov/corporations", note: "Nonprofit incorporation." },
+    other: [
+      { name: "TN Comptroller of the Treasury", url: "https://comptroller.tn.gov", note: "Oversight of local government and nonprofit fiscal compliance in TN." },
+      { name: "TN Secretary of State \\u2014 Charitable Solicitations", url: "https://sos.tn.gov/charitable-solicitations", note: "Annual charitable solicitation registration required for nonprofits raising funds in TN." }
+    ]
+  },
+  "Texas":         {
+    dor: { name: "TX Comptroller of Public Accounts", url: "https://comptroller.texas.gov/taxes/exempt", note: "In TX the Comptroller (not a separate DOR) handles all sales tax exemptions. Apply with Form AP-204 or AP-205." },
+    sos: { name: "TX Secretary of State", url: "https://www.sos.state.tx.us/corp/nonprofitinfo.shtml", note: "Nonprofit incorporation. Charter must be active for Comptroller to grant exemption." },
+    other: [
+      { name: "TX Comptroller \\u2014 Tax-Exempt Entity Search", url: "https://comptroller.texas.gov/taxes/exempt/search.php", note: "Verify your organization's exemption status online before making purchases." }
+    ]
+  },
+  "Utah":          {
+    dor: { name: "UT State Tax Commission", url: "https://tax.utah.gov/sales/exemptions", note: "Use Form TC-721. Conditional exemption for qualifying nonprofits." },
+    sos: { name: "UT Division of Corporations (Lt. Governor)", url: "https://corporations.utah.gov", note: "No Secretary of State in UT \\u2014 handled by Lt. Governor's office." },
+    other: []
+  },
+  "Vermont":       {
+    dor: { name: "VT Dept of Taxes", url: "https://tax.vermont.gov/business-and-corp/sales-and-use-tax/exemptions", note: "Register with VT DOR for exemption certificate. Broad exemption for qualifying charities." },
+    sos: { name: "VT Secretary of State", url: "https://www.sec.state.vt.us/corporations.aspx", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Virginia":      {
+    dor: { name: "VA Dept of Taxation", url: "https://www.tax.virginia.gov/nonprofit-exemptions", note: "Apply for approval; use Form ST-13A for purchases. Broad exemption. 5-year renewal." },
+    sos: { name: "VA State Corporation Commission (Secretary of Commonwealth)", url: "https://scc.virginia.gov/pages/Business-Information", note: "Nonprofit incorporation in VA." },
+    other: [
+      { name: "VA Dept of Agriculture \\u2014 Charitable Solicitations", url: "https://www.vdacs.virginia.gov/consumer-protection-charities.shtml", note: "Annual charitable solicitation registration required for nonprofits raising funds in VA." }
+    ]
+  },
+  "Washington":    {
+    dor: { name: "WA Dept of Revenue", url: "https://dor.wa.gov/taxes-rates/retail-sales-tax/services-newly-subject-retail-sales-tax", note: "MAJOR CHANGE Oct 2025 (ESSB 5814): IT, software, advertising, staffing, seminars now taxable. No general nonprofit exemption." },
+    sos: { name: "WA Secretary of State", url: "https://www.sos.wa.gov/corps", note: "Nonprofit incorporation and charitable solicitation registration." },
+    other: [
+      { name: "WA Secretary of State \\u2014 Charities", url: "https://www.sos.wa.gov/charities", note: "Annual charitable solicitation registration required for nonprofits raising funds in WA." }
+    ]
+  },
+  "West Virginia": {
+    dor: { name: "WV State Tax Division", url: "https://tax.wv.gov/Business/SalesAndUseTax/Pages/SalesAndUseTax.aspx", note: "Apply to WV Tax Division. Limited scope \\u2014 primarily hospitals, schools, churches." },
+    sos: { name: "WV Secretary of State", url: "https://apps.wv.gov/SOS", note: "Nonprofit incorporation." },
+    other: []
+  },
+  "Wisconsin":     {
+    dor: { name: "WI Dept of Revenue", url: "https://www.revenue.wi.gov/Pages/SalesAndUse/Exemptions.aspx", note: "Apply for Certificate of Exempt Status (CES). Broad 501(c)(3) exemption. Renew every 5 years." },
+    sos: { name: "WI Dept of Financial Institutions", url: "https://www.wdfi.org/corporations", note: "Nonprofit incorporation in WI." },
+    other: [
+      { name: "WI Dept of Agriculture \\u2014 Charitable Orgs", url: "https://datcp.wi.gov/Pages/Programs_Services/Charitable.aspx", note: "Charitable organization registration required for nonprofits soliciting in WI." }
+    ]
+  },
+  "Wyoming":       {
+    dor: { name: "WY Dept of Revenue", url: "https://revenue.wyo.gov/tax-types/sales-and-use-tax", note: "Apply for exemption certificate. Broad exemption for qualifying charitable orgs." },
+    sos: { name: "WY Secretary of State", url: "https://wyobiz.wyo.gov", note: "Nonprofit incorporation." },
+    other: []
+  }
+}
+;
 </script>
 </body>
 </html>
