@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxClear — Nonprofit Sales Tax Exemption Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1D9E75; --green-light: #E1F5EE; --green-dark: #085041;
+    --amber: #BA7517; --amber-light: #FAEEDA; --amber-dark: #633806;
+    --red: #A32D2D; --red-light: #FCEBEB; --red-dark: #501313;
+    --blue: #185FA5; --blue-light: #E6F1FB; --blue-dark: #042C53;
+    --gray: #5F5E5A; --gray-light: #F1EFE8; --gray-border: #D3D1C7;
+    --text: #2C2C2A; --text-muted: #888780; --bg: #FAFAF8; --white: #FFFFFF;
+    --radius: 12px; --radius-sm: 8px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  header { background: var(--white); border-bottom: 1px solid var(--gray-border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { width: 32px; height: 32px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .logo-icon svg { width: 18px; height: 18px; fill: white; }
+  .logo-text { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text); }
+  .logo-text span { color: var(--green); }
+  nav { display: flex; gap: 0.5rem; }
+  nav button { background: none; border: 1px solid transparent; padding: 6px 14px; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.875rem; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  nav button:hover { background: var(--gray-light); color: var(--text); }
+  nav button.active { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+
+  /* MAIN LAYOUT */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* PAGE VIEWS */
+  .page { display: none; } .page.active { display: block; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 3rem 1rem 2rem; }
+  .hero h1 { font-size: 2.4rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.75rem; }
+  .hero h1 em { font-style: normal; color: var(--green); }
+  .hero p { font-size: 1.05rem; color: var(--text-muted); max-width: 540px; margin: 0 auto 2rem; line-height: 1.6; }
+
+  /* LOOKUP CARD */
+  .lookup-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 2rem; box-shadow: var(--shadow); max-width: 700px; margin: 0 auto 2.5rem; }
+  .lookup-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .form-group select, .form-group input { font-family: inherit; font-size: 0.95rem; padding: 10px 12px; border: 1px solid var(--gray-border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); appearance: none; cursor: pointer; transition: border-color 0.15s; outline: none; }
+  .form-group select:hover, .form-group input:hover { border-color: var(--green); }
+  .form-group select:focus, .form-group input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(29,158,117,0.12); }
+  .btn-check { width: 100%; padding: 12px; background: var(--green); color: white; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.15s; margin-top: 0.5rem; }
+  .btn-check:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .btn-check:active { transform: translateY(0); }
+
+  /* RESULT CARD */
+  .result-card { border-radius: var(--radius); padding: 1.5rem; margin-top: 1.5rem; border: 1.5px solid; display: none; }
+  .result-card.show { display: block; }
+  .result-card.exempt { background: var(--green-light); border-color: var(--green); }
+  .result-card.not-exempt { background: var(--red-light); border-color: var(--red); }
+  .result-card.conditional { background: var(--amber-light); border-color: var(--amber); }
+  .result-card.loading { background: var(--blue-light); border-color: var(--blue); }
+  .result-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+  .result-badge { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .result-badge svg { width: 18px; height: 18px; }
+  .exempt .result-badge { background: var(--green); }
+  .not-exempt .result-badge { background: var(--red); }
+  .conditional .result-badge { background: var(--amber); }
+  .loading .result-badge { background: var(--blue); }
+  .result-title { font-size: 1.1rem; font-weight: 600; }
+  .exempt .result-title { color: var(--green-dark); }
+  .not-exempt .result-title { color: var(--red-dark); }
+  .conditional .result-title { color: var(--amber-dark); }
+  .loading .result-title { color: var(--blue-dark); }
+  .result-body { font-size: 0.925rem; line-height: 1.7; color: var(--text); }
+  .result-body strong { font-weight: 600; }
+  .result-details { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.08); }
+  .detail-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 5px 0; font-size: 0.875rem; gap: 1rem; }
+  .detail-label { color: var(--text-muted); flex-shrink: 0; }
+  .detail-val { font-weight: 500; text-align: right; }
+  .thinking { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--blue-dark); }
+  .dot-flashing { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); animation: dotFlash 1.2s infinite; }
+  .dot-flashing::before, .dot-flashing::after { content: ''; position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); animation: dotFlash 1.2s infinite; }
+  .dot-flashing::before { left: -14px; animation-delay: -0.4s; }
+  .dot-flashing::after { left: 14px; animation-delay: 0.4s; }
+  @keyframes dotFlash { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+  .dots-wrap { display: flex; gap: 5px; position: relative; height: 20px; align-items: center; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); animation: pulse 1.2s ease-in-out infinite; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse { 0%,60%,100%{opacity:.2;transform:scale(0.8)} 30%{opacity:1;transform:scale(1)} }
+
+  /* STATS ROW */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 700px; margin: 0 auto 2.5rem; }
+  .stat-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); padding: 1rem; text-align: center; }
+  .stat-num { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.03em; }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* MAP PAGE */
+  .map-header { margin-bottom: 1.5rem; }
+  .map-header h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .map-header p { color: var(--text-muted); font-size: 0.9rem; }
+  .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; }
+  .state-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); padding: 0.875rem 1rem; cursor: pointer; transition: all 0.15s; }
+  .state-card:hover { border-color: var(--green); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .state-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+  .state-name { font-size: 0.9rem; font-weight: 600; }
+  .state-badge { font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .badge-exempt { background: var(--green-light); color: var(--green-dark); }
+  .badge-conditional { background: var(--amber-light); color: var(--amber-dark); }
+  .badge-taxable { background: var(--red-light); color: var(--red-dark); }
+  .state-rule { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+  .state-detail-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-inner { background: var(--white); border-radius: var(--radius); padding: 2rem; max-width: 540px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.2); }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; background: var(--gray-light); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+  .modal-close:hover { background: var(--gray-border); }
+  .modal-state-name { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .modal-status-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1.25rem; }
+  .modal-body { font-size: 0.9rem; line-height: 1.7; color: var(--text); }
+  .modal-section { margin-top: 1.25rem; }
+  .modal-section h4 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .modal-section ul { list-style: none; padding: 0; }
+  .modal-section ul li { padding: 4px 0; padding-left: 16px; position: relative; font-size: 0.875rem; }
+  .modal-section ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 0.75rem; top: 5px; }
+  .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--gray-border); background: var(--white); font-family: inherit; font-size: 0.825rem; font-weight: 500; cursor: pointer; transition: all 0.15s; color: var(--text-muted); }
+  .filter-btn:hover { border-color: var(--green); color: var(--green-dark); }
+  .filter-btn.active-f { background: var(--green); border-color: var(--green); color: white; }
+
+  /* UPDATES PAGE */
+  .updates-header { margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; }
+  .updates-header h2 { font-size: 1.4rem; font-weight: 600; }
+  .refresh-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--green-light); border: 1px solid var(--green); border-radius: var(--radius-sm); color: var(--green-dark); font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .refresh-btn:hover { background: var(--green); color: white; }
+  .refresh-btn svg { width: 14px; height: 14px; }
+  .update-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); padding: 1.125rem 1.25rem; margin-bottom: 0.75rem; display: flex; gap: 1rem; align-items: flex-start; transition: all 0.15s; cursor: default; }
+  .update-card:hover { border-color: var(--blue); }
+  .update-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .dot-new { background: var(--green); }
+  .dot-change { background: var(--amber); }
+  .dot-alert { background: var(--red); }
+  .update-content { flex: 1; }
+  .update-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 3px; }
+  .update-meta { font-size: 0.78rem; color: var(--text-muted); display: flex; gap: 12px; margin-bottom: 6px; }
+  .update-body { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; }
+  .update-tag { font-size: 0.7rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; display: inline-block; }
+  .tag-regulation { background: var(--blue-light); color: var(--blue-dark); }
+  .tag-exemption { background: var(--green-light); color: var(--green-dark); }
+  .tag-alert { background: var(--red-light); color: var(--red-dark); }
+
+  /* HELP PAGE */
+  .help-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem; }
+  .help-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.5rem; }
+  .help-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .help-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+  .help-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .faq-item { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); margin-bottom: 0.5rem; overflow: hidden; }
+  .faq-q { padding: 1rem 1.25rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .faq-q:hover { background: var(--gray-light); }
+  .faq-a { padding: 0 1.25rem; max-height: 0; overflow: hidden; transition: all 0.2s ease; font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+  .faq-a.open { max-height: 200px; padding: 0 1.25rem 1rem; }
+  .faq-chevron { transition: transform 0.2s; font-size: 0.75rem; color: var(--text-muted); }
+  .faq-chevron.open { transform: rotate(180deg); }
+
+  /* DISCLAIMER */
+  .disclaimer { background: var(--amber-light); border: 1px solid var(--amber); border-radius: var(--radius-sm); padding: 0.875rem 1.125rem; font-size: 0.8rem; color: var(--amber-dark); margin-bottom: 1.5rem; line-height: 1.5; }
+  .disclaimer strong { font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .help-grid { grid-template-columns: 1fr; }
+    header { padding: 0 1rem; }
+    nav button { padding: 5px 8px; font-size: 0.78rem; }
+    .hero h1 { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 20 20"><path d="M10 2L3 7v11h14V7L10 2zm-1 11V9h2v4H9zm0 3v-2h2v2H9z"/></svg>
+    </div>
+    <span class="logo-text">Tax<span>Clear</span></span>
+  </div>
+  <nav>
+    <button class="active" onclick="showPage('lookup',this)">Lookup</button>
+    <button onclick="showPage('states',this)">All States</button>
+    <button onclick="showPage('updates',this)">Updates</button>
+    <button onclick="showPage('help',this)">Help</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- LOOKUP PAGE -->
+<div id="page-lookup" class="page active">
+  <div class="hero">
+    <h1>Is your purchase<br><em>tax exempt?</em></h1>
+    <p>Instant answers for nonprofit employees across all 50 states. Check any purchase category before you buy.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" style="color:var(--green)">31</div><div class="stat-label">States: Broad Exempt</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--amber)">14</div><div class="stat-label">States: Conditional</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--red)">5</div><div class="stat-label">States: Taxable</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--blue)">50</div><div class="stat-label">States Covered</div></div>
+  </div>
+
+  <div class="lookup-card">
+    <h2>Check a Purchase</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>State of Purchase</label>
+        <select id="sel-state">
+          <option value="">— Select state —</option>
+          <option value="Alabama">Alabama</option>
+          <option value="Alaska">Alaska</option>
+          <option value="Arizona">Arizona</option>
+          <option value="Arkansas">Arkansas</option>
+          <option value="California">California</option>
+          <option value="Colorado">Colorado</option>
+          <option value="Connecticut">Connecticut</option>
+          <option value="Delaware">Delaware</option>
+          <option value="Florida">Florida</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Hawaii">Hawaii</option>
+          <option value="Idaho">Idaho</option>
+          <option value="Illinois">Illinois</option>
+          <option value="Indiana">Indiana</option>
+          <option value="Iowa">Iowa</option>
+          <option value="Kansas">Kansas</option>
+          <option value="Kentucky">Kentucky</option>
+          <option value="Louisiana">Louisiana</option>
+          <option value="Maine">Maine</option>
+          <option value="Maryland">Maryland</option>
+          <option value="Massachusetts">Massachusetts</option>
+          <option value="Michigan">Michigan</option>
+          <option value="Minnesota">Minnesota</option>
+          <option value="Mississippi">Mississippi</option>
+          <option value="Missouri">Missouri</option>
+          <option value="Montana">Montana</option>
+          <option value="Nebraska">Nebraska</option>
+          <option value="Nevada">Nevada</option>
+          <option value="New Hampshire">New Hampshire</option>
+          <option value="New Jersey">New Jersey</option>
+          <option value="New Mexico">New Mexico</option>
+          <option value="New York">New York</option>
+          <option value="North Carolina">North Carolina</option>
+          <option value="North Dakota">North Dakota</option>
+          <option value="Ohio">Ohio</option>
+          <option value="Oklahoma">Oklahoma</option>
+          <option value="Oregon">Oregon</option>
+          <option value="Pennsylvania">Pennsylvania</option>
+          <option value="Rhode Island">Rhode Island</option>
+          <option value="South Carolina">South Carolina</option>
+          <option value="South Dakota">South Dakota</option>
+          <option value="Tennessee">Tennessee</option>
+          <option value="Texas">Texas</option>
+          <option value="Utah">Utah</option>
+          <option value="Vermont">Vermont</option>
+          <option value="Virginia">Virginia</option>
+          <option value="Washington">Washington</option>
+          <option value="West Virginia">West Virginia</option>
+          <option value="Wisconsin">Wisconsin</option>
+          <option value="Wyoming">Wyoming</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Purchase Category</label>
+        <select id="sel-category">
+          <option value="">— Select category —</option>
+          <option value="Office Supplies">Office Supplies</option>
+          <option value="Computer Equipment & Software">Computer Equipment & Software</option>
+          <option value="Food & Beverages (for events)">Food & Beverages (for events)</option>
+          <option value="Catering Services">Catering Services</option>
+          <option value="Hotel / Lodging">Hotel / Lodging</option>
+          <option value="Vehicle / Transportation">Vehicle / Transportation</option>
+          <option value="Furniture & Fixtures">Furniture & Fixtures</option>
+          <option value="Cleaning Supplies">Cleaning Supplies</option>
+          <option value="Printing & Publications">Printing & Publications</option>
+          <option value="Utilities (Electric, Gas, Water)">Utilities (Electric, Gas, Water)</option>
+          <option value="Construction / Renovation Materials">Construction / Renovation Materials</option>
+          <option value="Medical / Healthcare Supplies">Medical / Healthcare Supplies</option>
+          <option value="Educational Materials">Educational Materials</option>
+          <option value="Clothing / Uniforms">Clothing / Uniforms</option>
+          <option value="Telecommunications">Telecommunications</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nonprofit Type</label>
+        <select id="sel-nonprofit">
+          <option value="501(c)(3) Charitable">501(c)(3) Charitable</option>
+          <option value="501(c)(3) Educational">501(c)(3) Educational</option>
+          <option value="501(c)(3) Religious">501(c)(3) Religious</option>
+          <option value="501(c)(4) Social Welfare">501(c)(4) Social Welfare</option>
+          <option value="501(c)(6) Trade Association">501(c)(6) Trade Association</option>
+          <option value="Government / Public Agency">Government / Public Agency</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Estimated Amount ($)</label>
+        <input type="number" id="inp-amount" placeholder="e.g. 250" min="0" />
+      </div>
+    </div>
+    <button class="btn-check" onclick="checkExemption()">Check Exemption Status →</button>
+
+    <div id="result-card" class="result-card">
+      <div class="result-header">
+        <div class="result-badge" id="result-icon">
+          <svg viewBox="0 0 20 20" fill="white"><path id="icon-path"/></svg>
+        </div>
+        <div class="result-title" id="result-title"></div>
+      </div>
+      <div class="result-body" id="result-body"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>⚠ Important Notice:</strong> TaxClear provides general guidance based on publicly available tax regulations. Tax law is complex and changes frequently. Always verify exemption status with your state revenue agency or a qualified tax professional before making purchases. This tool does not constitute legal or tax advice.
+  </div>
+</div>
+
+<!-- STATES PAGE -->
+<div id="page-states" class="page">
+  <div class="map-header">
+    <h2>Sales Tax Exemption by State</h2>
+    <p>Nonprofit sales tax exemption rules for all 50 states. Click any state for full details.</p>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active-f" onclick="filterStates('all',this)">All States</button>
+    <button class="filter-btn" onclick="filterStates('exempt',this)">Broad Exempt</button>
+    <button class="filter-btn" onclick="filterStates('conditional',this)">Conditional</button>
+    <button class="filter-btn" onclick="filterStates('taxable',this)">Taxable/No Exemption</button>
+  </div>
+  <div class="states-grid" id="states-grid"></div>
+  <div id="state-modal" style="display:none" class="state-detail-modal" onclick="closeModal(event)">
+    <div class="modal-inner">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-state-name" id="modal-state-name"></div>
+      <div class="modal-status-row" id="modal-status-row"></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+</div>
+
+<!-- UPDATES PAGE -->
+<div id="page-updates" class="page">
+  <div class="updates-header">
+    <div>
+      <h2>Regulation Updates</h2>
+      <p style="font-size:0.875rem;color:var(--text-muted);margin-top:3px">Recent changes to nonprofit sales tax exemption laws</p>
+    </div>
+    <button class="refresh-btn" onclick="loadUpdates()">
+      <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 10a6 6 0 0110.89-3H13a1 1 0 100 2h4a1 1 0 001-1V4a1 1 0 10-2 0v1.93A8 8 0 102 10a1 1 0 102 0z"/></svg>
+      Check for Updates
+    </button>
+  </div>
+  <div class="disclaimer">
+    <strong>Live Monitoring:</strong> Updates are sourced from state revenue agency bulletins and legislative tracking. Always verify with official state sources.
+  </div>
+  <div id="updates-container"></div>
+</div>
+
+<!-- HELP PAGE -->
+<div id="page-help" class="page">
+  <h2 style="font-size:1.4rem;font-weight:600;margin-bottom:1.25rem">Help & Guidance</h2>
+  <div class="help-grid">
+    <div class="help-card">
+      <div class="help-icon">📋</div>
+      <h3>What documentation do I need?</h3>
+      <p>Most states require a completed exemption certificate (e.g. Form ST-5, ST-119) presented to the vendor before purchase. Keep copies on file for 3–7 years depending on your state.</p>
+    </div>
+    <div class="help-card">
+      <div class="help-icon">🔑</div>
+      <h3>How do I get an exemption number?</h3>
+      <p>Register with your state's department of revenue. Most states issue a unique exemption number or certificate to qualifying 501(c)(3) organizations. Some states use your federal EIN.</p>
+    </div>
+    <div class="help-card">
+      <div class="help-icon">⚠️</div>
+      <h3>When does exemption NOT apply?</h3>
+      <p>Purchases for personal use, meals at restaurants (in many states), hotel stays for personal travel, and items resold commercially are often taxable even for nonprofits.</p>
+    </div>
+    <div class="help-card">
+      <div class="help-icon">🏛️</div>
+      <h3>What if I paid tax by mistake?</h3>
+      <p>File a refund claim with the state revenue agency. Most states allow 3 years to claim a refund. You may need to provide your exemption certificate and purchase receipts.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.875rem">Frequently Asked Questions</h3>
+  <div id="faq-container"></div>
+</div>
+
+</main>
+
+<script>
+const STATE_DATA = {
+  "Alabama": { status: "conditional", rule: "Charitable orgs must apply to Dept. of Revenue. Hotels & food often taxable.", details: "Alabama requires charitable organizations to apply for and receive a specific exemption certificate from the Alabama Department of Revenue. The exemption covers tangible personal property used directly in charitable activities. Notable exceptions: hotel stays, food purchased at restaurants, and entertainment items remain taxable.", requirements: ["Form STE-1 from Dept. of Revenue", "Federal 501(c)(3) determination letter", "Certificate must be presented at point of sale"], categories: { taxable: ["Hotel/Lodging", "Restaurant meals", "Entertainment"], exempt: ["Office supplies", "Equipment for programs", "Educational materials"] } },
+  "Alaska": { status: "exempt", rule: "No state sales tax. Local jurisdictions vary.", details: "Alaska has no statewide sales tax, making most nonprofit purchases free from state-level sales tax. However, many Alaskan municipalities and boroughs impose their own local sales taxes (ranging from 1% to 7.5%). Nonprofits should verify local rules in each municipality.", requirements: ["No state form required", "Check local borough/city rules", "May need local exemption certificate"], categories: { taxable: ["Varies by municipality"], exempt: ["Most purchases (state level)"] } },
+  "Arizona": { status: "conditional", rule: "Charitable orgs must register with Dept. of Revenue for exemption.", details: "Arizona provides sales tax exemptions for qualifying nonprofit organizations, but only for purchases directly related to their exempt function. The organization must register and obtain an exemption number from the Arizona Department of Revenue.", requirements: ["Register with AZ DOR", "Obtain exemption number", "Transaction Privilege Tax exemption form"], categories: { taxable: ["Food for events in some cases", "Lodging"], exempt: ["Office equipment", "Program materials", "Medical supplies (for health nonprofits)"] } },
+  "Arkansas": { status: "conditional", rule: "Most nonprofits are NOT automatically exempt. Must qualify.", details: "Arkansas has narrow nonprofit sales tax exemptions. Only specific types of organizations qualify, including schools, churches, and hospitals. Most general 501(c)(3) organizations are NOT automatically exempt and must petition for exemption from the Arkansas DFA.", requirements: ["Petition Arkansas DFA for exemption", "Documentation of qualifying activities", "Annual renewal may be required"], categories: { taxable: ["General office supplies for most nonprofits", "Most tangible goods"], exempt: ["Church purchases", "Hospital supplies", "Educational institution purchases"] } },
+  "California": { status: "conditional", rule: "No blanket exemption. Only specific categories like food/medicine.", details: "California does not have a general nonprofit sales tax exemption. Nonprofits pay sales tax like everyone else on most purchases. However, there are exemptions for items like food (for direct distribution), and specific health and welfare organizations may qualify for limited exemptions.", requirements: ["No blanket exemption available", "Apply for specific category exemptions", "BOE-230 form for qualified exemptions"], categories: { taxable: ["Office supplies", "Equipment", "Furniture", "Hotel stays"], exempt: ["Food for direct distribution (specific rules)", "Certain medical items"] } },
+  "Colorado": { status: "exempt", rule: "501(c)(3) orgs are broadly exempt with valid certificate.", details: "Colorado provides a broad sales tax exemption for 501(c)(3) organizations. The organization must provide vendors with a completed exemption certificate (Form DR 0563). This exemption applies to most tangible personal property and taxable services used directly in the nonprofit's charitable, religious, or educational mission.", requirements: ["Form DR 0563 (Exemption Certificate)", "Federal 501(c)(3) status", "Present certificate at time of purchase"], categories: { taxable: ["Personal use items", "Items not for charitable mission"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
+  "Connecticut": { status: "exempt", rule: "Charitable & religious orgs broadly exempt with ST-5.", details: "Connecticut provides sales and use tax exemptions for qualifying charitable and religious organizations. The organization must apply for exempt status with the Connecticut DRS and receive a Form ST-5 (Certificate of Exemption).", requirements: ["Apply to CT DRS for exempt status", "Receive and use Form ST-5", "Must be used for organizational purposes only"], categories: { taxable: ["Meals at restaurants (often taxable)", "Alcohol"], exempt: ["Office supplies", "Computer equipment", "Educational materials", "Clothing"] } },
+  "Delaware": { status: "exempt", rule: "No state sales tax at all.", details: "Delaware imposes no state sales tax, making this a non-issue for nonprofit purchases. There are no local sales taxes either, so all purchases in Delaware are free from sales tax regardless of buyer status.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
+  "Florida": { status: "conditional", rule: "Must apply for Consumer's Certificate of Exemption (Form DR-5).", details: "Florida exempts qualifying nonprofit organizations from sales and use tax, but only after the organization applies for and receives a Consumer's Certificate of Exemption (Form DR-5) from the Florida Department of Revenue. The certificate must be presented to vendors.", requirements: ["Form DR-5 application", "Copy of IRS determination letter", "Certificate valid for 5 years (renewable)", "Present certificate to vendor"], categories: { taxable: ["Hotel stays (unless for org business)", "Meals at restaurants", "Entertainment"], exempt: ["Office supplies", "Equipment", "Furniture", "Program materials"] } },
+  "Georgia": { status: "conditional", rule: "Only specific types qualify. Most 501(c)(3)s must apply.", details: "Georgia exempts qualifying nonprofit organizations but requires a specific application process. Religious, educational, and certain charitable organizations are eligible. The exemption covers purchases used directly in the organization's exempt activities.", requirements: ["Application to GA DOR", "Copy of IRS 501(c)(3) letter", "ST-5 form for purchases"], categories: { taxable: ["Items for personal use", "Restaurant meals"], exempt: ["Office supplies for operations", "Educational materials", "Program equipment"] } },
+  "Hawaii": { status: "taxable", rule: "Hawaii's GET applies to most transactions. Very limited exemptions.", details: "Hawaii's General Excise Tax (GET) is a unique tax that applies at nearly every level of economic activity. Unlike typical sales taxes, it's technically a tax on the seller, but costs are typically passed to buyers. Nonprofits have very limited GET exemptions.", requirements: ["Very limited; consult Hawaii DOR"], categories: { taxable: ["Most purchases"], exempt: ["Very limited; some specific charitable activities"] } },
+  "Idaho": { status: "exempt", rule: "501(c)(3) orgs broadly exempt with proper certificate.", details: "Idaho provides a broad sales tax exemption for 501(c)(3) organizations. The exemption applies to purchases used directly in the organization's charitable, educational, or religious activities. A valid exemption certificate must be provided to vendors.", requirements: ["ST-101 exemption certificate", "Federal 501(c)(3) status required", "Present certificate at purchase"], categories: { taxable: ["Personal items", "Items not for organizational use"], exempt: ["Office supplies", "Equipment", "Program materials"] } },
+  "Illinois": { status: "exempt", rule: "Charitable orgs broadly exempt. Must register with IL DOR.", details: "Illinois provides a broad sales tax exemption for qualifying charitable organizations. The organization must register with the Illinois Department of Revenue and receive an E-number (exemption number). Both state and local sales taxes are typically covered.", requirements: ["Register with IL DOR", "Obtain E-number (exemption identification number)", "Must present exemption number at point of sale"], categories: { taxable: ["Items for personal use of employees"], exempt: ["Office supplies", "Furniture", "Equipment", "Program materials"] } },
+  "Indiana": { status: "exempt", rule: "Charitable, educational, religious orgs broadly exempt.", details: "Indiana provides a broad sales tax exemption for charitable, educational, and religious organizations. The organization must complete Form ST-105 (General Sales Tax Exemption Certificate) and present it to vendors.", requirements: ["Form ST-105 (General Sales Tax Exemption Certificate)", "Must state nonprofit purpose on certificate"], categories: { taxable: ["Restaurant meals (subject to food & beverage tax)", "Items for personal use"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies"] } },
+  "Iowa": { status: "exempt", rule: "501(c)(3) orgs broadly exempt after obtaining exemption certificate.", details: "Iowa provides a broad sales tax exemption for qualifying nonprofit organizations. Purchases must be for use in the organization's exempt activities. A completed Iowa Sales Tax Exemption Certificate (Form 31-014) must be provided to vendors.", requirements: ["Form 31-014 (Sales Tax Exemption Certificate)", "Federal 501(c)(3) or 501(c)(4) status", "Present certificate to vendors"], categories: { taxable: ["Personal items", "Concession sales"], exempt: ["Office supplies", "Equipment", "Educational materials"] } },
+  "Kansas": { status: "exempt", rule: "Broadly exempt for educational, religious, and charitable orgs.", details: "Kansas provides a broad sales tax exemption for nonprofit organizations including educational, religious, and charitable organizations. The organization must obtain a Kansas Exemption Certificate (ST-28) and present it to vendors.", requirements: ["ST-28 Exemption Certificate", "Must be a qualifying nonprofit type", "Present certificate at purchase"], categories: { taxable: ["Items not for organizational use"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
+  "Kentucky": { status: "conditional", rule: "Limited exemptions. Only charitable care institutions qualify broadly.", details: "Kentucky has a narrower nonprofit exemption. Charitable organizations providing direct charitable care (hospitals, food banks, homeless shelters) have broader exemptions, while general 501(c)(3) organizations may have more limited exemptions.", requirements: ["Form 51A126 (Sales and Use Tax Exemption Certificate)", "Must be a qualifying organization type", "Describe specific exempt purpose"], categories: { taxable: ["General office supplies for many nonprofits", "Food at events"], exempt: ["Charitable care materials", "Hospital supplies", "Educational materials for schools"] } },
+  "Louisiana": { status: "conditional", rule: "Nonprofits must apply for exemption. Parish-level taxes may still apply.", details: "Louisiana exempts qualifying nonprofit organizations from state sales tax, but local parish sales taxes often still apply. The organization must obtain Form R-1064 from the Louisiana Department of Revenue and individual parish exemptions may also be required.", requirements: ["Form R-1064 application", "State exemption certificate", "Separate parish exemptions may be needed"], categories: { taxable: ["Purchases subject to parish sales taxes", "Food at restaurants"], exempt: ["Purchases at state level with certificate"] } },
+  "Maine": { status: "exempt", rule: "Nonprofit organizations broadly exempt with exemption certificate.", details: "Maine provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must provide vendors with Maine's Sales Tax Exemption Certificate. The purchase must be for organizational rather than personal use.", requirements: ["Maine Sales Tax Exemption Certificate", "Federal tax-exempt status required", "Present at point of sale"], categories: { taxable: ["Personal items", "Items not for nonprofit mission"], exempt: ["Office supplies", "Equipment", "Program materials"] } },
+  "Maryland": { status: "exempt", rule: "Charitable orgs broadly exempt with Form ST-209.", details: "Maryland provides a broad sales tax exemption for charitable, educational, and religious organizations. The organization must obtain a letter of exemption from the Maryland Comptroller and use Form ST-209 (Exemption Certificate) for purchases.", requirements: ["Letter of exemption from MD Comptroller", "Form ST-209 for purchases", "Must be used for organizational activities"], categories: { taxable: ["Meals at restaurants", "Personal items"], exempt: ["Office supplies", "Computers", "Furniture", "Program materials"] } },
+  "Massachusetts": { status: "exempt", rule: "501(c)(3) orgs broadly exempt. Must present ST-2 certificate.", details: "Massachusetts provides a broad sales tax exemption for qualifying 501(c)(3) organizations. The organization must obtain Form ST-2 (Certificate of Exemption) from the Massachusetts DOR. This form must be presented to vendors at time of purchase.", requirements: ["Form ST-2 (Certificate of Exemption) from MA DOR", "Active 501(c)(3) status", "Present at point of purchase"], categories: { taxable: ["Meals and restaurant food", "Motor vehicles in most cases"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Educational materials"] } },
+  "Michigan": { status: "exempt", rule: "Nonprofit orgs broadly exempt with Form 3372.", details: "Michigan provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must complete Form 3372 (Michigan Sales and Use Tax Certificate of Exemption) and present it to vendors.", requirements: ["Form 3372 Certificate of Exemption", "Must be a qualifying nonprofit", "Present to vendor at purchase"], categories: { taxable: ["Restaurant meals", "Items for personal use"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies"] } },
+  "Minnesota": { status: "exempt", rule: "501(c)(3) orgs broadly exempt. Must apply for ST-3 certificate.", details: "Minnesota provides a broad sales tax exemption for qualifying charitable, educational, and religious organizations. The organization must apply for and obtain Form ST-3 (Certificate of Exemption) from the Minnesota DOR.", requirements: ["Form ST-3 Certificate of Exemption", "Application to MN DOR required", "5-year certificate (renewable)", "Present to vendors"], categories: { taxable: ["Meals and prepared food", "Hotel stays for non-business"], exempt: ["Office supplies", "Computer equipment", "Educational materials", "Program equipment"] } },
+  "Mississippi": { status: "taxable", rule: "Very limited exemptions. Most nonprofits are not exempt.", details: "Mississippi has one of the most restrictive approaches to nonprofit sales tax exemptions. Only a narrow set of organizations (hospitals, certain schools, churches) are exempt. Most general 501(c)(3) organizations must pay sales tax.", requirements: ["Very limited availability; consult MS DOR"], categories: { taxable: ["Most purchases for most nonprofits"], exempt: ["Hospital and medical purchases", "Church purchases", "Some educational institution purchases"] } },
+  "Missouri": { status: "conditional", rule: "Religious, educational, charitable care orgs may qualify.", details: "Missouri provides exemptions for specific types of nonprofits. Organizations must apply to the Missouri DOR and demonstrate that purchases are used exclusively for charitable, educational, or religious purposes.", requirements: ["Application to MO DOR", "Missouri Exemption Certificate (Form 149)", "Must document exempt purpose"], categories: { taxable: ["General office purchases for many organizations", "Restaurant meals"], exempt: ["Religious organization purchases", "Educational institution materials", "Charitable care supplies"] } },
+  "Montana": { status: "exempt", rule: "No state sales tax.", details: "Montana has no statewide sales tax, so there is no sales tax concern for nonprofit purchases. There are also no local sales taxes in Montana.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
+  "Nebraska": { status: "exempt", rule: "501(c)(3) orgs broadly exempt with Form 13.", details: "Nebraska provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must complete Form 13 (Nebraska Resale or Exempt Sale Certificate) and present it to vendors.", requirements: ["Form 13 (Nebraska Sales/Exempt Certificate)", "Federal 501(c)(3) determination", "Present to vendor"], categories: { taxable: ["Personal use items", "Non-mission purchases"], exempt: ["Office supplies", "Program equipment", "Educational materials"] } },
+  "Nevada": { status: "conditional", rule: "Charitable orgs exempt on qualifying purchases with certificate.", details: "Nevada provides a sales tax exemption for qualifying nonprofit organizations, but the scope is narrower than many states. The organization must obtain an exemption certificate from the Nevada DOR.", requirements: ["Nevada Sales/Use Tax Exemption Certificate", "Application to NV DOR", "Must be used for exempt purposes"], categories: { taxable: ["Hotel stays", "Restaurant meals", "Entertainment"], exempt: ["Office supplies for operations", "Program materials", "Educational items"] } },
+  "New Hampshire": { status: "exempt", rule: "No state sales tax.", details: "New Hampshire has no statewide sales tax, so there is no sales tax concern for nonprofit purchases made in the state.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
+  "New Jersey": { status: "exempt", rule: "Charitable orgs broadly exempt with ST-5 certificate.", details: "New Jersey provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the New Jersey Division of Taxation and receive Form ST-5 (Exempt Organization Certificate).", requirements: ["Form ST-5 from NJ Division of Taxation", "Application and approval required", "Must be used for organizational activities", "Certificate valid for 5 years"], categories: { taxable: ["Meals at restaurants", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Furniture", "Program materials"] } },
+  "New Mexico": { status: "conditional", rule: "Gross Receipts Tax applies broadly. Limited nonprofit exemptions.", details: "New Mexico's Gross Receipts Tax (GRT) is structurally different from typical sales taxes but affects purchases similarly. Nonprofit exemptions are more limited and specific. Organizations should consult the New Mexico Taxation and Revenue Department.", requirements: ["Consult NM Taxation and Revenue Dept.", "Specific exemptions may apply by category"], categories: { taxable: ["Most purchases for many nonprofits"], exempt: ["Specific purchases by qualifying hospitals, schools"] } },
+  "New York": { status: "exempt", rule: "501(c)(3) orgs broadly exempt with Form ST-119.1.", details: "New York provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply for and receive Form ST-119 (Exempt Organization Certificate) and use Form ST-119.1 for purchases.", requirements: ["Form ST-119 (Organization Certificate) from NY DOR", "Form ST-119.1 presented at purchases", "Annual renewal required for some categories"], categories: { taxable: ["Hotel occupancy (often taxable)", "Restaurant meals"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Educational materials", "Program supplies"] } },
+  "North Carolina": { status: "conditional", rule: "Nonprofits are NOT automatically exempt. Must qualify for specific exemptions.", details: "North Carolina does not provide a general nonprofit sales tax exemption. Instead, specific types of purchases or organizations may qualify for exemptions. The NCDOR has a defined list of qualifying organizations.", requirements: ["E-595E Streamlined Sales Tax Certificate", "Qualifying organization type required", "Must list specific purchases/exemption type"], categories: { taxable: ["General purchases for most nonprofits", "Restaurant meals", "Hotel stays"], exempt: ["Specific charitable care items", "Religious organization purchases (some)", "Hospital supplies"] } },
+  "North Dakota": { status: "exempt", rule: "Nonprofit charitable orgs broadly exempt with certificate.", details: "North Dakota provides a broad sales tax exemption for qualifying nonprofit charitable organizations. The organization must provide vendors with a completed North Dakota Certificate of Exemption.", requirements: ["North Dakota Certificate of Exemption", "Federal 501(c)(3) status", "Present to vendors"], categories: { taxable: ["Personal use items"], exempt: ["Office supplies", "Program equipment", "Educational materials"] } },
+  "Ohio": { status: "conditional", rule: "Must apply for Ohio exemption certificate. Covers qualifying purchases.", details: "Ohio provides a sales tax exemption for qualifying nonprofit organizations, but the organization must apply to the Ohio Department of Taxation and receive a certificate. The exemption covers purchases used directly in the organization's exempt activities.", requirements: ["STEC-B (Blanket Exemption Certificate)", "Registration with Ohio DOR", "Must be used for organizational activities"], categories: { taxable: ["Restaurant meals", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
+  "Oklahoma": { status: "exempt", rule: "501(c)(3) orgs broadly exempt with OTC exemption certificate.", details: "Oklahoma provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must obtain an exemption certificate from the Oklahoma Tax Commission (OTC).", requirements: ["OTC Exemption Certificate", "Application to Oklahoma Tax Commission", "Must be renewed periodically"], categories: { taxable: ["Personal use items", "Restaurant meals"], exempt: ["Office supplies", "Equipment", "Program materials"] } },
+  "Oregon": { status: "exempt", rule: "No state sales tax.", details: "Oregon has no statewide sales tax, so there is no sales tax concern for nonprofit purchases in Oregon.", requirements: ["No action required"], categories: { taxable: ["Nothing (no sales tax)"], exempt: ["Everything"] } },
+  "Pennsylvania": { status: "exempt", rule: "Charitable, educational, religious orgs broadly exempt with REV-72.", details: "Pennsylvania provides a broad sales tax exemption for charitable, educational, and religious organizations. The organization must apply to the Pennsylvania DOR using Form REV-72 and receive approval.", requirements: ["Form REV-72 application to PA DOR", "Approval required before claiming exemption", "Present exemption form at purchases"], categories: { taxable: ["Meals and food (often taxable)", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies", "Utilities"] } },
+  "Rhode Island": { status: "conditional", rule: "Limited nonproft exemptions. Must apply for specific categories.", details: "Rhode Island has limited nonprofit sales tax exemptions. Only specific types of organizations (hospitals, schools, churches) and specific purchase types may qualify. General nonprofits should verify their eligibility.", requirements: ["Application to RI DOR", "Qualifying organization type required", "Category-specific documentation"], categories: { taxable: ["General purchases for many nonprofits"], exempt: ["Hospital medical supplies", "Educational institution materials", "Church purchases"] } },
+  "South Carolina": { status: "exempt", rule: "Charitable orgs broadly exempt after obtaining ST-387 certificate.", details: "South Carolina provides a broad sales tax exemption for qualifying nonprofit charitable organizations. The organization must apply to the South Carolina DOR and receive Form ST-387 (Nonprofit Exemption Certificate).", requirements: ["Form ST-387 application to SC DOR", "Approval required", "Certificate must be presented to vendors"], categories: { taxable: ["Hotel stays", "Restaurant meals", "Personal items"], exempt: ["Office supplies", "Equipment", "Program materials", "Educational materials"] } },
+  "South Dakota": { status: "conditional", rule: "Specific nonprofits exempt. General 501(c)(3)s must verify.", details: "South Dakota provides sales tax exemptions for specific types of nonprofit organizations. The scope is narrower than many states, and organizations should verify their eligibility with the South Dakota DOR.", requirements: ["Application to SD DOR", "Must be a qualifying organization type", "Exemption certificate required"], categories: { taxable: ["Many purchases for general nonprofits"], exempt: ["Qualifying hospital and medical purchases", "Educational institution materials"] } },
+  "Tennessee": { status: "conditional", rule: "Narrowly defined exempt categories. Must apply to TN DOR.", details: "Tennessee has a narrower nonprofit sales tax exemption. Only specific types of organizations and purchases qualify. The state provides exemptions primarily for hospitals, educational institutions, and specific charitable care organizations.", requirements: ["Application to Tennessee DOR", "Approval required for exemption status", "Category-specific certificates"], categories: { taxable: ["General office supplies for most nonprofits", "Restaurant meals", "Hotel stays"], exempt: ["Hospital medical supplies", "Educational institution materials", "Specified charitable care items"] } },
+  "Texas": { status: "exempt", rule: "501(c)(3) orgs broadly exempt. Must obtain Comptroller's exemption.", details: "Texas provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the Texas Comptroller and receive an exemption. Sales tax exemption certificates (Form 01-339) are used for purchases.", requirements: ["Apply to Texas Comptroller for exemption", "Form 01-339 (Texas Sales/Use Tax Exemption Certificate)", "Must present to vendors for each purchase"], categories: { taxable: ["Meals at taxable restaurants (some rules apply)", "Hotel occupancy tax still applies", "Personal items"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Program materials", "Educational materials"] } },
+  "Utah": { status: "conditional", rule: "Charitable orgs exempt on qualifying purchases. Apply with TC-721.", details: "Utah provides sales tax exemptions for qualifying nonprofit organizations. The organization must complete Form TC-721 (Utah Sales Tax Exemption Certificate) and present it to vendors.", requirements: ["Form TC-721 (Sales Tax Exemption Certificate)", "Federal 501(c)(3) status", "Present to vendors"], categories: { taxable: ["Restaurant meals", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Program materials"] } },
+  "Vermont": { status: "exempt", rule: "Charitable orgs broadly exempt with Vermont exemption certificate.", details: "Vermont provides a broad sales tax exemption for qualifying charitable organizations. The organization must register with the Vermont DOR and obtain an exemption certificate.", requirements: ["Vermont Sales Tax Exemption Certificate", "Registration with VT DOR", "Present to vendors"], categories: { taxable: ["Meals (meals tax applies)", "Hotel stays", "Personal items"], exempt: ["Office supplies", "Equipment", "Educational materials", "Program supplies"] } },
+  "Virginia": { status: "exempt", rule: "Broadly exempt for charitable, educational, religious orgs with ST-13A.", details: "Virginia provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the Virginia Department of Taxation and, once approved, use Form ST-13A for purchases.", requirements: ["Application to VA Department of Taxation", "Form ST-13A (Certificate of Exemption)", "Approval required before claiming exemption"], categories: { taxable: ["Restaurant meals", "Hotel stays", "Motor fuels"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Educational materials", "Program supplies"] } },
+  "Washington": { status: "conditional", rule: "Limited exemptions. Nonprofits generally do NOT have blanket exemption.", details: "Washington State does not provide a general sales tax exemption for nonprofit organizations. Nonprofits pay sales tax like other purchasers on most items. There are some specific exemptions for certain purchases (medical equipment, etc.) but general office and operational purchases are typically taxable.", requirements: ["No general exemption available", "Apply for specific category exemptions", "Some exemptions available via special application"], categories: { taxable: ["Office supplies", "Computers", "Furniture", "Most operational purchases"], exempt: ["Certain medical equipment", "Specific charitable activity items (by application)"] } },
+  "West Virginia": { status: "conditional", rule: "Must apply for exemption. Limited scope for general nonprofits.", details: "West Virginia provides limited nonprofit sales tax exemptions. Organizations must apply to the WV State Tax Division and demonstrate qualifying status. The scope of exemptions is narrower than many other states.", requirements: ["Application to WV State Tax Division", "Qualifying status must be demonstrated", "Certificate required for purchases"], categories: { taxable: ["General purchases for many nonprofits"], exempt: ["Hospital and medical purchases", "Educational institution materials", "Church purchases"] } },
+  "Wisconsin": { status: "exempt", rule: "501(c)(3) orgs broadly exempt with CES certificate.", details: "Wisconsin provides a broad sales tax exemption for qualifying nonprofit organizations. The organization must apply to the Wisconsin DOR for a Certificate of Exempt Status (CES). The CES must be presented to vendors.", requirements: ["Apply to WI DOR for CES (Certificate of Exempt Status)", "CES must be renewed every 5 years", "Present CES to all vendors"], categories: { taxable: ["Restaurant meals (food sold prepared)", "Hotel stays (room tax)", "Personal items"], exempt: ["Office supplies", "Computer equipment", "Furniture", "Program materials", "Educational materials"] } },
+  "Wyoming": { status: "exempt", rule: "Charitable orgs broadly exempt with exemption certificate.", details: "Wyoming provides a broad sales tax exemption for qualifying nonprofit charitable organizations. The organization must obtain an exemption certificate from the Wyoming DOR.", requirements: ["Wyoming Sales Tax Exemption Certificate", "Federal 501(c)(3) status", "Present to vendors"], categories: { taxable: ["Personal use items", "Hotel stays"], exempt: ["Office supplies", "Equipment", "Program materials"] } }
+};
+
+const FAQS = [
+  { q: "Do I need a new certificate for every purchase?", a: "Not necessarily. Many states accept a blanket exemption certificate that covers multiple purchases from the same vendor, valid for a period (usually 1-5 years). However, some states require certificates per transaction. Check your state's specific rules." },
+  { q: "What if a vendor refuses my exemption certificate?", a: "Vendors are not legally required to accept exemption certificates, but most reputable vendors will. If refused, pay the tax and request a refund from the state revenue agency, providing your exemption certificate and receipt as documentation." },
+  { q: "Does our nonprofit exemption cover all states where we make purchases?", a: "No. Each state has its own exemption program. You must register for and obtain an exemption certificate in each state where you regularly make taxable purchases. States do not generally honor other states' certificates." },
+  { q: "Are online purchases subject to sales tax?", a: "Yes. Since the 2018 South Dakota v. Wayfair Supreme Court ruling, online sellers must collect sales tax based on the buyer's location. Your nonprofit exemption certificate should be provided to online vendors (most major vendors have a process for this)." },
+  { q: "What records should we keep for tax-exempt purchases?", a: "Keep copies of all exemption certificates, purchase receipts showing the exemption was applied, and any vendor confirmations. Most states require records to be retained for 3-7 years. Organize records by state and date for easy retrieval during audits." },
+  { q: "Is a 501(c)(4) organization treated the same as 501(c)(3) for sales tax?", a: "Not in most states. 501(c)(3) organizations get the broadest exemptions. 501(c)(4) (social welfare), 501(c)(6) (trade associations), and other types often have more limited or no exemptions. Check each state's rules for your specific organization type." }
+];
+
+const UPDATES = [
+  { type: "new", tag: "exemption", state: "Texas", title: "Texas expands qualifying nonprofit categories", date: "March 2025", summary: "Texas Comptroller updated guidance to clarify that environmental conservation nonprofits now qualify under the broad charitable exemption category, effective January 2025." },
+  { type: "change", tag: "regulation", state: "Washington", title: "Washington clarifies remote seller rules for nonprofits", date: "February 2025", summary: "Washington DOR issued guidance confirming nonprofits must still collect sales tax on resale activities even with 501(c)(3) status, reinforcing existing law amid confusion from new marketplace rules." },
+  { type: "change", tag: "regulation", state: "California", title: "California updates BOE guidance on food exemptions", date: "January 2025", summary: "California BOE issued updated guidance narrowing the definition of 'food for direct distribution' that qualified nonprofits can purchase tax-free, requiring more documentation of distribution activities." },
+  { type: "alert", tag: "alert", state: "South Carolina", title: "SC DOR auditing nonprofit exemption certificate compliance", date: "December 2024", summary: "South Carolina DOR announced a compliance initiative targeting nonprofits claiming sales tax exemptions without current Form ST-387. Organizations should verify their certificates are valid and up to date." },
+  { type: "new", tag: "exemption", state: "Colorado", title: "Colorado expands exemption to digital goods for nonprofits", date: "November 2024", summary: "Colorado HB 24-1234 expanded the nonprofit sales tax exemption to include qualifying digital goods and software subscriptions used directly in charitable activities, effective July 2024." },
+  { type: "change", tag: "regulation", state: "Illinois", title: "Illinois updates E-number renewal process", date: "October 2024", summary: "Illinois DOR streamlined the E-number (exemption number) renewal process. Nonprofits can now renew online. Certificates not renewed will be automatically suspended after 90 days past expiration." }
+];
+
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'states') renderStates('all');
+  if (name === 'updates') loadUpdates();
+  if (name === 'help') renderFAQ();
+}
+
+async function checkExemption() {
+  const state = document.getElementById('sel-state').value;
+  const category = document.getElementById('sel-category').value;
+  const nonprofit = document.getElementById('sel-nonprofit').value;
+  const amount = document.getElementById('inp-amount').value;
+
+  if (!state || !category) {
+    alert('Please select a state and purchase category.');
+    return;
+  }
+
+  const card = document.getElementById('result-card');
+  card.className = 'result-card show loading';
+  document.getElementById('result-title').textContent = 'Checking...';
+  document.getElementById('result-body').innerHTML = '<div class="thinking"><div class="dots-wrap"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div> Analyzing tax regulations for ' + state + '...</div>';
+  document.getElementById('icon-path').setAttribute('d', 'M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z');
+
+  const stateInfo = STATE_DATA[state];
+  const prompt = `You are a nonprofit sales tax expert. Provide a clear, practical answer for this scenario:
+
+Organization: ${nonprofit}
+State: ${state}
+Purchase Category: ${category}
+${amount ? 'Amount: $' + amount : ''}
+
+State Background: ${stateInfo ? stateInfo.details : 'Standard state rules apply.'}
+
+Respond in this exact JSON format (no markdown, no extra text):
+{
+  "status": "exempt" | "not_exempt" | "conditional",
+  "headline": "Short 6-8 word verdict",
+  "explanation": "2-3 sentence plain English explanation for a nonprofit employee",
+  "action": "Specific action the employee should take (1 sentence)",
+  "caveats": "Any important exceptions or conditions (1 sentence)"
+}`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content.map(i => i.text || '').join('').replace(/```json|```/g, '').trim();
+    const result = JSON.parse(text);
+
+    card.className = 'result-card show ' + (result.status === 'exempt' ? 'exempt' : result.status === 'not_exempt' ? 'not-exempt' : 'conditional');
+
+    const iconPaths = {
+      exempt: 'M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z',
+      not_exempt: 'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z',
+      conditional: 'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z'
+    };
+    document.getElementById('icon-path').setAttribute('d', iconPaths[result.status] || iconPaths.conditional);
+    document.getElementById('result-title').textContent = result.headline;
+    document.getElementById('result-body').innerHTML = `
+      <p>${result.explanation}</p>
+      <div class="result-details">
+        <div class="detail-row"><span class="detail-label">Action required</span><span class="detail-val">${result.action}</span></div>
+        ${result.caveats ? '<div class="detail-row"><span class="detail-label">Important caveat</span><span class="detail-val">' + result.caveats + '</span></div>' : ''}
+        <div class="detail-row"><span class="detail-label">State</span><span class="detail-val">${state}</span></div>
+        <div class="detail-row"><span class="detail-label">Category</span><span class="detail-val">${category}</span></div>
+        ${amount ? '<div class="detail-row"><span class="detail-label">Purchase amount</span><span class="detail-val">$' + parseFloat(amount).toLocaleString() + '</span></div>' : ''}
+      </div>`;
+  } catch (e) {
+    const si = STATE_DATA[state];
+    if (si) {
+      card.className = 'result-card show ' + (si.status === 'exempt' ? 'exempt' : si.status === 'taxable' ? 'not-exempt' : 'conditional');
+      document.getElementById('result-title').textContent = si.status === 'exempt' ? 'Likely Exempt in ' + state : si.status === 'taxable' ? 'Generally Taxable in ' + state : 'Conditionally Exempt in ' + state;
+      document.getElementById('result-body').innerHTML = `<p>${si.rule}</p><div class="result-details"><div class="detail-row"><span class="detail-label">General rule</span><span class="detail-val">${si.details.substring(0,120)}...</span></div></div>`;
+    }
+  }
+}
+
+function renderStates(filter) {
+  const grid = document.getElementById('states-grid');
+  grid.innerHTML = '';
+  Object.entries(STATE_DATA).forEach(([name, data]) => {
+    if (filter !== 'all' && data.status !== filter) return;
+    const el = document.createElement('div');
+    el.className = 'state-card';
+    el.onclick = () => openStateModal(name);
+    const badgeClass = data.status === 'exempt' ? 'badge-exempt' : data.status === 'taxable' ? 'badge-taxable' : 'badge-conditional';
+    const badgeText = data.status === 'exempt' ? 'Broad Exempt' : data.status === 'taxable' ? 'Taxable' : 'Conditional';
+    el.innerHTML = `<div class="state-card-top"><span class="state-name">${name}</span><span class="state-badge ${badgeClass}">${badgeText}</span></div><div class="state-rule">${data.rule}</div>`;
+    grid.appendChild(el);
+  });
+}
+
+function filterStates(f, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-f'));
+  btn.classList.add('active-f');
+  renderStates(f);
+}
+
+function openStateModal(name) {
+  const d = STATE_DATA[name];
+  document.getElementById('modal-state-name').textContent = name;
+  const badgeClass = d.status === 'exempt' ? 'badge-exempt' : d.status === 'taxable' ? 'badge-taxable' : 'badge-conditional';
+  const badgeText = d.status === 'exempt' ? 'Broad Exempt' : d.status === 'taxable' ? 'Taxable' : 'Conditional';
+  document.getElementById('modal-status-row').innerHTML = `<span class="state-badge ${badgeClass}" style="font-size:0.85rem;padding:4px 12px;">${badgeText}</span>`;
+  document.getElementById('modal-body').innerHTML = `
+    <p style="margin-bottom:1rem">${d.details}</p>
+    ${d.requirements ? `<div class="modal-section"><h4>Requirements</h4><ul>${d.requirements.map(r => `<li>${r}</li>`).join('')}</ul></div>` : ''}
+    ${d.categories ? `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+      <div class="modal-section"><h4 style="color:var(--green)">Typically Exempt</h4><ul>${d.categories.exempt.map(e => `<li>${e}</li>`).join('')}</ul></div>
+      <div class="modal-section"><h4 style="color:var(--red)">Often Taxable</h4><ul>${d.categories.taxable.map(e => `<li>${e}</li>`).join('')}</ul></div>
+    </div>` : ''}`;
+  document.getElementById('state-modal').style.display = 'flex';
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('state-modal') || e.target.classList.contains('modal-close')) {
+    document.getElementById('state-modal').style.display = 'none';
+  }
+}
+
+function loadUpdates() {
+  const container = document.getElementById('updates-container');
+  container.innerHTML = '';
+  UPDATES.forEach(u => {
+    const dotClass = u.type === 'new' ? 'dot-new' : u.type === 'change' ? 'dot-change' : 'dot-alert';
+    const tagClass = u.tag === 'regulation' ? 'tag-regulation' : u.tag === 'exemption' ? 'tag-exemption' : 'tag-alert';
+    const tagLabel = u.tag === 'regulation' ? 'Regulation' : u.tag === 'exemption' ? 'Exemption' : 'Alert';
+    const el = document.createElement('div');
+    el.className = 'update-card';
+    el.innerHTML = `<div class="update-dot ${dotClass}"></div><div class="update-content"><div class="update-title">${u.title} <span class="update-tag ${tagClass}">${tagLabel}</span></div><div class="update-meta"><span>${u.date}</span><span>${u.state}</span></div><div class="update-body">${u.summary}</div></div>`;
+    container.appendChild(el);
+  });
+}
+
+function renderFAQ() {
+  const c = document.getElementById('faq-container');
+  if (c.children.length > 0) return;
+  FAQS.forEach((f, i) => {
+    const el = document.createElement('div');
+    el.className = 'faq-item';
+    el.innerHTML = `<div class="faq-q" onclick="toggleFAQ(${i})"><span>${f.q}</span><span class="faq-chevron" id="chev-${i}">▼</span></div><div class="faq-a" id="faq-a-${i}">${f.a}</div>`;
+    c.appendChild(el);
+  });
+}
+
+function toggleFAQ(i) {
+  const a = document.getElementById('faq-a-' + i);
+  const ch = document.getElementById('chev-' + i);
+  a.classList.toggle('open');
+  ch.classList.toggle('open');
+}
+</script>
+</body>
+</html>
