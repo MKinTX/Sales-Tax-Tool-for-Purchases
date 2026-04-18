@@ -911,7 +911,7 @@ const CATEGORY_RULES = {
   "Ground Transportation (Taxi, Rideshare, Bus)": {
     default: "conditional",
     taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Georgia"],
-    note: "GA TAXABLE: Georgia DOR explicitly lists 'in-state transportation of individuals (e.g., taxis, limos)' as a taxable service per O.C.G.A. §48-8-2(31). Taxi, rideshare, and limo charges ARE subject to GA sales tax regardless of nonprofit status. Hawaii and South Dakota tax all services broadly."
+    note: "CA NOT TAXABLE: California sales tax applies to tangible personal property — taxi, rideshare, and bus fares are service charges and are NOT subject to CA sales tax per CDTFA Pub.61 (services are generally not taxable in CA unless specifically enumerated). GA TAXABLE: Georgia DOR explicitly lists 'in-state transportation of individuals (e.g., taxis, limos)' as a taxable service per O.C.G.A. §48-8-2(31). TN NOT TAXABLE: Ground transportation services are NOT on Tennessee's enumerated taxable services list (TN Manual Ch.5). Hawaii and South Dakota tax all services broadly."
   },
   "Postage & Shipping": {
     default: "conditional",
@@ -1088,19 +1088,29 @@ function isCategoryTaxable(stateData, category) {
 }
 
 function getCategoryVerdict(stateData, category) {
-  if (stateData.status === 'taxable') return 'not_exempt';
   const rule = CATEGORY_RULES[category];
   if (rule) {
+    // Category-level rules always take precedence over state-level status
+    // This handles states like CA/GA that have no GENERAL exemption but DO
+    // have specific item-level exemptions for certain categories
     if (rule.default === 'taxable') return 'not_exempt';
     if (rule.taxable_states && rule.taxable_states.includes(stateData.stateName)) return 'not_exempt';
     if (rule.conditional_states && rule.conditional_states.includes(stateData.stateName)) return 'conditional';
     if (rule.exempt_states && rule.exempt_states.includes(stateData.stateName)) return 'exempt';
-    if (rule.default === 'exempt') return 'exempt';
+    if (rule.default === 'exempt') {
+      // Even in "taxable" states, item-level exempt means exempt
+      return 'exempt';
+    }
     if (rule.default === 'conditional') {
+      // For conditional categories: taxable states with no general exemption → not_exempt
+      // unless this specific state has a known item-level exemption
       if (stateData.status === 'exempt') return 'exempt';
+      if (stateData.status === 'taxable') return 'not_exempt';
       return 'conditional';
     }
   }
+  // No category rule matched — fall back to state-level status
+  if (stateData.status === 'taxable') return 'not_exempt';
   if (isCategoryTaxable(stateData, category)) return 'not_exempt';
   if (stateData.status === 'exempt') return 'exempt';
   return 'conditional';
