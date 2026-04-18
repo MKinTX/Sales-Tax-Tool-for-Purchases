@@ -1090,26 +1090,29 @@ function isCategoryTaxable(stateData, category) {
 function getCategoryVerdict(stateData, category) {
   const rule = CATEGORY_RULES[category];
   if (rule) {
-    // Category-level rules always take precedence over state-level status
-    // This handles states like CA/GA that have no GENERAL exemption but DO
-    // have specific item-level exemptions for certain categories
+    // 1. Always-taxable default (e.g. restaurant meals, airline tickets)
     if (rule.default === 'taxable') return 'not_exempt';
+    // 2. State is specifically listed as taxable for this category
     if (rule.taxable_states && rule.taxable_states.includes(stateData.stateName)) return 'not_exempt';
+    // 3. State is specifically listed as conditional for this category
     if (rule.conditional_states && rule.conditional_states.includes(stateData.stateName)) return 'conditional';
+    // 4. State is specifically listed as exempt for this category
     if (rule.exempt_states && rule.exempt_states.includes(stateData.stateName)) return 'exempt';
-    if (rule.default === 'exempt') {
-      // Even in "taxable" states, item-level exempt means exempt
-      return 'exempt';
-    }
+    // 5. Category is exempt everywhere by default (e.g. legal services, medical, postage)
+    if (rule.default === 'exempt') return 'exempt';
+    // 6. Category is conditional by default
     if (rule.default === 'conditional') {
-      // For conditional categories: taxable states with no general exemption → not_exempt
-      // unless this specific state has a known item-level exemption
+      // "taxable" state status means no general nonprofit exemption —
+      // but for conditional categories this only matters if the item IS
+      // within that state's tax base. State-level "taxable" status is
+      // about the NONPROFIT EXEMPTION, not about whether the item type
+      // is taxed at all. Fall through to conditional so the AI prompt
+      // and category note can clarify the actual state-specific answer.
       if (stateData.status === 'exempt') return 'exempt';
-      if (stateData.status === 'taxable') return 'not_exempt';
       return 'conditional';
     }
   }
-  // No category rule matched — fall back to state-level status
+  // No category rule: fall back to state-level status
   if (stateData.status === 'taxable') return 'not_exempt';
   if (isCategoryTaxable(stateData, category)) return 'not_exempt';
   if (stateData.status === 'exempt') return 'exempt';
