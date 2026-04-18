@@ -135,7 +135,7 @@
   .modal-section h4 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.5rem; }
   .modal-section ul { list-style: none; padding: 0; }
   .modal-section ul li { padding: 4px 0; padding-left: 16px; position: relative; font-size: 0.875rem; }
-  .modal-section ul li::before { content: '\u2192'; position: absolute; left: 0; color: var(--green); font-size: 0.75rem; top: 5px; }
+  .modal-section ul li::before { content: '–'; position: absolute; left: 0; color: var(--green); font-size: 0.75rem; top: 5px; }
   .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
   .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--gray-border); background: var(--white); font-family: inherit; font-size: 0.825rem; font-weight: 500; cursor: pointer; transition: all 0.15s; color: var(--text-muted); }
   .filter-btn:hover { border-color: var(--green); color: var(--green-dark); }
@@ -167,7 +167,7 @@
   .help-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.5rem; }
   .help-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
   .help-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
-  .help-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .help-icon { display: none; }
   .faq-item { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); margin-bottom: 0.5rem; overflow: hidden; }
   .faq-q { padding: 1rem 1.25rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
   .faq-q:hover { background: var(--gray-light); }
@@ -202,6 +202,7 @@
   <nav>
     <button class="active" onclick="showPage('lookup',this)">Lookup</button>
     <button onclick="showPage('states',this)">All States</button>
+    <button onclick="showPage('nexus',this)">Nexus &amp; Local</button>
     <button onclick="showPage('updates',this)">Updates</button>
     <button onclick="showPage('help',this)">Help</button>
   </nav>
@@ -369,7 +370,7 @@
         <input type="number" id="inp-amount" placeholder="e.g. 250" min="0" />
       </div>
     </div>
-    <button class="btn-check" onclick="checkExemption()">Check Exemption Status \u2192</button>
+    <button class="btn-check" onclick="checkExemption()">Check Exemption Status</button>
 
     <div id="result-card" class="result-card">
       <div class="result-header">
@@ -383,7 +384,7 @@
   </div>
 
   <div class="disclaimer">
-    <strong>\u26a0 Important Notice:</strong> TaxClear provides general guidance based on publicly available tax regulations. Tax law is complex and changes frequently. Always verify exemption status with your state revenue agency or a qualified tax professional before making purchases. This tool does not constitute legal or tax advice.
+    <strong>Important Notice:</strong> TaxClear provides general guidance based on publicly available tax regulations. Tax law is complex and changes frequently. Always verify exemption status with your state revenue agency or a qualified tax professional before making purchases. This tool does not constitute legal or tax advice.
   </div>
 </div>
 
@@ -402,7 +403,7 @@
   <div class="states-grid" id="states-grid"></div>
   <div id="state-modal" style="display:none" class="state-detail-modal" onclick="closeModal(event)">
     <div class="modal-inner">
-      <button class="modal-close" onclick="closeModal()">\u2715</button>
+      <button class="modal-close" onclick="closeModal()">X</button>
       <div class="modal-state-name" id="modal-state-name"></div>
       <div class="modal-status-row" id="modal-status-row"></div>
       <div class="modal-body" id="modal-body"></div>
@@ -433,22 +434,22 @@
   <h2 style="font-size:1.4rem;font-weight:600;margin-bottom:1.25rem">Help & Guidance</h2>
   <div class="help-grid">
     <div class="help-card">
-      <div class="help-icon">\ud83d\udccb</div>
+      
       <h3>What documentation do I need?</h3>
       <p>Most states require a completed exemption certificate (e.g. Form ST-5, ST-119) presented to the vendor before purchase. Keep copies on file for 3–7 years depending on your state.</p>
     </div>
     <div class="help-card">
-      <div class="help-icon">\ud83d\udd11</div>
+      
       <h3>How do I get an exemption number?</h3>
       <p>Register with your state's department of revenue. Most states issue a unique exemption number or certificate to qualifying 501(c)(3) organizations. Some states use your federal EIN.</p>
     </div>
     <div class="help-card">
-      <div class="help-icon">\u26a0\ufe0f</div>
+      
       <h3>When does exemption NOT apply?</h3>
       <p>Purchases for personal use, meals at restaurants (in many states), hotel stays for personal travel, and items resold commercially are often taxable even for nonprofits.</p>
     </div>
     <div class="help-card">
-      <div class="help-icon">\ud83c\udfdb\ufe0f</div>
+      
       <h3>What if I paid tax by mistake?</h3>
       <p>File a refund claim with the state revenue agency. Most states allow 3 years to claim a refund. You may need to provide your exemption certificate and purchase receipts.</p>
     </div>
@@ -457,6 +458,53 @@
   <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.875rem">Frequently Asked Questions</h3>
   <div id="faq-container"></div>
 </div>
+
+<!-- NEXUS & LOCAL TAX PAGE -->
+<div id="page-nexus" class="page">
+  <div class="map-header">
+    <h2>Nexus &amp; Local Jurisdiction Rules</h2>
+    <p>Business nexus requirements and local sales tax rules per state. Select a state to see category-level nexus thresholds and local tax exposures.</p>
+  <div style="background:var(--green-light);border:1px solid var(--green);border-radius:var(--radius-sm);padding:0.625rem 1rem;font-size:0.8rem;color:var(--green-dark);margin-bottom:1rem"><strong>✓ Verified April 17, 2026</strong> — Economic nexus thresholds verified against Avalara's state-by-state guide (avalara.com) and state DOR sources. 14 corrections applied: AK, CO, CT, FL, IL, IN, IA, LA, ME, MO, NY, NC, OK, SD.</div>
+  </div>
+  <div class="disclaimer">
+    <strong>&#9432; What is Nexus?</strong> A nonprofit must have "nexus" (sufficient presence) in a state before that state can require it to collect/pay sales tax. Physical presence (office, employees, property) always creates nexus. Economic nexus thresholds (based on sales volume) vary by state. <em>Local jurisdictions</em> may impose their own rates and exemption rules on top of state rules.
+  </div>
+  <div class="form-row" style="max-width:560px;margin-bottom:1.5rem">
+    <div class="form-group">
+      <label>Filter by State</label>
+      <select id="nexus-state-filter" onchange="renderNexusTable()">
+        <option value="">All States</option>
+        <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+        <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+        <option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option>
+        <option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option>
+        <option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option>
+        <option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option>
+        <option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option>
+        <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option>
+        <option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option>
+        <option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+        <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option>
+        <option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option>
+        <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Filter by Spend Category</label>
+      <select id="nexus-cat-filter" onchange="renderNexusTable()">
+        <option value="">All Categories</option>
+        <option>Office &amp; Operations</option>
+        <option>Travel &amp; Lodging</option>
+        <option>Professional Services</option>
+        <option>Events &amp; Programs</option>
+        <option>Digital / SaaS</option>
+        <option>Printing &amp; Communications</option>
+      </select>
+    </div>
+  </div>
+  <div id="nexus-table-container"></div>
+</div>
+
 
 </main>
 
@@ -525,12 +573,70 @@ const FAQS = [
 ];
 
 const UPDATES = [
-  { type: "new", tag: "exemption", state: "Texas", title: "Texas expands qualifying nonprofit categories", date: "March 2025", summary: "Texas Comptroller updated guidance to clarify that environmental conservation nonprofits now qualify under the broad charitable exemption category, effective January 2025." },
-  { type: "change", tag: "regulation", state: "Washington", title: "Washington clarifies remote seller rules for nonprofits", date: "February 2025", summary: "Washington DOR issued guidance confirming nonprofits must still collect sales tax on resale activities even with 501(c)(3) status, reinforcing existing law amid confusion from new marketplace rules." },
-  { type: "change", tag: "regulation", state: "California", title: "California updates BOE guidance on food exemptions", date: "January 2025", summary: "California BOE issued updated guidance narrowing the definition of 'food for direct distribution' that qualified nonprofits can purchase tax-free, requiring more documentation of distribution activities." },
-  { type: "alert", tag: "alert", state: "South Carolina", title: "SC DOR auditing nonprofit exemption certificate compliance", date: "December 2024", summary: "South Carolina DOR announced a compliance initiative targeting nonprofits claiming sales tax exemptions without current Form ST-387. Organizations should verify their certificates are valid and up to date." },
-  { type: "new", tag: "exemption", state: "Colorado", title: "Colorado expands exemption to digital goods for nonprofits", date: "November 2024", summary: "Colorado HB 24-1234 expanded the nonprofit sales tax exemption to include qualifying digital goods and software subscriptions used directly in charitable activities, effective July 2024." },
-  { type: "change", tag: "regulation", state: "Illinois", title: "Illinois updates E-number renewal process", date: "October 2024", summary: "Illinois DOR streamlined the E-number (exemption number) renewal process. Nonprofits can now renew online. Certificates not renewed will be automatically suspended after 90 days past expiration." }
+  {
+    type: "alert",
+    tag: "alert",
+    state: "Washington",
+    title: "WA ESSB 5814: IT, Advertising & Staffing Now Taxable for Nonprofits",
+    date: "October 2025 (verified April 2026)",
+    summary: "Effective October 1, 2025, Washington ESSB 5814 reclassified as taxable: temporary staffing, advertising services, IT/managed services, custom software, website design, live presentations/seminars, and security services. Nonprofits are explicitly NOT exempt — WA DOR confirmed 'nonprofit organizations must pay retail sales tax when purchasing temporary staffing services' and advertising services. Pre-Oct 2025 contracts were grandfathered only through March 31, 2026; all contracts now taxable as of April 1, 2026. Source: WA DOR interim guidance statements (dor.wa.gov)."
+  },
+  {
+    type: "alert",
+    tag: "alert",
+    state: "District of Columbia",
+    title: "DC Sales Tax Rate: 6.5% Now; Rising to 7% October 1, 2026",
+    date: "October 2025 / October 2026 (verified April 2026)",
+    summary: "DC OTR confirmed via official notice: DC general sales tax rate increased from 6% to 6.5% on October 1, 2025, and increases again to 7.0% on October 1, 2026 (Sales Tax Increase Delay Amendment Act of 2025). Hotel surtax rate remains at 15.95% through September 30, 2027. Nonprofit purchase exemptions remain available via Form FR-164, but all exemption calculations are affected by the rate change. Source: DC OTR official notice (otr.cfo.dc.gov)."
+  },
+  {
+    type: "change",
+    tag: "regulation",
+    state: "Illinois",
+    title: "IL Drops 200-Transaction Nexus Threshold; E-Number Now 5-Year Renewal",
+    date: "January 2026 (verified April 2026)",
+    summary: "Effective January 1, 2026, Illinois HB 2755 eliminated the 200-transaction economic nexus threshold — only the $100,000 annual sales threshold now applies. Separately, IL IDOR confirms nonprofit E-numbers (exemption numbers) must be renewed every five years and are now filed via STAX-1 form through MyTax Illinois (processing time 2-6 weeks). Hotel stays remain taxable for nonprofits under the Hotel Operators' Occupation Tax even with an E-number. Source: IL IDOR (tax.illinois.gov), Aprio/Reed Smith analysis of HB 2755."
+  },
+  {
+    type: "change",
+    tag: "regulation",
+    state: "South Dakota",
+    title: "SD Drops 200-Transaction Nexus Threshold; Churches Remain Taxable",
+    date: "July 2023 / January 2026 confirmed (verified April 2026)",
+    summary: "South Dakota DOR January 2026 guide confirmed: SD dropped the 200-transaction nexus threshold as of July 1, 2023 — $100,000 in sales is now the sole threshold. Notably, the state that originated the Wayfair 200-transaction standard no longer uses it. The same January 2026 guide reconfirms that churches are NOT exempt organizations in South Dakota and are subject to sales tax on all purchases. YMCA, scouts, Lions Club, Jaycees, and qualified relief agencies remain exempt. Source: SD DOR Exempt Entities guide, January 2026 (dor.sd.gov)."
+  },
+  {
+    type: "change",
+    tag: "regulation",
+    state: "Indiana",
+    title: "IN NP-1 Form Required Per-Vendor; ST-105 Invalid Since Jan 2023",
+    date: "January 2023 / April 2026 confirmed (verified April 2026)",
+    summary: "Indiana DOR reconfirmed: Form ST-105 has been invalid for nonprofit exemptions since January 1, 2023. Nonprofits must use Form NP-1, generated individually per vendor via the INTIME portal (intime.dor.in.gov). A separate NP-1 must be generated for EACH vendor. File Form NP-20A first to register as a nonprofit. Indiana also dropped its 200-transaction nexus threshold as of January 1, 2024. Source: IN DOR (in.gov/dor)."
+  },
+  {
+    type: "new",
+    tag: "exemption",
+    state: "Maine",
+    title: "Maine Enacted Blanket 501(c)(3) Exemption — Effective January 2025",
+    date: "January 2025 (verified April 2026)",
+    summary: "Maine enacted a broad blanket sales tax exemption for all 501(c)(3) organizations effective January 1, 2025 — a significant expansion from prior law. Organizations must apply via the Maine Tax Portal (portal.maine.gov/mtrs); the IRS determination letter alone is NOT sufficient. Simultaneously, Maine dropped its 200-transaction economic nexus threshold (effective January 1, 2022), so the state's $100,000 sales threshold is now the sole nexus standard. Source: ME Revenue Services (maine.gov/revenue)."
+  },
+  {
+    type: "alert",
+    tag: "alert",
+    state: "Maryland",
+    title: "MD Paper Exemption Applications Discontinued July 2025",
+    date: "July 2025 (verified April 2026)",
+    summary: "Maryland Comptroller discontinued paper exemption applications as of July 15, 2025. All nonprofit sales tax exemption applications must now be submitted online via Maryland Tax Connect (interactive.marylandtaxes.gov). Applications submitted by paper after July 15, 2025 will not be processed. Five-year renewal requirement remains in effect. Out-of-state nonprofits must be located in MD, DC, VA, WV, PA, or DE to qualify. Hotel local occupancy taxes still not covered by the exemption certificate. Source: MD Comptroller (marylandtaxes.gov)."
+  },
+  {
+    type: "change",
+    tag: "regulation",
+    state: "Arkansas",
+    title: "AR 2025 Law: Small Nonprofits Under $200K May Now Qualify",
+    date: "2025 (verified April 2026)",
+    summary: "Arkansas enacted a new 2025 law creating a sales tax exemption for 'qualified nonprofit organizations' — defined as 501(c)(3) orgs that existed before January 1, 2025, with annual operating budgets under $200,000, performing charitable community-based services. Larger nonprofits (over $200K budget) must still be specifically listed in statute. Even qualifying small nonprofits cannot exempt computers, mobile phones, TVs, motor vehicles, construction materials, or household appliances. Application required via AR DFA. Source: AR Department of Finance and Administration (dfa.arkansas.gov)."
+  }
 ];
 
 function showPage(name, btn) {
@@ -541,6 +647,7 @@ function showPage(name, btn) {
   if (name === 'states') renderStates('all');
   if (name === 'updates') loadUpdates();
   if (name === 'help') renderFAQ();
+  if (name === 'nexus') setTimeout(renderNexusTable, 50);
 }
 
 async function checkExemption() {
@@ -1315,6 +1422,861 @@ const STATE_AGENCIES = {
   }
 }
 ;
+
+// ============================================================
+// NEXUS_RULES — Physical & Economic Nexus by State
+// Source: State DOR guidance, Wayfair economic nexus laws
+// ============================================================
+const NEXUS_RULES = {
+  "Alabama": {
+    physical: "Office, employees, agents, inventory, or representatives create nexus.",
+    economic: "$250,000 in annual sales OR 200 transactions (AL DOR). Simplified sellers use SSUT 8% flat rate.",
+    registration: "Register via My Alabama Taxes (MAT). STE-1 certificate required before exempt purchases.",
+    nonprofit_nexus_note: "Alabama has no general nonprofit exemption. Even with nexus, nonprofits pay tax on all purchases. Only specifically listed statutory orgs qualify.",
+    local: {
+      overview: "Alabama has complex local sales taxes — often HIGHER than the state rate (4%). Many cities/counties exceed combined 10%.",
+      key_jurisdictions: [
+        { name: "Birmingham", local_rate: "4%", combined: "~10%", nonprofit_local_exempt: "No — same as state (no general exemption)", note: "Jefferson County also levies 1% occupational tax." },
+        { name: "Montgomery", local_rate: "3.5%", combined: "~9.5%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Huntsville", local_rate: "4.5%", combined: "~10.5%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Mobile", local_rate: "3%", combined: "~9%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "Local taxes self-administered — contact each city/county revenue department separately."
+    }
+  },
+  "Alaska": {
+    physical: "No state sales tax — no state nexus concern.",
+    economic: "$100,000 in sales only via local borough/municipality districts (as of Jan 1, 2025; previously $100K OR 200 transactions). Effective date varies by district. No statewide sales tax, but local districts now enforce economic nexus.",
+    registration: "No state registration required for sales tax.",
+    nonprofit_nexus_note: "No state sales tax. Local jurisdictions may apply; see below.",
+    local: {
+      overview: "Alaska has NO state sales tax but numerous municipalities levy local option sales taxes. Rates range 0–7.5%.",
+      key_jurisdictions: [
+        { name: "Anchorage", local_rate: "0%", combined: "0%", nonprofit_local_exempt: "N/A", note: "Anchorage has NO local sales tax." },
+        { name: "Juneau", local_rate: "5%", combined: "5%", nonprofit_local_exempt: "Conditional — apply to City/Borough", note: "" },
+        { name: "Fairbanks (City)", local_rate: "0%", combined: "0%", nonprofit_local_exempt: "N/A", note: "City of Fairbanks has no local sales tax." },
+        { name: "Fairbanks North Star Borough", local_rate: "0%", combined: "0%", nonprofit_local_exempt: "N/A", note: "" },
+        { name: "Ketchikan", local_rate: "2.5%", combined: "2.5%", nonprofit_local_exempt: "Conditional", note: "" },
+        { name: "Sitka", local_rate: "5%", combined: "5%", nonprofit_local_exempt: "Conditional", note: "" }
+      ],
+      admin_note: "Each municipality self-administers. Contact Alaska Municipal League (akml.org) for directory of local rates."
+    }
+  },
+  "Arizona": {
+    physical: "Office, employees, warehouse, or property in AZ creates nexus for Transaction Privilege Tax (TPT).",
+    economic: "$100,000 in gross receipts (AZ DOR) or 200 transactions triggers economic nexus.",
+    registration: "Register via AZTaxes.gov for TPT license (renewed annually $12).",
+    nonprofit_nexus_note: "Arizona taxes SELLERS, not buyers. No general purchase exemption. Even if nexus exists, nonprofits cannot claim an exemption on purchases (except licensed hospitals).",
+    local: {
+      overview: "Arizona has city-level TPT rates in addition to the state 5.6% rate. Many cities self-administer.",
+      key_jurisdictions: [
+        { name: "Phoenix", local_rate: "2.3%", combined: "8.6%", nonprofit_local_exempt: "No — same as state (no general purchase exemption)", note: "Self-administered — register separately at phoenix.gov/pdd" },
+        { name: "Tucson", local_rate: "2.6%", combined: "8.7%", nonprofit_local_exempt: "No", note: "Self-administered by City of Tucson" },
+        { name: "Mesa", local_rate: "2%", combined: "8.3%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Scottsdale", local_rate: "1.75%", combined: "7.95%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Tempe", local_rate: "1.8%", combined: "8.1%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "Arizona's 91 municipalities have their own TPT rates. Use AZTaxes.gov for current city rates."
+    }
+  },
+  "Arkansas": {
+    physical: "Office, employees, property, or representatives in AR creates nexus.",
+    economic: "$100,000 in sales or 200 transactions annually.",
+    registration: "Register via Arkansas Taxpayer Access Point (ATAP).",
+    nonprofit_nexus_note: "Small nonprofits under $200K budget may qualify (2025 law). Must petition AR DFA. If nexus exists, must apply BEFORE making exempt purchases.",
+    local: {
+      overview: "AR has state (6.5%) + county + city rates. Combined can reach 11.5%.",
+      key_jurisdictions: [
+        { name: "Little Rock", local_rate: "1.5% city + 1% county", combined: "~9%", nonprofit_local_exempt: "Conditional (qualifying orgs only)", note: "" },
+        { name: "Fort Smith", local_rate: "2%", combined: "~9.5%", nonprofit_local_exempt: "Conditional", note: "" },
+        { name: "Fayetteville", local_rate: "2%", combined: "~9.5%", nonprofit_local_exempt: "Conditional", note: "" },
+        { name: "Springdale", local_rate: "2%", combined: "~9.5%", nonprofit_local_exempt: "Conditional", note: "" }
+      ],
+      admin_note: "AR DFA administers all local taxes centrally. Local rates searchable at dfa.arkansas.gov."
+    }
+  },
+  "California": {
+    physical: "Office, employees, inventory, sales agents, or trade show presence creates nexus.",
+    economic: "$500,000 in California sales in current or prior year.",
+    registration: "Register with CDTFA (cdtfa.ca.gov). Seller's permit or use tax account.",
+    nonprofit_nexus_note: "No general nonprofit purchase exemption. Even with nexus established, nonprofits cannot use a blanket exemption certificate. Only very specific items (e.g., items sold by specific welfare orgs) may qualify.",
+    local: {
+      overview: "CA base rate 7.25%. District taxes (city/county) add 0.25%–3.25%. LA and SF among highest.",
+      key_jurisdictions: [
+        { name: "Los Angeles (City)", local_rate: "2.25%", combined: "10.25%", nonprofit_local_exempt: "No general exemption", note: "One of highest rates in CA" },
+        { name: "San Francisco", local_rate: "1.25%", combined: "8.625%", nonprofit_local_exempt: "No", note: "" },
+        { name: "San Diego", local_rate: "0.75%", combined: "7.75%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Oakland", local_rate: "0.75%", combined: "10.25%", nonprofit_local_exempt: "No", note: "Alameda County + city" },
+        { name: "Long Beach", local_rate: "1.5%", combined: "10.25%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Sacramento", local_rate: "1.25%", combined: "8.75%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "CDTFA administers all district taxes. Use cdtfa.ca.gov/taxes-and-fees/rates to find exact rate by address."
+    }
+  },
+  "Colorado": {
+    physical: "Office, employees, inventory, or representatives in CO creates nexus.",
+    economic: "$100,000 in sales only (transaction count threshold dropped April 14, 2019). Current or previous calendar year. Effective Dec 1, 2018.",
+    registration: "Register via Revenue Online (DOR). Form DR 0715 for nonprofit exemption.",
+    nonprofit_nexus_note: "Broad 501(c)(3) exemption available. CRITICAL: Purchases over $250 must be paid with org check/card — not personal funds reimbursed. Home-rule cities administer own taxes and require SEPARATE local exemption certificates.",
+    local: {
+      overview: "CO is complex: 'home-rule' municipalities (271 of them) self-administer their own sales tax independently from the state. Even with a state exemption, nonprofits must separately register with home-rule cities.",
+      key_jurisdictions: [
+        { name: "Denver", local_rate: "4.81%", combined: "~8.81%", nonprofit_local_exempt: "Must apply separately to Denver Treasury", note: "SELF-ADMINISTERED. Apply at denvergov.org/treasury" },
+        { name: "Aurora", local_rate: "3.75%", combined: "~8.75%", nonprofit_local_exempt: "Must apply separately", note: "SELF-ADMINISTERED" },
+        { name: "Colorado Springs", local_rate: "3.07%", combined: "~8.07%", nonprofit_local_exempt: "Must apply separately", note: "SELF-ADMINISTERED" },
+        { name: "Boulder", local_rate: "3.86%", combined: "~8.86%", nonprofit_local_exempt: "Must apply separately", note: "SELF-ADMINISTERED" },
+        { name: "Fort Collins", local_rate: "2.25%", combined: "~6.25%", nonprofit_local_exempt: "Must apply separately", note: "SELF-ADMINISTERED" },
+        { name: "Lakewood", local_rate: "3%", combined: "~8%", nonprofit_local_exempt: "Must apply separately", note: "SELF-ADMINISTERED" }
+      ],
+      admin_note: "For CO home-rule cities, state DR 0563 is NOT sufficient. Contact each city directly. Colorado Municipal League (cml.org) maintains a directory."
+    }
+  },
+  "Connecticut": {
+    physical: "Office, employees, property, or agents in CT creates nexus.",
+    economic: "$100,000 AND 200 transactions (BOTH required — not OR). 12-month period ending Sep 30 preceding the filing period. Effective July 1, 2019.",
+    registration: "Register via myconneCT portal.",
+    nonprofit_nexus_note: "Broad exemption — present IRS determination letter; no CT permit needed since 1995. Meals and lodging can be exempt if billed directly to org and org pays.",
+    local: {
+      overview: "Connecticut is a single-rate state — no local sales taxes. Only the state 6.35% rate applies statewide.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "6.35%", nonprofit_local_exempt: "State exemption covers all CT", note: "No separate local tax exists in CT" }
+      ],
+      admin_note: "No local taxes in CT. State exemption applies uniformly."
+    }
+  },
+  "Delaware": {
+    physical: "No sales tax. Gross Receipts Tax (GRT) on businesses applies.",
+    economic: "No sales tax. GRT is on seller's gross receipts — not buyers.",
+    registration: "No sales tax registration needed.",
+    nonprofit_nexus_note: "No state or local sales tax. Nonprofits are generally exempt from GRT on most goods and services.",
+    local: {
+      overview: "Delaware has NO state or local sales tax. The Gross Receipts Tax applies to businesses, not buyers, and nonprofits are generally exempt.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "0%", nonprofit_local_exempt: "N/A — no sales tax", note: "" }
+      ],
+      admin_note: "No sales tax in Delaware. No local tax concerns."
+    }
+  },
+  "District of Columbia": {
+    physical: "Office, employees, or property in DC creates nexus.",
+    economic: "$100,000 in sales or 200 transactions in prior year.",
+    registration: "Apply via MyTax.DC.gov. Form FR-164 for nonprofit exemption.",
+    nonprofit_nexus_note: "Must have nexus in DC (office or activities) to qualify for exemption. DC rate increasing from 6% to 7% on October 1, 2026. Restaurant meals and hotel occupancy taxes are separate.",
+    local: {
+      overview: "DC is a single unified jurisdiction. No additional local tax layers beyond DC itself.",
+      key_jurisdictions: [
+        { name: "Washington DC", local_rate: "Unified", combined: "6% (→7% Oct 2026)", nonprofit_local_exempt: "Yes, with FR-164 certificate", note: "Hotel tax (14.95%) and meals tax (10%) are separate and generally taxable even for nonprofits" }
+      ],
+      admin_note: "DC administers its own tax. No separate local taxes within DC."
+    }
+  },
+  "Florida": {
+    physical: "Office, employees, inventory, trade show presence, or representatives create nexus.",
+    economic: "$100,000 in TAXABLE sales of tangible personal property only (excludes exempt sales and services; no transaction threshold). Previous calendar year. Effective July 1, 2021.",
+    registration: "Register via Florida Business Tax Application (DR-1) online.",
+    nonprofit_nexus_note: "Broad exemption with Form DR-14 (Consumer's Certificate of Exemption). Hotels exempt if billed and paid by org. Payment MUST come from org funds — personal payment is taxable even if reimbursed.",
+    local: {
+      overview: "FL has county-level discretionary surtaxes (0%–2%) on top of state 6%. These surtaxes are administered by FL DOR along with state tax and are generally covered by the nonprofit exemption certificate.",
+      key_jurisdictions: [
+        { name: "Miami-Dade County", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "Yes — DR-14 covers county surtax", note: "" },
+        { name: "Broward County", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "Yes — DR-14 covers county surtax", note: "" },
+        { name: "Palm Beach County", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Orange County (Orlando)", local_rate: "0.5%", combined: "6.5%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Hillsborough County (Tampa)", local_rate: "1.5%", combined: "7.5%", nonprofit_local_exempt: "Yes", note: "One of higher FL county rates" },
+        { name: "Pinellas County (St. Pete)", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "Yes", note: "" }
+      ],
+      admin_note: "FL DOR administers county surtaxes centrally — one registration covers state + county. DR-14 certificate covers both."
+    }
+  },
+  "Georgia": {
+    physical: "Office, employees, inventory, or property in GA creates nexus.",
+    economic: "$100,000 in sales or 200 transactions in prior or current year.",
+    registration: "Register via Georgia Tax Center (GTC) online.",
+    nonprofit_nexus_note: "NO general exemption for nonprofit purchases. Even with nexus, general 501(c)(3)s cannot exempt purchases. Only licensed hospitals, orphanages, food banks, and specific statutory orgs qualify.",
+    local: {
+      overview: "GA has state 4% + county LOST (1%) + city taxes. Combined can reach 8–9%.",
+      key_jurisdictions: [
+        { name: "Atlanta (Fulton County)", local_rate: "4% (county+city SPLOST)", combined: "8.9%", nonprofit_local_exempt: "No general exemption — qualifying orgs only", note: "" },
+        { name: "Augusta-Richmond County", local_rate: "4%", combined: "8%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Columbus (Muscogee County)", local_rate: "4%", combined: "8%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Savannah (Chatham County)", local_rate: "4%", combined: "8%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "GA DOR administers all local taxes centrally via Georgia Tax Center."
+    }
+  },
+  "Hawaii": {
+    physical: "Business activity in Hawaii of any kind creates nexus for General Excise Tax (GET).",
+    economic: "$100,000 in Hawaii gross income creates economic nexus.",
+    registration: "Register via Hawaii Tax Online (HTO). GET license required.",
+    nonprofit_nexus_note: "Hawaii GET applies extremely broadly — taxing all services and goods. Very limited nonprofit exemptions. Even with nexus, nonprofits pay GET on most purchases.",
+    local: {
+      overview: "Hawaii GET has county surcharges. Oahu (Honolulu) has a 0.5% surcharge; other counties may add surcharges.",
+      key_jurisdictions: [
+        { name: "Honolulu (Oahu)", local_rate: "0.5%", combined: "4.712%", nonprofit_local_exempt: "No — very limited exemptions", note: "4.0% base + 0.5% surcharge at retail" },
+        { name: "Maui County", local_rate: "0.5%", combined: "4.5%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Hawaii County (Big Island)", local_rate: "0.25%", combined: "4.25%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Kauai County", local_rate: "0.5%", combined: "4.5%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "State GET + county surcharges all administered by HI Dept of Taxation."
+    }
+  },
+  "Idaho": {
+    physical: "Office, employees, inventory, or property in ID creates nexus.",
+    economic: "$100,000 in ID sales in prior or current year.",
+    registration: "Register via Idaho Business Registration (IBR) system.",
+    nonprofit_nexus_note: "Broad 501(c)(3) exemption with Form ST-101. Nexus must be established for the org to be required to register, but buying in-state using exemption certificate does not require nexus.",
+    local: {
+      overview: "ID has state 6% + optional local taxes. Few Idaho cities levy local sales taxes.",
+      key_jurisdictions: [
+        { name: "Boise", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers all", note: "No local sales tax" },
+        { name: "Pocatello", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers all", note: "" },
+        { name: "Idaho Falls", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers all", note: "" }
+      ],
+      admin_note: "Limited local taxes in ID. State ST-101 generally sufficient."
+    }
+  },
+  "Illinois": {
+    physical: "Office, employees, inventory, or property in IL creates nexus.",
+    economic: "$100,000 in sales only (200-transaction threshold dropped Jan 1, 2026). Quarterly review of preceding 12-month period. Effective Oct 1, 2018.",
+    registration: "Register via MyTax Illinois. Apply for E-number (exemption number) same portal.",
+    nonprofit_nexus_note: "Broad exemption after receiving E-number from IDOR. CRITICAL: Hotel stays are TAXABLE even for exempt nonprofits — Hotel Operators Occupation Tax applies separately. Local ROT (Retailers Occupation Tax) rates vary.",
+    local: {
+      overview: "Illinois has complex multi-level taxes: state ROT (6.25%) + county + municipality + home-rule city taxes. Chicago is among the highest in the nation.",
+      key_jurisdictions: [
+        { name: "Chicago", local_rate: "3.75% (city) + various", combined: "~10.25%", nonprofit_local_exempt: "Conditional — E-number covers state/county; Chicago administers own Home Rule Use Tax", note: "Home-rule city — may require separate Chicago registration" },
+        { name: "Cook County (unincorporated)", local_rate: "1.75%", combined: "~8.75%", nonprofit_local_exempt: "E-number covers", note: "" },
+        { name: "Springfield", local_rate: "2.25%", combined: "~9.25%", nonprofit_local_exempt: "E-number covers most", note: "" },
+        { name: "Rockford", local_rate: "2.5%", combined: "~8.75%", nonprofit_local_exempt: "E-number covers most", note: "" }
+      ],
+      admin_note: "Chicago has its own home-rule taxes. Contact Chicago Dept of Finance for local requirements. IL DOR E-number covers state + most other local taxes."
+    }
+  },
+  "Indiana": {
+    physical: "Office, employees, inventory, or property in IN creates nexus.",
+    economic: "$100,000 in sales only (200-transaction threshold dropped Jan 1, 2024). Current or previous calendar year. Effective Oct 1, 2018.",
+    registration: "Register via INTIME portal (intime.dor.in.gov). File NP-20A first, then generate NP-1 per vendor.",
+    nonprofit_nexus_note: "CRITICAL CHANGE since Jan 2023: Form ST-105 no longer valid for nonprofits. Must use Form NP-1 from INTIME portal, one per vendor. State rate is flat 7% with no local additions.",
+    local: {
+      overview: "Indiana has a flat 7% state rate with NO local sales taxes. Single unified rate statewide.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "7%", nonprofit_local_exempt: "NP-1 covers statewide", note: "No local sales tax in Indiana" }
+      ],
+      admin_note: "No local sales taxes in Indiana. NP-1 certificate covers all purchases statewide."
+    }
+  },
+  "Iowa": {
+    physical: "Office, employees, inventory, or property in IA creates nexus.",
+    economic: "$100,000 in sales only (200-transaction threshold dropped July 1, 2019). Current or previous calendar year. Effective Jan 1, 2019.",
+    registration: "Register via Iowa's GovConnect system.",
+    nonprofit_nexus_note: "IMPORTANT: Iowa exemption applies to SALES BY nonprofits (proceeds fund charity), NOT purchases BY nonprofits. Most nonprofits must pay tax on operational purchases even after establishing nexus.",
+    local: {
+      overview: "Iowa has state 6% + local option sales tax (LOST) of 1% in most counties/cities. Combined typically 7%.",
+      key_jurisdictions: [
+        { name: "Des Moines (Polk County)", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "No — purchases taxable for most nonprofits", note: "" },
+        { name: "Cedar Rapids (Linn County)", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Davenport (Scott County)", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Sioux City (Woodbury County)", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "Iowa DOR administers local option taxes centrally."
+    }
+  },
+  "Kansas": {
+    physical: "Office, employees, inventory, or property in KS creates nexus.",
+    economic: "$100,000 in KS sales (no transaction threshold in KS).",
+    registration: "Register via Kansas Customer Service Center (ksrevenue.gov).",
+    nonprofit_nexus_note: "IMPORTANT: General charitable/benevolent orgs are NOT exempt per KS DOR Pub KS-1520. Only hospitals, schools, churches, and specifically listed statutory entities qualify. Even with nexus, most nonprofits must pay tax.",
+    local: {
+      overview: "Kansas has state 6.5% + county + city rates. Combined can reach 11.6% (highest in U.S.).",
+      key_jurisdictions: [
+        { name: "Wichita (Sedgwick County)", local_rate: "3% (1% county + 2% city)", combined: "9.5%", nonprofit_local_exempt: "Qualifying orgs only", note: "" },
+        { name: "Overland Park (Johnson County)", local_rate: "2.35%", combined: "9.1%", nonprofit_local_exempt: "Qualifying orgs only", note: "" },
+        { name: "Kansas City (Wyandotte County)", local_rate: "3.75%", combined: "10.25%", nonprofit_local_exempt: "Qualifying orgs only", note: "" },
+        { name: "Topeka (Shawnee County)", local_rate: "2.65%", combined: "9.15%", nonprofit_local_exempt: "Qualifying orgs only", note: "" }
+      ],
+      admin_note: "KS DOR administers state + local taxes centrally. Kansas has some of the highest combined rates in the U.S."
+    }
+  },
+  "Kentucky": {
+    physical: "Office, employees, inventory, or property in KY creates nexus.",
+    economic: "$100,000 in KY sales or 200 transactions.",
+    registration: "Register via Kentucky's One Stop Business Portal.",
+    nonprofit_nexus_note: "Limited exemptions — primarily charitable care institutions providing direct care. General operational purchases often taxable. Flat 6% rate with no local additions.",
+    local: {
+      overview: "Kentucky has a flat 6% state rate with NO local sales taxes. Single statewide rate.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers all", note: "No local sales tax in Kentucky" }
+      ],
+      admin_note: "No local sales taxes in KY. Note: Louisville/Jefferson County and Lexington have local occupational taxes (income-based, not sales)."
+    }
+  },
+  "Louisiana": {
+    physical: "Office, employees, inventory, or property in LA creates nexus.",
+    economic: "$100,000 in sales only (200-transaction threshold dropped Aug 1, 2023). Current or previous calendar year. Effective July 1, 2020.",
+    registration: "Register via LaTAP. State + parishes registered separately.",
+    nonprofit_nexus_note: "State exemption may be granted via Form R-1064. However, parish-level sales taxes often still apply and require separate parish exemption applications. Louisiana is unique: parishes self-administer local taxes.",
+    local: {
+      overview: "Louisiana parishes independently administer their own sales taxes. Parish rates add 3%–7% on top of state 4.45%. This is CRITICAL — state exemption does NOT automatically cover parish taxes.",
+      key_jurisdictions: [
+        { name: "Orleans Parish (New Orleans)", local_rate: "5%", combined: "9.45%", nonprofit_local_exempt: "Must apply separately to Orleans Parish", note: "Orleans Parish Revenue Bureau: orleansrevenue.com" },
+        { name: "Jefferson Parish", local_rate: "5.5%", combined: "9.95%", nonprofit_local_exempt: "Must apply separately", note: "Separate application to Jefferson Parish Sheriffs Office" },
+        { name: "East Baton Rouge Parish", local_rate: "5.5%", combined: "9.95%", nonprofit_local_exempt: "Must apply separately", note: "" },
+        { name: "Caddo Parish (Shreveport)", local_rate: "5%", combined: "9.45%", nonprofit_local_exempt: "Must apply separately", note: "" },
+        { name: "Calcasieu Parish (Lake Charles)", local_rate: "5%", combined: "9.45%", nonprofit_local_exempt: "Must apply separately", note: "" }
+      ],
+      admin_note: "Louisiana Uniform Local Sales Tax Board (ULSTB) provides some coordination. Parish Sheriffs and local revenue offices must be contacted individually for exemptions."
+    }
+  },
+  "Maine": {
+    physical: "Office, employees, inventory, or property in ME creates nexus.",
+    economic: "$100,000 in sales only (200-transaction threshold dropped Jan 1, 2022). Current or previous calendar year. Effective July 1, 2018.",
+    registration: "Register via Maine Tax Portal (portal.maine.gov/mtrs).",
+    nonprofit_nexus_note: "NEW as of Jan 2025: All 501(c)(3) orgs have blanket exemption. Must apply via Maine Tax Portal. IRS determination letter alone is NOT sufficient. Single state rate — no local complications.",
+    local: {
+      overview: "Maine has a single 5.5% state rate with NO local sales taxes.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "5.5%", nonprofit_local_exempt: "State exemption covers all of Maine", note: "No local sales tax in Maine" }
+      ],
+      admin_note: "No local sales taxes in Maine. State exemption applies uniformly statewide."
+    }
+  },
+  "Maryland": {
+    physical: "Office, employees, inventory, or property in MD creates nexus.",
+    economic: "$100,000 in MD sales or 200 transactions in prior year.",
+    registration: "Apply online via Maryland Tax Connect (paper apps discontinued July 2025).",
+    nonprofit_nexus_note: "Broadly exempt for MD-based orgs. Out-of-state nonprofits must be in MD, DC, VA, WV, PA, or DE to qualify. IMPORTANT: MD sales tax exemption does NOT cover local hotel taxes. 5-year renewal.",
+    local: {
+      overview: "Maryland has a flat 6% state rate with NO local sales taxes. Local hotel/motel taxes exist separately.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers all", note: "No local sales tax in MD" },
+        { name: "Hotel/Lodging — Local taxes", local_rate: "Varies by county", combined: "State + local hotel taxes", nonprofit_local_exempt: "NOT covered by exemption certificate", note: "Local hotel taxes range 5–13% and are generally taxable for nonprofits" }
+      ],
+      admin_note: "No local sales taxes. Hotel taxes (not covered by exemption) are administered by counties — check county finance offices."
+    }
+  },
+  "Massachusetts": {
+    physical: "Office, employees, inventory, or property in MA creates nexus.",
+    economic: "$100,000 in MA sales in prior year.",
+    registration: "Register via MassTaxConnect. Form ST-2 required for nonprofit exemption.",
+    nonprofit_nexus_note: "Broad exemption. Apply via MassTaxConnect, receive Form ST-2. Present Form ST-5 + copy of ST-2 at each purchase. ST-2 valid 10 years. Single statewide rate.",
+    local: {
+      overview: "Massachusetts has a flat 6.25% state rate with NO local sales taxes.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "6.25%", nonprofit_local_exempt: "ST-2/ST-5 covers all of MA", note: "No local sales tax in MA" }
+      ],
+      admin_note: "No local sales taxes in MA. Local meals taxes (0.75%) exist in some cities — generally taxable for nonprofits."
+    }
+  },
+  "Michigan": {
+    physical: "Office, employees, inventory, or property in MI creates nexus.",
+    economic: "$100,000 in MI sales or 200 transactions in prior year.",
+    registration: "Michigan eliminated the application process. Present Form 3372 + IRS letter.",
+    nonprofit_nexus_note: "No application needed — Michigan eliminated the process. 501(c)(3) and (c)(4) orgs present Form 3372 plus IRS determination letter. Single statewide rate.",
+    local: {
+      overview: "Michigan has a flat 6% state rate with NO local sales taxes.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "Form 3372 + IRS letter covers all of MI", note: "No local sales tax in Michigan" }
+      ],
+      admin_note: "No local sales taxes in MI. City income taxes exist in Detroit and other cities but are not sales taxes."
+    }
+  },
+  "Minnesota": {
+    physical: "Office, employees, inventory, or property in MN creates nexus.",
+    economic: "$100,000 in MN sales or 200 transactions in prior year.",
+    registration: "Register via MN Dept of Revenue (e-Services). Apply for Nonprofit Exempt Status separately.",
+    nonprofit_nexus_note: "Broad exemption after applying for Nonprofit Exempt Status. EXPLICITLY EXCLUDES: prepared food, catered food, candy, soft drinks, alcohol, lodging, and most motor vehicles. Use Form ST3.",
+    local: {
+      overview: "MN has state 6.875% + metro county taxes + city taxes. Minneapolis and St. Paul have higher combined rates.",
+      key_jurisdictions: [
+        { name: "Minneapolis", local_rate: "1.15% (city) + 0.5% (Hennepin County)", combined: "~8.525%", nonprofit_local_exempt: "State exemption (ST3) covers local taxes in MN", note: "MN DOR administers all local taxes centrally" },
+        { name: "St. Paul (Ramsey County)", local_rate: "0.5%", combined: "~7.875%", nonprofit_local_exempt: "ST3 covers", note: "" },
+        { name: "Duluth (St. Louis County)", local_rate: "1.5%", combined: "~8.875%", nonprofit_local_exempt: "ST3 covers", note: "" },
+        { name: "Rochester (Olmsted County)", local_rate: "0.5%", combined: "~7.375%", nonprofit_local_exempt: "ST3 covers", note: "" }
+      ],
+      admin_note: "MN DOR administers state + local taxes centrally. ST3 covers state and local in most cases. Local lodging taxes are separate."
+    }
+  },
+  "Mississippi": {
+    physical: "Office, employees, inventory, or property in MS creates nexus.",
+    economic: "$250,000 in MS sales in prior year.",
+    registration: "Register via Mississippi Taxpayer Access Point (TAP).",
+    nonprofit_nexus_note: "Very restrictive — most nonprofits are NOT exempt. Only hospitals, certain schools, and churches qualify for purchase exemptions. General 501(c)(3)s must pay tax on all purchases.",
+    local: {
+      overview: "Mississippi has state 7% + local taxes. Some municipalities levy up to 1% additional.",
+      key_jurisdictions: [
+        { name: "Jackson (Hinds County)", local_rate: "1%", combined: "8%", nonprofit_local_exempt: "No — qualifying orgs only", note: "" },
+        { name: "Gulfport (Harrison County)", local_rate: "0%", combined: "7%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Biloxi", local_rate: "0%", combined: "7%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "MS DOR administers local taxes centrally."
+    }
+  },
+  "Missouri": {
+    physical: "Office, employees, inventory, or property in MO creates nexus.",
+    economic: "$100,000 in TAXABLE sales of tangible personal property only (exempt sales and services excluded). Preceding 12-month period reviewed each quarter. Effective Jan 1, 2023 (latest state to adopt economic nexus).",
+    registration: "Apply with Form 1746 to MO DOR. 3-year financial statement required.",
+    nonprofit_nexus_note: "Religious, charitable, educational orgs broadly exempt after applying with Form 1746. Unions, political orgs, and HOAs do NOT qualify. Local taxes vary significantly.",
+    local: {
+      overview: "Missouri has state 4.225% + county + city rates. Kansas City and St. Louis have higher combined rates. Some local jurisdictions have own exemption requirements.",
+      key_jurisdictions: [
+        { name: "Kansas City", local_rate: "3.25% (city + county)", combined: "~8.35%", nonprofit_local_exempt: "MO exemption letter generally covers; verify with KCMO", note: "" },
+        { name: "St. Louis City", local_rate: "2.5%", combined: "~9.7%", nonprofit_local_exempt: "MO exemption letter generally covers", note: "" },
+        { name: "St. Louis County (unincorporated)", local_rate: "2.263%", combined: "~8.263%", nonprofit_local_exempt: "MO exemption letter generally covers", note: "" },
+        { name: "Springfield (Greene County)", local_rate: "3%", combined: "~8.1%", nonprofit_local_exempt: "MO exemption letter generally covers", note: "" }
+      ],
+      admin_note: "MO DOR administers most local taxes. Kansas City and St. Louis have additional city taxes."
+    }
+  },
+  "Montana": {
+    physical: "No state sales tax. Montana has no nexus concerns for sales tax.",
+    economic: "No state sales tax.",
+    registration: "No state sales tax registration required.",
+    nonprofit_nexus_note: "No state or local sales tax in Montana.",
+    local: {
+      overview: "Montana has NO state or local sales tax. Resort taxes (up to 3%) apply in some resort towns (Whitefish, West Yellowstone, Big Sky) on lodging, food, and alcohol — these typically apply to nonprofits.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "0%", nonprofit_local_exempt: "N/A — no sales tax", note: "" },
+        { name: "Whitefish / Big Sky / West Yellowstone (Resort Tax)", local_rate: "3%", combined: "3%", nonprofit_local_exempt: "Resort tax applies — nonprofit exemption not available", note: "Resort tax on lodging, food, and beverages in resort areas" }
+      ],
+      admin_note: "No general sales tax. Resort taxes are locally administered."
+    }
+  },
+  "Nebraska": {
+    physical: "Office, employees, inventory, or property in NE creates nexus.",
+    economic: "$100,000 in NE sales or 200 transactions in prior year.",
+    registration: "Register via Nebraska e-file system.",
+    nonprofit_nexus_note: "Narrow exemption — only licensed healthcare facilities, child welfare agencies, and behavioral health orgs qualify. General 501(c)(3)s must pay tax.",
+    local: {
+      overview: "Nebraska has state 5.5% + city taxes (up to 2%). Cities may have own rates; state DOR administers many.",
+      key_jurisdictions: [
+        { name: "Omaha", local_rate: "1.5%", combined: "7%", nonprofit_local_exempt: "Qualifying licensed facilities only", note: "" },
+        { name: "Lincoln", local_rate: "1.5%", combined: "7%", nonprofit_local_exempt: "Qualifying licensed facilities only", note: "" },
+        { name: "Bellevue", local_rate: "1.5%", combined: "7%", nonprofit_local_exempt: "Qualifying licensed facilities only", note: "" }
+      ],
+      admin_note: "NE DOR administers local city taxes centrally."
+    }
+  },
+  "Nevada": {
+    physical: "Office, employees, inventory, or property in NV creates nexus.",
+    economic: "$100,000 in NV sales or 200 transactions in prior year.",
+    registration: "Register via Nevada Tax Center (tax.nv.gov).",
+    nonprofit_nexus_note: "Charitable orgs may qualify for a narrower exemption than most states. Must apply; 5-year renewal. Clark County (Las Vegas) adds additional taxes.",
+    local: {
+      overview: "Nevada has state 6.85% + county taxes. Clark County (Las Vegas area) has the highest combined rate.",
+      key_jurisdictions: [
+        { name: "Las Vegas / Clark County", local_rate: "1.53%", combined: "8.375%", nonprofit_local_exempt: "Conditional — state cert generally covers county tax", note: "" },
+        { name: "Reno / Washoe County", local_rate: "1.415%", combined: "8.265%", nonprofit_local_exempt: "Conditional", note: "" },
+        { name: "Carson City", local_rate: "0.15%", combined: "7%", nonprofit_local_exempt: "Conditional", note: "" }
+      ],
+      admin_note: "NV DOR administers county taxes centrally. One registration generally covers state + county."
+    }
+  },
+  "New Hampshire": {
+    physical: "No state sales tax.",
+    economic: "No state sales tax.",
+    registration: "No state sales tax registration required.",
+    nonprofit_nexus_note: "No state or local sales tax. NH has Meals & Rooms Tax (9%) on prepared food and lodging — this applies to nonprofits and cannot be exempted.",
+    local: {
+      overview: "New Hampshire has NO state or local general sales tax. The 9% Meals & Rooms Tax on restaurants and lodging applies to all buyers including nonprofits.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "0% (sales tax)", nonprofit_local_exempt: "N/A — no sales tax", note: "9% Meals & Rooms Tax on food/lodging applies to nonprofits" }
+      ],
+      admin_note: "No local sales taxes. Meals & Rooms Tax is state-administered and applies to nonprofit purchases of prepared food and lodging."
+    }
+  },
+  "New Jersey": {
+    physical: "Office, employees, inventory, or property in NJ creates nexus.",
+    economic: "$100,000 in NJ sales or 200 transactions in prior year.",
+    registration: "Apply with Form REG-1E to NJ Division of Taxation.",
+    nonprofit_nexus_note: "501(c)(3) exempt with Form ST-5 (annual renewal). CRITICAL: ST-5 does NOT cover hotel occupancy tax or energy purchases. Annual renewal required.",
+    local: {
+      overview: "New Jersey is a single-rate state (6.625%) with NO additional local sales taxes. Exception: Urban Enterprise Zones (UEZ) have reduced 3.3125% rates.",
+      key_jurisdictions: [
+        { name: "All jurisdictions (general)", local_rate: "0%", combined: "6.625%", nonprofit_local_exempt: "ST-5 covers statewide", note: "No local sales tax in NJ" },
+        { name: "Urban Enterprise Zones (Newark, Camden, etc.)", local_rate: "Half rate applies", combined: "3.3125%", nonprofit_local_exempt: "ST-5 still applies", note: "Qualifying businesses in UEZs charge half the state rate" }
+      ],
+      admin_note: "No local general sales taxes in NJ. Hotel occupancy and energy NOT covered by ST-5."
+    }
+  },
+  "New Mexico": {
+    physical: "Office, employees, inventory, or property in NM creates nexus for Gross Receipts Tax (GRT).",
+    economic: "$100,000 in NM receipts in prior year.",
+    registration: "Register via Taxpayer Access Point (tap.state.nm.us).",
+    nonprofit_nexus_note: "NM Gross Receipts Tax applies broadly like a sales tax but taxes seller's receipts. Very limited nonprofit exemptions — most nonprofits pay effectively the same as commercial buyers.",
+    local: {
+      overview: "NM GRT has state + municipality + county components. Combined can exceed 9% in some areas.",
+      key_jurisdictions: [
+        { name: "Albuquerque", local_rate: "2.75% (city + county)", combined: "~7.875%", nonprofit_local_exempt: "No general exemption", note: "" },
+        { name: "Santa Fe (City)", local_rate: "3.3125%", combined: "~8.4375%", nonprofit_local_exempt: "No general exemption", note: "" },
+        { name: "Las Cruces", local_rate: "2.875%", combined: "~8%", nonprofit_local_exempt: "No general exemption", note: "" }
+      ],
+      admin_note: "NM Taxation & Revenue Dept administers state + local GRT centrally."
+    }
+  },
+  "New York": {
+    physical: "Office, employees, inventory, or property in NY creates nexus.",
+    economic: "$500,000 AND 100 transactions (BOTH required). Preceding four sales tax quarters. Effective June 21, 2018. Note: SaaS counts as tangible personal property in NY.",
+    registration: "File Form ST-119.2 for nonprofit exemption; receive NY exemption number.",
+    nonprofit_nexus_note: "Broad 501(c)(3) exemption. Hotel stays also covered using Form ST-129. Local rates vary significantly — NYC has highest combined rate. State exemption generally covers all local rates administered by NY DTF.",
+    local: {
+      overview: "NY state 4% + county/city taxes. NYC has the highest combined rate (8.875%). NY DTF administers most local taxes centrally.",
+      key_jurisdictions: [
+        { name: "New York City (5 boroughs)", local_rate: "4.5% (city) + 0.375% (MCTD)", combined: "8.875%", nonprofit_local_exempt: "Yes — ST-119.1 covers NYC taxes", note: "NY DTF administers NYC sales tax centrally" },
+        { name: "Buffalo (Erie County)", local_rate: "4.75%", combined: "8.75%", nonprofit_local_exempt: "Yes — ST-119.1 covers", note: "" },
+        { name: "Rochester (Monroe County)", local_rate: "4%", combined: "8%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Albany (Albany County)", local_rate: "4%", combined: "8%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Syracuse (Onondaga County)", local_rate: "4%", combined: "8%", nonprofit_local_exempt: "Yes", note: "" }
+      ],
+      admin_note: "NY DTF administers state + most local taxes centrally. ST-119.1 generally covers state + local. For hotel stays, use separate Form ST-129."
+    }
+  },
+  "North Carolina": {
+    physical: "Office, employees, inventory, or property in NC creates nexus.",
+    economic: "$100,000 in sales only (200-transaction threshold dropped July 1, 2024). Current or previous calendar year. Effective Nov 1, 2018.",
+    registration: "Register via NC Department of Revenue online portal.",
+    nonprofit_nexus_note: "NC uses a REFUND model — pay full tax at purchase, file semiannual refund (Form E-585). Electricity, telecom, motor vehicles, local hotel/food taxes, and alcohol are NON-REFUNDABLE.",
+    local: {
+      overview: "NC has state 4.75% + county 2% + transit/special district taxes. Local hotel taxes and food/beverage taxes are NON-REFUNDABLE to nonprofits.",
+      key_jurisdictions: [
+        { name: "Charlotte (Mecklenburg County)", local_rate: "2.25% + 0.5% transit", combined: "7.5%", nonprofit_local_exempt: "Refundable on general purchases; local hotel/food taxes NON-REFUNDABLE", note: "" },
+        { name: "Raleigh (Wake County)", local_rate: "2%", combined: "7.25%", nonprofit_local_exempt: "Refundable; local hotel/food NON-REFUNDABLE", note: "" },
+        { name: "Durham (Durham County)", local_rate: "2.25%", combined: "7.5%", nonprofit_local_exempt: "Refundable; local hotel/food NON-REFUNDABLE", note: "" },
+        { name: "Greensboro (Guilford County)", local_rate: "2%", combined: "7.25%", nonprofit_local_exempt: "Refundable; local hotel/food NON-REFUNDABLE", note: "" }
+      ],
+      admin_note: "NC DOR administers state + county taxes centrally. Local occupancy and food/beverage taxes (administered by counties/cities) are NOT included in the E-585 refund."
+    }
+  },
+  "North Dakota": {
+    physical: "Office, employees, inventory, or property in ND creates nexus.",
+    economic: "$100,000 in ND sales in prior year.",
+    registration: "Register via North Dakota Taxpayer Access Point (tap.nd.gov).",
+    nonprofit_nexus_note: "CONFIRMED TAXABLE: ND law does NOT exempt religious, charitable, or nonprofit organizations. All nonprofit purchases taxable. Only federally chartered corps (Red Cross) and licensed hospitals are exempt.",
+    local: {
+      overview: "ND has state 5% + city taxes (1%–3%). Most cities levy local sales taxes.",
+      key_jurisdictions: [
+        { name: "Fargo (Cass County)", local_rate: "2.25%", combined: "7.25%", nonprofit_local_exempt: "No — nonprofits not exempt in ND", note: "" },
+        { name: "Bismarck (Burleigh County)", local_rate: "2%", combined: "7%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Grand Forks", local_rate: "2%", combined: "7%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Minot", local_rate: "2%", combined: "7%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "ND Tax Commissioner administers state + local taxes centrally."
+    }
+  },
+  "Ohio": {
+    physical: "Office, employees, inventory, or property in OH creates nexus.",
+    economic: "$100,000 in OH sales or 200 transactions in prior year.",
+    registration: "Register via Ohio Business Gateway (gateway.ohio.gov).",
+    nonprofit_nexus_note: "Broad exemption. Use Form STEC-B (blanket) or STEC-U (single purchase). No prior state approval required. Local taxes administered with state — forms generally sufficient.",
+    local: {
+      overview: "Ohio has state 5.75% + county taxes. Combined ranges 6.5%–8%. OH Dept of Taxation administers all local taxes centrally.",
+      key_jurisdictions: [
+        { name: "Columbus (Franklin County)", local_rate: "1.75%", combined: "7.5%", nonprofit_local_exempt: "Yes — STEC-B/STEC-U covers", note: "" },
+        { name: "Cleveland (Cuyahoga County)", local_rate: "2.25%", combined: "8%", nonprofit_local_exempt: "Yes — STEC-B/STEC-U covers", note: "Highest in OH" },
+        { name: "Cincinnati (Hamilton County)", local_rate: "1.25%", combined: "7.8%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Dayton (Montgomery County)", local_rate: "1.75%", combined: "7.5%", nonprofit_local_exempt: "Yes", note: "" }
+      ],
+      admin_note: "OH DOR administers state + county taxes centrally. One set of forms covers all."
+    }
+  },
+  "Oklahoma": {
+    physical: "Office, employees, inventory, or property in OK creates nexus.",
+    economic: "$100,000 in taxable sales only (no transaction threshold; exempt sales excluded). Current or previous calendar year. Effective Aug 1, 2019.",
+    registration: "Register via Oklahoma Taxpayer Access Point (oktap.tax.ok.gov).",
+    nonprofit_nexus_note: "Broad 501(c)(3) exemption after applying for exemption certificate (Form 13-16-A). Local rates vary by city.",
+    local: {
+      overview: "Oklahoma has state 4.5% + county + city rates. Combined can reach 11%+.",
+      key_jurisdictions: [
+        { name: "Oklahoma City (Oklahoma County)", local_rate: "4.125% (city + county)", combined: "8.625%", nonprofit_local_exempt: "State cert generally covers", note: "" },
+        { name: "Tulsa (Tulsa County)", local_rate: "4.017%", combined: "8.517%", nonprofit_local_exempt: "State cert generally covers", note: "" },
+        { name: "Norman (Cleveland County)", local_rate: "3.75%", combined: "8.25%", nonprofit_local_exempt: "State cert generally covers", note: "" }
+      ],
+      admin_note: "OK Tax Commission administers state + most local taxes centrally."
+    }
+  },
+  "Oregon": {
+    physical: "No state sales tax.",
+    economic: "No state sales tax.",
+    registration: "No state sales tax registration.",
+    nonprofit_nexus_note: "No state or local sales tax in Oregon.",
+    local: {
+      overview: "Oregon has NO state or local general sales tax. Portland Metro area has a 1% arts tax on individuals (not purchases). No sales tax nexus concerns.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "0%", nonprofit_local_exempt: "N/A — no sales tax", note: "" }
+      ],
+      admin_note: "No sales tax in Oregon. No local tax concerns for purchases."
+    }
+  },
+  "Pennsylvania": {
+    physical: "Office, employees, inventory, or property in PA creates nexus.",
+    economic: "$100,000 in PA sales in prior year.",
+    registration: "Apply with Form REV-72 to PA DOR (strict 6-part Act 55 test).",
+    nonprofit_nexus_note: "Strict 6-part Act 55 test. Many applications denied. Must prove all criteria quantifiably. Apply BEFORE making any exempt purchases.",
+    local: {
+      overview: "PA has state 6% + Philadelphia (2%) and Allegheny County (1%) local taxes.",
+      key_jurisdictions: [
+        { name: "Philadelphia (Philadelphia County)", local_rate: "2%", combined: "8%", nonprofit_local_exempt: "State exemption (REV-1220) covers Philadelphia local tax", note: "Philadelphia Revenue Dept coordinates with PA DOR" },
+        { name: "Pittsburgh (Allegheny County)", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "State exemption covers Allegheny County tax", note: "" },
+        { name: "All other PA jurisdictions", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers all", note: "Only Philadelphia and Allegheny County levy local tax" }
+      ],
+      admin_note: "PA has only two localities with additional sales taxes: Philadelphia (2%) and Allegheny County (1%). State REV-1220 covers both."
+    }
+  },
+  "Rhode Island": {
+    physical: "Office, employees, inventory, or property in RI creates nexus.",
+    economic: "$100,000 in RI sales or 200 transactions in prior year.",
+    registration: "Apply to RI Division of Taxation for Certificate of Exemption.",
+    nonprofit_nexus_note: "Orgs 'operated exclusively for religious or charitable purposes' qualify. Individual employees paying personally cannot use org exemption. Hotel rates increased Jan 2026.",
+    local: {
+      overview: "Rhode Island has a single 7% state rate with NO local sales taxes.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "7%", nonprofit_local_exempt: "RI Certificate of Exemption covers statewide", note: "No local sales tax in RI" }
+      ],
+      admin_note: "No local sales taxes in RI. State exemption applies uniformly."
+    }
+  },
+  "South Carolina": {
+    physical: "Office, employees, inventory, or property in SC creates nexus.",
+    economic: "$100,000 in SC sales or 200 transactions in prior year.",
+    registration: "Register via South Carolina Business One Stop (scbos.sc.gov).",
+    nonprofit_nexus_note: "NO general exemption for nonprofit purchases. SC DOR confirmed: computers, furniture, office supplies purchased for org use are taxable even for 501(c)(3)s. Hotel stays always taxable.",
+    local: {
+      overview: "SC has state 6% + county taxes (1%–2%). Total can reach 9% in some counties.",
+      key_jurisdictions: [
+        { name: "Columbia (Richland County)", local_rate: "2%", combined: "8%", nonprofit_local_exempt: "No general exemption", note: "" },
+        { name: "Charleston (Charleston County)", local_rate: "1%", combined: "9%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Greenville (Greenville County)", local_rate: "1%", combined: "7%", nonprofit_local_exempt: "No", note: "" },
+        { name: "Myrtle Beach (Horry County)", local_rate: "2%", combined: "8%", nonprofit_local_exempt: "No", note: "" }
+      ],
+      admin_note: "SC DOR administers local taxes centrally."
+    }
+  },
+  "South Dakota": {
+    physical: "Office, employees, inventory, or property in SD creates nexus.",
+    economic: "$100,000 in sales only (200-transaction threshold dropped July 1, 2023 — notably SD v. Wayfair originated the 200-transaction standard). Previous or current calendar year. Effective Nov 1, 2018.",
+    registration: "Register via South Dakota Department of Revenue online.",
+    nonprofit_nexus_note: "Limited exemptions — YMCA, scouts, civic associations, relief agencies, and hospitals qualify. General 501(c)(3)s are generally taxable.",
+    local: {
+      overview: "SD has state 4.5% + municipal taxes (up to 2%). Some municipalities levy own rates.",
+      key_jurisdictions: [
+        { name: "Sioux Falls (Minnehaha County)", local_rate: "2%", combined: "6.5%", nonprofit_local_exempt: "Qualifying orgs only (YMCA, hospitals, etc.)", note: "" },
+        { name: "Rapid City (Pennington County)", local_rate: "2%", combined: "6.5%", nonprofit_local_exempt: "Qualifying orgs only", note: "" },
+        { name: "Aberdeen (Brown County)", local_rate: "2%", combined: "6.5%", nonprofit_local_exempt: "Qualifying orgs only", note: "" }
+      ],
+      admin_note: "SD DOR administers state + local taxes centrally."
+    }
+  },
+  "Tennessee": {
+    physical: "Office, employees, inventory, or property in TN creates nexus.",
+    economic: "$100,000 in TN sales in prior 12 months.",
+    registration: "Register via Tennessee Taxpayer Access Point (TNTAP). Apply for Certificate of Exemption BEFORE making exempt purchases.",
+    nonprofit_nexus_note: "Broadly exempt after receiving Certificate of Exemption from TN DOR. Must apply BEFORE exempt purchases. Certificate valid 4 years. Personal payment is TAXABLE even if org reimburses.",
+    local: {
+      overview: "TN has state 7% (9.75% on food) + local rates (1%–2.75%). Combined can reach 9.75%.",
+      key_jurisdictions: [
+        { name: "Nashville (Davidson County)", local_rate: "2.25%", combined: "9.25%", nonprofit_local_exempt: "TN certificate covers local taxes", note: "" },
+        { name: "Memphis (Shelby County)", local_rate: "2.25%", combined: "9.75%", nonprofit_local_exempt: "TN certificate covers local taxes", note: "One of highest combined rates in US" },
+        { name: "Knoxville (Knox County)", local_rate: "2.25%", combined: "9.25%", nonprofit_local_exempt: "TN certificate covers", note: "" },
+        { name: "Chattanooga (Hamilton County)", local_rate: "2.25%", combined: "9.25%", nonprofit_local_exempt: "TN certificate covers", note: "" }
+      ],
+      admin_note: "TN DOR administers state + local taxes centrally. One certificate covers both."
+    }
+  },
+  "Texas": {
+    physical: "Office, employees, inventory, property, or representatives in TX creates nexus.",
+    economic: "$500,000 in TX sales in prior 12 months.",
+    registration: "Register with Texas Comptroller (Form AP-201). Nonprofits: Form AP-204 or AP-205.",
+    nonprofit_nexus_note: "Broad sales tax exemption using Form 01-339. Hotel occupancy tax exemption much narrower — only orgs providing food/shelter to indigent, schools, and churches qualify. General 501(c)(3)s pay hotel tax.",
+    local: {
+      overview: "TX has state 6.25% + local taxes up to 2%. Combined max 8.25%. TX Comptroller administers most local taxes.",
+      key_jurisdictions: [
+        { name: "Houston (Harris County)", local_rate: "2%", combined: "8.25%", nonprofit_local_exempt: "Yes — Form 01-339 covers local taxes", note: "" },
+        { name: "Dallas", local_rate: "2%", combined: "8.25%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "San Antonio (Bexar County)", local_rate: "2%", combined: "8.25%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Austin (Travis County)", local_rate: "2%", combined: "8.25%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Fort Worth (Tarrant County)", local_rate: "2%", combined: "8.25%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Frisco (Collin County)", local_rate: "2%", combined: "8.25%", nonprofit_local_exempt: "Yes", note: "" }
+      ],
+      admin_note: "TX Comptroller administers state + city taxes centrally. Form 01-339 covers all. Hotel occupancy tax (HOT) is separate — generally not covered for most nonprofits."
+    }
+  },
+  "Utah": {
+    physical: "Office, employees, inventory, or property in UT creates nexus.",
+    economic: "$100,000 in UT sales or 200 transactions in prior year.",
+    registration: "Register via Utah Tax Commission (tc.utah.gov). Form TC-721 for exemption.",
+    nonprofit_nexus_note: "Limited exemptions — purchases must be directly for charitable purposes. Org must apply and qualify. Local rates add to state base rate.",
+    local: {
+      overview: "Utah has state 4.85% + county/city/transit rates. Combined ranges 6.1%–9.05%.",
+      key_jurisdictions: [
+        { name: "Salt Lake City (Salt Lake County)", local_rate: "2.1%", combined: "7.75%", nonprofit_local_exempt: "Qualifying orgs — TC-721 covers", note: "" },
+        { name: "Provo (Utah County)", local_rate: "1.1%", combined: "6.75%", nonprofit_local_exempt: "Qualifying orgs — TC-721 covers", note: "" },
+        { name: "Ogden (Weber County)", local_rate: "1.35%", combined: "7.2%", nonprofit_local_exempt: "Qualifying orgs", note: "" }
+      ],
+      admin_note: "UT Tax Commission administers state + local taxes centrally."
+    }
+  },
+  "Vermont": {
+    physical: "Office, employees, inventory, or property in VT creates nexus.",
+    economic: "$100,000 in VT sales or 200 transactions in prior year.",
+    registration: "Register for Vermont Business Tax Account first, then use Form S-3.",
+    nonprofit_nexus_note: "ONLY 501(c)(3) qualifies — NOT 501(c)(4)–(13). Must register for VT Business Tax Account before making exempt purchases. Single statewide rate.",
+    local: {
+      overview: "Vermont has state 6% with NO local sales taxes. Some municipalities levy local meals and rooms taxes.",
+      key_jurisdictions: [
+        { name: "All jurisdictions", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "Form S-3 covers statewide", note: "No local sales tax in VT" },
+        { name: "Burlington (Meals Tax)", local_rate: "1% local meals", combined: "10% meals total", nonprofit_local_exempt: "Local meals tax may apply — verify", note: "VT allows municipalities to add local meals tax" }
+      ],
+      admin_note: "No local general sales taxes. Some municipalities have local meals/rooms taxes — verify with VT Dept of Taxes."
+    }
+  },
+  "Virginia": {
+    physical: "Office, employees, inventory, or property in VA creates nexus.",
+    economic: "$100,000 in VA sales or 200 transactions in prior year.",
+    registration: "Apply via Nonprofit Online at tax.virginia.gov or Form NP-1 with financial statements.",
+    nonprofit_nexus_note: "NO general exemption — must qualify under strict criteria. Hotel stays under 90 days TAXABLE even with certificate. Northern VA and Hampton Roads have higher combined rates.",
+    local: {
+      overview: "VA has state 4.3% + regional taxes (1.3% for Northern VA and Hampton Roads) + local taxes. Combined ranges 5.3%–7%.",
+      key_jurisdictions: [
+        { name: "Northern Virginia (Fairfax, Arlington, etc.)", local_rate: "1.7% regional + local", combined: "7%", nonprofit_local_exempt: "VA certificate covers all", note: "Higher regional rate applies" },
+        { name: "Richmond (Henrico/Chesterfield)", local_rate: "1%", combined: "6%", nonprofit_local_exempt: "VA certificate covers", note: "" },
+        { name: "Virginia Beach / Hampton Roads", local_rate: "1.7% regional", combined: "7%", nonprofit_local_exempt: "VA certificate covers", note: "" },
+        { name: "Roanoke", local_rate: "1%", combined: "6%", nonprofit_local_exempt: "VA certificate covers", note: "" }
+      ],
+      admin_note: "VA Tax administers state + all local taxes centrally. VA certificate covers state + local (not hotel occupancy tax for stays under 90 days)."
+    }
+  },
+  "Washington": {
+    physical: "Office, employees, inventory, or property in WA creates nexus.",
+    economic: "$100,000 in WA sales in prior or current year.",
+    registration: "Register via My DOR portal (dor.wa.gov). File Business License Application.",
+    nonprofit_nexus_note: "MAJOR 2025 CHANGE (ESSB 5814, effective Oct 2025): IT services, custom software, website design, staffing, advertising, and seminars are now taxable for nonprofits. Legal services, accounting, engineering, and healthcare remain exempt.",
+    local: {
+      overview: "WA has state 6.5% + local rates. Combined ranges 7.5%–10.6%. Seattle has among the highest rates.",
+      key_jurisdictions: [
+        { name: "Seattle (King County)", local_rate: "3.6%", combined: "10.25%", nonprofit_local_exempt: "Nonprofit exemption applies where applicable; ESSB 5814 taxable services are taxable locally too", note: "" },
+        { name: "Tacoma (Pierce County)", local_rate: "2.8%", combined: "10.3%", nonprofit_local_exempt: "Same as Seattle — ESSB 5814 rules apply", note: "" },
+        { name: "Spokane (Spokane County)", local_rate: "2.4%", combined: "8.9%", nonprofit_local_exempt: "Nonprofit exemption applies where applicable", note: "" },
+        { name: "Bellevue (King County)", local_rate: "3.6%", combined: "10.2%", nonprofit_local_exempt: "ESSB 5814 rules apply", note: "" }
+      ],
+      admin_note: "WA DOR administers state + local taxes centrally. One registration covers all. ESSB 5814 services are taxable at combined state+local rate."
+    }
+  },
+  "West Virginia": {
+    physical: "Office, employees, inventory, or property in WV creates nexus.",
+    economic: "$100,000 in WV sales or 200 transactions in prior year.",
+    registration: "Register via West Virginia One Stop Business Center. Apply Form CST-240 for refund orgs.",
+    nonprofit_nexus_note: "Bona fide charities making no charge for services: directly exempt using SSTGB Form F0003. Orgs that charge fees must pay tax then apply for refund (Form CST-240). Gasoline NEVER exempt.",
+    local: {
+      overview: "WV has state 6% + municipal business and occupation (B&O) taxes and limited local option taxes. No broad local sales taxes.",
+      key_jurisdictions: [
+        { name: "Charleston (Kanawha County)", local_rate: "1% city B&O tax", combined: "~7% effective", nonprofit_local_exempt: "State exemption covers most; verify local B&O", note: "" },
+        { name: "Huntington (Cabell County)", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers", note: "" },
+        { name: "Morgantown (Monongalia County)", local_rate: "0%", combined: "6%", nonprofit_local_exempt: "State exemption covers", note: "" }
+      ],
+      admin_note: "WV State Tax Division administers state sales tax centrally. Local B&O taxes are city-administered separately."
+    }
+  },
+  "Wisconsin": {
+    physical: "Office, employees, inventory, or property in WI creates nexus.",
+    economic: "$100,000 in WI sales in prior or current year.",
+    registration: "Apply for Certificate of Exempt Status (CES) from WI DOR. Out-of-state orgs use IRS letter.",
+    nonprofit_nexus_note: "Broad 501(c)(3) exemption. Hotel/lodging EXPLICITLY COVERED including local room taxes. Out-of-state 501(c)(3)s do NOT need a Wisconsin CES — just present IRS determination letter.",
+    local: {
+      overview: "WI has state 5% + county 0.5%. Room taxes (hotel) also exempt when state exemption applies — unusual among states.",
+      key_jurisdictions: [
+        { name: "Milwaukee (Milwaukee County)", local_rate: "0.5%", combined: "5.5%", nonprofit_local_exempt: "Yes — CES covers county tax too", note: "" },
+        { name: "Madison (Dane County)", local_rate: "0.5%", combined: "5.5%", nonprofit_local_exempt: "Yes — CES covers", note: "" },
+        { name: "Green Bay (Brown County)", local_rate: "0.5%", combined: "5.5%", nonprofit_local_exempt: "Yes", note: "" },
+        { name: "Waukesha (Waukesha County)", local_rate: "0.5%", combined: "5.5%", nonprofit_local_exempt: "Yes — local room taxes also covered", note: "" }
+      ],
+      admin_note: "WI DOR administers state + county taxes centrally. CES covers both. Local room taxes also exempt when state exemption applies."
+    }
+  },
+  "Wyoming": {
+    physical: "Office, employees, inventory, or property in WY creates nexus.",
+    economic: "$100,000 in WY sales or 200 transactions in prior year.",
+    registration: "Register via Wyoming's ETS system. Apply for exemption certificate.",
+    nonprofit_nexus_note: "Broad 501(c)(3) exemption with WY exemption certificate. County optional taxes add to state rate.",
+    local: {
+      overview: "WY has state 4% + county taxes (up to 2%). Combined ranges 4%–6%.",
+      key_jurisdictions: [
+        { name: "Cheyenne (Laramie County)", local_rate: "2%", combined: "6%", nonprofit_local_exempt: "WY cert covers county taxes", note: "" },
+        { name: "Casper (Natrona County)", local_rate: "2%", combined: "6%", nonprofit_local_exempt: "WY cert covers", note: "" },
+        { name: "Jackson (Teton County)", local_rate: "2%", combined: "6%", nonprofit_local_exempt: "WY cert covers", note: "" }
+      ],
+      admin_note: "WY DOR administers state + county taxes centrally."
+    }
+  }
+};
+
+// Category groupings for Nexus page filter
+const NEXUS_CATEGORIES = {
+  "Office & Operations": ["Office Supplies","Computer Equipment & Software","Software Subscriptions / SaaS","Furniture & Fixtures","Cleaning Supplies","Telecommunications","Utilities (Electric, Gas, Water)"],
+  "Travel & Lodging": ["Hotel / Lodging (Business Travel)","Airline Tickets / Flights","Car Rental","Ground Transportation (Taxi, Rideshare, Bus)","Mileage / Fuel Reimbursement","Parking & Tolls"],
+  "Professional Services": ["Legal Services (Attorney / Law Firm)","Accounting & Audit Services (CPA)","Management Consulting","Financial Advisory / Investment Services","HR / Payroll Services","IT Consulting & Managed Services","Architecture & Engineering Services","Lobbying & Government Relations","Insurance Premiums"],
+  "Events & Programs": ["Donor Event / Gala Expenses","Donor Meals (Restaurant / Catered)","Meeting Meals & Refreshments","Food & Beverages (for events)","Catering Services","Event Venue Rental","Audio/Visual Equipment & Rentals","Conference / Event Registration Fees"],
+  "Digital / SaaS": ["Software Subscriptions / SaaS","Advertising Services","Photography & Videography","Graphic Design Services","IT Consulting & Managed Services"],
+  "Printing & Communications": ["Printing & Publications","Donor Newsletters & Annual Reports","Marketing & Promotional Materials","Postage & Shipping"]
+};
+
+function renderNexusTable() {
+  const stateFilter = document.getElementById('nexus-state-filter').value;
+  const catFilter = document.getElementById('nexus-cat-filter').value;
+  const container = document.getElementById('nexus-table-container');
+
+  let states = stateFilter ? [stateFilter] : Object.keys(NEXUS_RULES);
+  if (!stateFilter && Object.keys(NEXUS_RULES).length > 20) states = states.slice(0, 51);
+
+  let html = '';
+  for (const state of states) {
+    const nexus = NEXUS_RULES[state];
+    if (!nexus) continue;
+    const sd = STATE_DATA[state];
+    const badgeClass = sd ? (sd.status === 'exempt' ? 'badge-exempt' : sd.status === 'taxable' ? 'badge-taxable' : 'badge-conditional') : 'badge-conditional';
+    const badgeText = sd ? (sd.status === 'exempt' ? 'Broad Exempt' : sd.status === 'taxable' ? 'Taxable' : 'Conditional') : 'Conditional';
+
+    // Filter local jurisdictions by category if filter active
+    let localRows = nexus.local.key_jurisdictions;
+    // (category filter doesn't deeply filter local rows, just shows relevant note)
+
+    html += `<div class="update-card" style="flex-direction:column;cursor:default;margin-bottom:1.25rem;border-radius:var(--radius)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem">
+        <span style="font-size:1.05rem;font-weight:700">${state}</span>
+        <span class="state-badge ${badgeClass}">${badgeText}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:0.85rem;margin-bottom:1rem">
+        <div><span style="color:var(--text-muted);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Physical Nexus</span><br>${nexus.physical}</div>
+        <div><span style="color:var(--text-muted);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Economic Nexus Threshold</span><br>${nexus.economic}</div>
+      </div>
+      <div class="category-note" style="margin-bottom:0.75rem"><strong>Nonprofit Nexus Note:</strong> ${nexus.nonprofit_nexus_note}</div>
+      <div style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:0.5rem">Local Jurisdiction Rules</div>
+      <div style="font-size:0.825rem;color:var(--text-muted);margin-bottom:0.5rem">${nexus.local.overview}</div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-bottom:0.5rem">
+        <thead>
+          <tr style="background:var(--gray-light)">
+            <th style="text-align:left;padding:5px 8px;font-weight:600;color:var(--text-muted)">Jurisdiction</th>
+            <th style="text-align:center;padding:5px 8px;font-weight:600;color:var(--text-muted)">Local Rate</th>
+            <th style="text-align:center;padding:5px 8px;font-weight:600;color:var(--text-muted)">Combined</th>
+            <th style="text-align:left;padding:5px 8px;font-weight:600;color:var(--text-muted)">Nonprofit Local Exempt?</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${localRows.map((j,i) => `<tr style="border-top:1px solid var(--gray-border);${i%2===1?'background:var(--gray-light)':''}">
+            <td style="padding:5px 8px;font-weight:500">${j.name}</td>
+            <td style="padding:5px 8px;text-align:center">${j.local_rate}</td>
+            <td style="padding:5px 8px;text-align:center;font-weight:600">${j.combined}</td>
+            <td style="padding:5px 8px;color:${j.nonprofit_local_exempt && (j.nonprofit_local_exempt.startsWith('Yes') || j.nonprofit_local_exempt.includes('covers')) ? 'var(--green-dark)' : j.nonprofit_local_exempt && j.nonprofit_local_exempt.startsWith('No') ? 'var(--red-dark)' : 'var(--amber-dark)'}">${j.nonprofit_local_exempt}${j.note ? ' <span style="color:var(--text-muted);font-style:italic">— '+j.note+'</span>' : ''}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+      <div style="font-size:0.78rem;color:var(--text-muted);font-style:italic">${nexus.local.admin_note}</div>
+    </div>`;
+  }
+
+  container.innerHTML = html || '<p style="color:var(--text-muted)">No matching states found.</p>';
+}
+
+// showPage patched above to include nexus
+
+
 </script>
 </body>
 </html>
