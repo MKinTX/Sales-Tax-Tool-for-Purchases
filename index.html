@@ -214,14 +214,6 @@
 <div id="page-lookup" class="page active">
   <div class="hero">
     <h1>Is your purchase<br><em>tax exempt?</em></h1>
-    <p>Instant answers for nonprofit employees across all 50 states. Check any purchase category before you buy.</p>
-  </div>
-
-  <div class="stats-row">
-    <div class="stat-card"><div class="stat-num" style="color:var(--green)">31</div><div class="stat-label">States: Broad Exempt</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--amber)">14</div><div class="stat-label">States: Conditional</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--red)">5</div><div class="stat-label">States: Taxable</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--blue)">50</div><div class="stat-label">States Covered</div></div>
   </div>
 
   <div class="lookup-card">
@@ -514,16 +506,16 @@ const STATE_DATA = {
   "Alaska": { status: "exempt", verified: "April 2026", source: "https://tax.alaska.gov", rule: "No state sales tax. Alaska has no statewide sales tax.", details: "Alaska has no statewide sales tax. Some local jurisdictions have local option sales taxes.", requirements: [], categories: { taxable: [], exempt: [] } },
   "Arizona": { status: "taxable", verified: "April 2026 (live-searched AZ DOR)", source: "https://azdor.gov/transaction-privilege-tax/non-profit-and-qualifying-healthcare", rule: "NO general exemption for nonprofit purchases. Arizona TPT taxes SELLERS not buyers. Only hospitals and specific healthcare orgs qualify for purchase exemptions.", details: "AZ DOR confirmed: Arizona does NOT provide a general exemption for nonprofit purchases. Arizona's Transaction Privilege Tax (TPT) is a tax on the seller (not buyer), so exemptions primarily apply to SALES BY nonprofits. When a nonprofit acts as a customer, vendors may pass the tax on to them. Only licensed nonprofit hospitals and qualifying healthcare organizations can obtain an exemption letter for purchases.", requirements: ["General 501(c)(3)s: NO purchase exemption available", "Only qualifying hospitals and healthcare orgs: apply to ADOR for exemption letter", "Use Form 5000HC (Healthcare Exemption Certificate) for qualifying healthcare orgs only"], categories: { taxable: [], exempt: [] } },
   "Arkansas": { status: "conditional", verified: "April 2026 (live-searched AR DFA)", source: "https://www.dfa.arkansas.gov/excise-tax/sales-and-use-tax/", rule: "NEW 2025 LAW: Small nonprofits under $200K budget may now qualify. Larger orgs still limited. Churches, hospitals, schools broadly exempt.", details: "AR DFA confirmed (2025 law): New exemption for 'qualified nonprofit organizations' — 501(c)(3) orgs that existed before Jan 1, 2025, with annual operating budget under $200,000, performing charitable community-based services. EXCLUSIONS even for qualifying orgs: motor vehicles, computers, mobile phones, televisions, construction materials, household appliances, ATVs, alcoholic beverages, tobacco. Larger nonprofits (over $200K budget) must be specifically listed in statute (schools, churches, hospitals).", requirements: ["Small nonprofits (under $200K budget): petition AR DFA for exemption", "Provide proof of 501(c)(3) status and community-based services", "Larger orgs: must be specifically listed in statute", "Computers, phones, TVs: excluded even for qualifying orgs"], categories: { taxable: ["Computer equipment", "Mobile phones", "Televisions", "Motor vehicles", "Construction materials"], exempt: ["Mission-related supplies for qualifying small nonprofits", "Church purchases", "Hospital supplies"] } },
-  "California": { status: "taxable", verified: "April 2026", source: "https://www.cdtfa.ca.gov/industry/nonprofit.html", rule: "No general exemption for nonprofit purchases. Very limited exemptions.", details: "California does not provide a general sales tax exemption for nonprofit purchases. Only very specific types of purchases qualify.", requirements: [], categories: { taxable: [], exempt: [] } },
+  "California": { status: "taxable", verified: "April 2026 (CDTFA Pub.61 FY2023-24)", source: "https://www.cdtfa.ca.gov/industry/nonprofit.html", rule: "NO general nonprofit purchase exemption. CA law is explicit: no exemption merely because purchaser is a nonprofit. Only narrow statutory exemptions apply per CDTFA Publication 61.", details: "CDTFA Publication 61 (FY2023-24) confirms: California imposes no blanket sales/use tax exemption on nonprofit purchases. Key item-specific exemptions that DO apply to nonprofits: (1) Food products purchased for human consumption — broadly exempt per §6359; (2) Prescription medicines/medical devices — exempt per §§6369-6369.5; (3) Gas, electricity, water delivered through mains/lines — exempt per §6353; (4) Custom computer programs (not prewritten software) — excluded from 'sale' definition per §6010.9; (5) Postage/USPS charges — not taxable as transportation charges per §§6011-6012; (6) Printed sales messages mailed to others — exempt per §6379.5; (7) Donations of property by sellers to qualifying nonprofits — exempt from use tax per §6403; (8) Meals delivered to homebound elderly/disabled by nonprofit volunteer providers — exempt per §6363.7. TAXABLE for nonprofits: office supplies, furniture, computer hardware, software subscriptions/SaaS (prewritten), printing for internal use, hotel stays, car rentals, advertising, clothing/uniforms, construction materials, most services.", requirements: ["No application needed — CA has no general nonprofit exemption certificate process", "Present IRS 501(c)(3) letter only where a specific statutory exemption applies (e.g. food, medicine)", "For food/medicine purchases: rely on item-level exemption, not org status", "Register with CDTFA if making taxable sales: cdtfa.ca.gov"], categories: { taxable: ["Office supplies", "Furniture & fixtures", "Computer hardware", "Prewritten software / SaaS", "Printing for internal use", "Hotel/lodging", "Car rentals", "Advertising services", "Clothing & uniforms", "Construction materials", "Catering services", "Event venue rental"], exempt: ["Food for human consumption (§6359)", "Prescription medicines & medical devices (§6369)", "Gas/electricity/water via mains (§6353)", "Custom computer programs (§6010.9)", "USPS postage (transportation exclusion)", "Meals delivered to homebound elderly/disabled by nonprofit (§6363.7)", "Donated property — use tax exempt (§6403)"] } },
   "Colorado": { status: "exempt", verified: "April 2026 (live-searched CO DOR)", source: "https://tax.colorado.gov/nonprofit-organizations", rule: "501(c)(3) broadly exempt. Purchases over $250 must be paid with org check/card. Home-rule cities (Denver, Aurora, etc.) require separate local certificates.", details: "CO DOR confirmed: Broad exemption for 501(c)(3) organizations. IMPORTANT PAYMENT RULE: Purchases over $250 must be made with the organization's own check or credit card — not personal funds later reimbursed. Apply with Form DR 0715 from CO DOR. CAUTION: Colorado has many home-rule cities (Denver, Aurora, Colorado Springs, etc.) that administer their own local sales tax independently — separate city exemption may be required.", requirements: ["Apply for DR 0715 (Application for Sales Tax Exemption) from CO DOR", "Present Form DR 0563 (Exemption Certificate) to vendors", "Purchases over $250: MUST be paid with org's own check or org-issued credit card", "Home-rule cities: check Denver, Aurora, Colorado Springs requirements separately"], categories: { taxable: [], exempt: [] } },
   "Connecticut": { status: "exempt", verified: "April 2026 (live-searched CT DOR)", source: "https://portal.ct.gov/drs/sales-tax/tax-exemption-programs-for-nonprofit-organizations", rule: "501(c)(3) broadly exempt. No permit required since 1995 — present IRS determination letter. Meals/lodging can be exempt if org is billed directly AND pays with org funds.", details: "CT DOR confirmed: No longer issues exemption permits. 501(c)(3) and 501(c)(13) orgs present their IRS determination letter. Meals and lodging CAN be exempt if: (1) retailer directly invoices org, (2) org pays with org check/card, and (3) org is not reimbursed by those consuming. Use Form CERT-122 for meals/lodging refund if paid incorrectly.", requirements: ["Present IRS 501(c)(3) determination letter to vendors — no CT permit needed", "For meals/lodging: must be billed to org AND paid with org check or org credit card", "Purchases must be for org purposes only — not personal use of officers/members"], categories: { taxable: [], exempt: [] } },
   "Delaware": { status: "exempt", verified: "April 2026 (live-searched DE Revenue)", source: "https://revenue.delaware.gov/business-tax-forms/exemption-certificates/", rule: "No sales tax. Delaware has no state or local sales tax. Nonprofit exemption certificates are not applicable.", details: "DE Revenue confirmed: Delaware has NO state or local sales tax. Exemption certificates are not applicable. Delaware uses a Gross Receipts Tax on businesses (not passed to consumers). Nonprofits are exempt from the Gross Receipts Tax on most goods and services.", requirements: ["No action required — Delaware has no sales tax", "Nonprofits exempt from Gross Receipts Tax on most goods/services"], categories: { taxable: [], exempt: [] } },
     "District of Columbia": { status: "conditional", verified: "April 2026 (live-searched DC OTR)", source: "https://otr.cfo.dc.gov/page/applying-tax-exemption", rule: "Must have DC office or activities. Apply via Form FR-164 at MyTax.DC.gov. NOTE: DC rate increases 6%→7% on Oct 1, 2026.", details: "DC Office of Tax and Revenue (OTR): nonprofits must have a nexus in DC (office or activities) to qualify. Apply via Form FR-164 at MyTax.DC.gov. The current DC sales tax rate is 6%. IMPORTANT UPCOMING CHANGE: DC sales tax rate increases from 6% to 7% on October 1, 2026.", requirements: ["Must have DC office or activities to qualify", "Apply via Form FR-164 at MyTax.DC.gov", "Submit IRS determination letter and DC nexus documentation", "Note: DC rate increases 6%→7% on October 1, 2026"], categories: { taxable: ["Restaurant meals (separate meals tax applies)", "Hotel stays (Hotel Occupancy Tax applies separately)"], exempt: ["Office supplies", "Equipment", "Mission-related purchases with certificate"] } },
   "Florida": { status: "exempt", verified: "April 2026 (live-searched FL DOR)", source: "https://floridarevenue.com/taxes/businesses/Pages/nonprofit_sales_tax.aspx", rule: "501(c)(3) broadly exempt with Consumer's Certificate of Exemption (Form DR-14). Includes hotel/lodging. Payment must be from org funds.", details: "FL DOR confirmed: 501(c)(3) orgs broadly exempt under Section 212.08(7) F.S. Must apply for Form DR-14 (formerly DR-5). Certificate valid 5 years. HOTEL STAYS ARE INCLUDED — purchases and rentals of living/sleeping accommodations are exempt. Payment must be from organizational funds — personal payment is taxable even if later reimbursed.", requirements: ["Apply for Consumer's Certificate of Exemption (Form DR-14) from FL DOR", "Certificate valid 5 years (auto-reviewed by FL DOR)", "Payment must be with ORGANIZATIONAL FUNDS — personal payment is taxable even if reimbursed", "Hotel stays also exempt if billed to and paid by org"], categories: { taxable: [], exempt: [] } },
-  "Georgia": { status: "taxable", verified: "April 2026 (live-searched GA DOR)", source: "https://dor.georgia.gov/taxes/sales-use-tax/tax-exempt-nonprofit-organizations", rule: "NO general exemption. GA statute grants no exemption to churches, religious, charitable, civic or other nonprofit organizations. Only licensed hospitals, orphanages, and nonprofit private schools qualify.", details: "GA DOR confirmed: Georgia statute grants NO sales or use tax exemption to churches, religious, charitable, civic or other nonprofit organizations for their purchases. Only specifically listed orgs qualify: licensed orphanages/adoption agencies, licensed non-profit hospitals/nursing homes, nonprofit private schools (grades 1-12), food banks, job training orgs, nonprofit volunteer health clinics.", requirements: ["General charitable 501(c)(3)s: NO exemption — tax must be paid on all purchases", "Licensed hospitals, orphanages, nonprofit private schools: apply via Georgia Tax Center", "Verify if org is in the specific qualifying list at dor.georgia.gov"], categories: { taxable: [], exempt: [] } },
+  "Georgia": { status: "taxable", verified: "April 2026 (GA DOR dor.georgia.gov)", source: "https://dor.georgia.gov/taxes/sales-use-tax/tax-exempt-nonprofit-organizations", rule: "NO general exemption for nonprofit purchases. Georgia statute grants NO sales/use tax exemption to churches, religious, charitable, civic or other nonprofits. Only specifically enumerated orgs qualify per O.C.G.A. §48-8-3.", details: "GA DOR confirmed: Georgia law does not provide a general nonprofit purchase exemption. The following SPECIFIC org types qualify for purchase exemptions: (1) Licensed nonprofit orphanages, adoption agencies, and maternity homes; (2) Licensed nonprofit in-patient general hospitals, mental hospitals, nursing homes, and hospices; (3) Nonprofit private schools (grades 1-12); (4) Qualified food banks (Letter of Authorization required annually via GA Tax Center); (5) Job training organizations (Letter of Authorization required); (6) Nonprofit volunteer health clinics and nonprofit health centers (annual Letter of Authorization via GA Tax Center). ALL other nonprofits — including general 501(c)(3) charitable orgs, churches, civic groups — must pay Georgia sales and use tax on ALL purchases. ITEM-LEVEL NOTES: Services (legal, accounting, consulting, IT) are generally NOT taxable in GA as GA taxes only tangible personal property and specific enumerated services. Accommodations, in-state transportation, admissions, and amusement charges ARE taxable. Newspapers and periodicals ARE taxable in GA (O.C.G.A. §48-8-30(b)).", requirements: ["General 501(c)(3)s: NO purchase exemption — all tangible personal property purchases taxable", "Qualifying orgs: apply via Georgia Tax Center at gtc.dor.georgia.gov", "Food banks, job training orgs, health clinics: annual Letter of Authorization required (renewed July 1–June 30)", "Form ST-5 Certificate of Exemption: only for specifically qualifying org types — NOT general nonprofits", "Note: Most services are NOT taxable in GA regardless of buyer status (O.C.G.A. §48-8-2(31))"], categories: { taxable: ["Office supplies", "Computer equipment & hardware", "Furniture & fixtures", "Cleaning supplies", "Event venue rental", "Audio/Visual equipment", "Clothing & uniforms", "Construction materials", "Flowers & floral arrangements", "Plaques & trophies", "Newspapers & periodicals"], exempt: ["Most professional services (legal, accounting, consulting, IT) — services generally not subject to GA sales tax", "Postage/shipping charges separately stated", "Hotel/lodging (accommodation tax applies separately)", "Airline tickets (not tangible personal property)"] } },
   "Hawaii": { status: "taxable", verified: "April 2026", source: "https://tax.hawaii.gov", rule: "Hawaii's GET taxes all services broadly. Very limited nonprofit exemptions.", details: "Hawaii's General Excise Tax (GET) applies broadly to all services and goods. Very limited nonprofit exemptions.", requirements: [], categories: { taxable: [], exempt: [] } },
   "Idaho": { status: "exempt", verified: "April 2026", source: "https://tax.idaho.gov", rule: "501(c)(3) orgs broadly exempt with ST-101 certificate.", details: "Idaho provides a broad sales tax exemption for 501(c)(3) organizations using Form ST-101.", requirements: [], categories: { taxable: [], exempt: [] } },
-  "Illinois": { status: "exempt", verified: "April 2026 (live-searched IL DOR)", source: "https://tax.illinois.gov/research/publications/pio-37.html", rule: "501(c)(3) broadly exempt with E-number from IDOR. IMPORTANT: Hotel stays taxable even for nonprofits under Hotel Operators Occupation Tax. Apply for E-number via MyTax Illinois.", details: "IL DOR confirmed: Charitable, religious, and educational organizations exempt from sales tax after receiving an E-number from IDOR. Apply via MyTax Illinois (no fee, up to 90 days). CRITICAL: Hotel occupancy is subject to Hotel Operators Occupation Tax 'even if the person paying for the room may be a church, charity, or school.' Hotel stays are TAXABLE even for exempt nonprofits in Illinois.", requirements: ["Apply for E-number via MyTax Illinois (tax.illinois.gov) — no fee", "Processing takes up to 90 days", "Present E-number to vendors for exempt purchases", "Hotel stays: TAXABLE even for exempt nonprofits (Hotel Operators Occupation Tax)"], categories: { taxable: [], exempt: [] } },
+  "Illinois": { status: "exempt", verified: "April 2026 (IL IDOR tax.illinois.gov/research/taxinformation/sales/rot.html + PIO-37 R-09/24)", source: "https://tax.illinois.gov/research/publications/pio-37.html", rule: "Exclusively charitable, religious, or educational 501(c)(3) orgs broadly exempt with E-number from IDOR. CRITICAL EXCEPTIONS: (1) Hotel stays TAXABLE under Hotel Operators' Occupation Tax [86 Ill. Adm. Code 480.101(b)(3)]; (2) Civic/fraternal orgs (American Legions, Lions Clubs, Rotary, VFW, Chambers of Commerce, trade associations) do NOT qualify.", details: "IL IDOR confirmed via PIO-37 (R-09/24) and ROT page: Qualifying organizations must be (a) not-for-profit, (b) organized and operated EXCLUSIVELY for charitable, religious, educational, or governmental purposes, AND (c) approved by IDOR. Apply via Form STAX-1 through MyTax Illinois — no fee, up to 90 days processing, NOT retroactive. QUALIFYING ORG TYPES: Churches, exclusively charitable orgs, licensed not-for-profit day care centers, arts/cultural nonprofits, qualifying senior citizen orgs, schools, governments. NON-QUALIFYING: American Legions, AmVets, Chambers of Commerce, Elks Clubs, Lions Clubs, Rotary Clubs, VFW, unions, trade associations — even if they do charitable work. TAXABLE EVEN WITH E-NUMBER: Hotel room rentals (Hotel Operators' Occupation Tax [86 Ill. Adm. Code 480.101(b)(3)]); candy, chewing gum, tobacco, razor blades sold by hospital gift shops; gift shops/rummage stores in competition with community businesses. EXEMPT SELLING RULES: Orgs with E-numbers may sell to members, make noncompetitive sales, and hold up to 2 occasional dinners/year tax-free. IMPORTANT: 501(c)(3) federal status alone does NOT automatically qualify — org must also pass IDOR's exclusively charitable purpose test. E-number is NOT retroactive.", requirements: ["Apply via Form STAX-1 on MyTax Illinois (mytax.illinois.gov) — no fee", "Submit: articles of incorporation, bylaws, IRS determination letter, financial statements, narrative of purposes", "Processing up to 90 days; exemption NOT retroactive from application date", "E-number must be presented to each vendor at time of purchase", "Hotel stays: TAXABLE even for exempt nonprofits — no exception under Hotel Operators' Occupation Tax", "Verify E-number at mytax.illinois.gov — vendors should validate before accepting", "Name/address changes: submit Form STAX-300-C", "Civic/fraternal orgs (Rotary, Lions, VFW, Chambers): do NOT qualify regardless of charitable activities"], categories: { taxable: ["Hotel/lodging (Hotel Operators' Occupation Tax — no nonprofit exception)", "Candy, gum, tobacco, razor blades (even sold by nonprofit hospitals)", "Gift shops/rummage stores competing with community businesses", "Ongoing concession stand sales (must register as retailer)"], exempt: ["Office supplies purchased with E-number", "Computer equipment purchased with E-number", "Furniture & fixtures purchased with E-number", "Food/groceries purchased with E-number", "Medical supplies purchased with E-number", "Services (professional services generally not subject to IL sales tax)"] } },
   "Indiana": { status: "exempt", verified: "April 2026 (live-searched IN DOR)", source: "https://www.in.gov/dor/business-tax/sales-tax/sales-tax-exemptions/nonprofit-organizations/", rule: "501(c)(3) broadly exempt. IMPORTANT CHANGE (Jan 2023): Form ST-105 no longer valid for nonprofits. Must use Form NP-1 generated per-vendor via Indiana's INTIME portal.", details: "IN DOR confirmed: CRITICAL CHANGE effective January 1, 2023 — Form ST-105 is no longer valid for nonprofit exemptions. Nonprofits must now use Form NP-1, which is only available through Indiana's INTIME portal (intime.dor.in.gov). A SEPARATE NP-1 must be generated for EACH vendor. Must file Form NP-20A first to register as nonprofit with IN DOR, then generate NP-1 via INTIME. Annual report Form NP-20R due every 5 years.", requirements: ["File Form NP-20A to register as nonprofit with IN DOR FIRST", "Generate Form NP-1 via INTIME portal (intime.dor.in.gov)", "A SEPARATE NP-1 is required for EACH vendor", "Form ST-105 is NO LONGER VALID for nonprofits (since Jan 2023)"], categories: { taxable: [], exempt: [] } },
   "Iowa": { status: "conditional", verified: "April 2026 (live-searched IA DOR)", source: "https://revenue.iowa.gov/taxes/tax-guidance/sales-use-excise-tax/sales-use-tax-guide/nonprofit-entities", rule: "IMPORTANT: Iowa DOR states 'Most nonprofit organizations are NOT exempt from tax on their purchases.' Exemption applies to qualifying SALES by nonprofits when net proceeds fund charitable purposes.", details: "IA DOR confirmed explicitly: 'Most nonprofit organizations are not exempt from tax on their purchases.' Iowa's exemption applies primarily to SALES BY nonprofits where proceeds are used for charitable purposes — NOT to purchases BY nonprofits. Only nonprofit hospitals qualify for purchase exemptions. All other nonprofits must pay sales tax on operational purchases.", requirements: ["Iowa exemption applies to SALES BY nonprofits (when proceeds fund charity), NOT purchases BY nonprofits", "Most nonprofits must pay sales tax on all purchases (office supplies, equipment, etc.)", "Nonprofit hospitals: exempt on purchases", "Provide Form 31-014 only for qualifying sales transactions"], categories: { taxable: [], exempt: [] } },
   "Kansas": { status: "conditional", verified: "April 2026 (live-searched KS DOR)", source: "https://www.ksrevenue.gov/pub1520.html", rule: "IMPORTANT: KS DOR Publication KS-1520 explicitly states charitable and benevolent organizations are NOT exempt. Only hospitals, schools, churches, and specifically listed entities qualify.", details: "KS DOR Publication KS-1520 confirmed explicitly: 'Groups and organizations that are NOT EXEMPT from paying Kansas sales tax include alumni associations, charitable and benevolent organizations, clubs, labor unions, and professional associations.' Only hospitals, schools, churches, political subdivisions, and specifically enumerated statutory entities qualify. Kansas-based qualifying orgs must obtain a Kansas Tax-Exempt Entity Exemption Certificate.", requirements: ["General 501(c)(3) charitable organizations: NOT EXEMPT in Kansas", "Qualifying orgs (hospitals, schools, churches): apply for Kansas Tax-Exempt Entity Exemption Certificate", "Verify if org is in the specifically enumerated list at ksrevenue.gov", "Use ST-28 Generic Certificate only for qualifying entity types"], categories: { taxable: [], exempt: [] } },
@@ -552,7 +544,7 @@ const STATE_DATA = {
   "Rhode Island": { status: "conditional", verified: "April 2026 (live-searched RI DOR)", source: "https://tax.ri.gov/tax-sections/audit/sales-tax-exempt-organizations", rule: "Orgs 'operated exclusively for religious or charitable purposes' qualify. Must apply to RI Division of Taxation for Certificate of Exemption. Individual employees paying personally cannot use org exemption.", details: "RI DOR confirmed: Broader than many realize — orgs operated exclusively for religious or charitable purposes qualify (not just hospitals/schools). Must apply and receive Certificate of Exemption from RI Division of Taxation. Present certificate at purchases. Individual employees/members paying personally are taxable even on org business. Hotel rate increased Jan 2026.", requirements: ["Apply to RI Division of Taxation for Certificate of Exemption", "Submit IRS 501(c)(3) letter with application", "Present Certificate of Exemption to vendors", "Individual employees paying personally cannot use org exemption"], categories: { taxable: [], exempt: [] } },
   "South Carolina": { status: "taxable", verified: "April 2026 (live-searched SC DOR)", source: "https://dor.sc.gov/sales-use-tax-index/sales-tax-exemptions", rule: "NO general exemption for nonprofit PURCHASES. SC DOR confirmed: computers, furniture, office supplies purchased for own use are taxable even for 501(c)(3) organizations.", details: "SC DOR confirmed explicitly: 'Sales to a nonprofit organization of tangible personal property for its own use (e.g., computers, furniture, office supplies), including items the nonprofit will donate or provide free as part of its charitable mission, are subject to the sales and use tax.' Only very limited exemptions for churches, YMCA-type orgs.", requirements: ["General 501(c)(3)s: NO purchase exemption — all purchases taxable", "Hotel/accommodations: always taxable regardless of nonprofit status", "Churches, YMCA, scouts, veterans orgs: limited exemptions — apply to SC DOR"], categories: { taxable: [], exempt: [] } },
   "South Dakota": { status: "conditional", verified: "April 2026 (live-searched SD DOR)", source: "https://dor.sd.gov/media/sgxnhnhl/exemptentities.pdf", rule: "Specific orgs exempt: YMCA, scouts, civic associations, relief agencies, hospitals. General 501(c)(3)s generally taxable.", details: "SD DOR (January 2026) confirmed: Only YMCA/YWCA, Boy Scouts, Lions Club, Jaycees and similar membership civic associations, qualified relief agencies (exclusively for poor/distressed), and nonprofit hospitals qualify. General 501(c)(3)s are generally taxable.", requirements: [], categories: { taxable: [], exempt: [] } },
-  "Tennessee": { status: "exempt", verified: "April 2026 (live-searched TN DOR)", source: "https://revenue.support.tn.gov/hc/en-us/articles/360058251372", rule: "Nonprofits broadly exempt but must apply and receive Certificate BEFORE making exempt purchases. Certificate valid 4 years, reissued automatically. Personal payment is taxable even if org reimburses.", details: "TN DOR confirmed: Broadly exempts nonprofit entities from paying sales and use tax on purchases of property and services. Must apply for and receive Sales and Use Tax Certificate of Exemption BEFORE making any exempt purchases. Certificate valid 4 years and automatically reissued. IMPORTANT: Payment by personal check or personal credit card is NOT exempt, even if the purchaser will be reimbursed by the organization.", requirements: ["Apply to TN DOR for Sales and Use Tax Certificate of Exemption BEFORE making exempt purchases", "Certificate valid 4 years — TN DOR reissues automatically", "Present certificate to vendors at time of purchase", "Personal payment is TAXABLE even if org will reimburse"], categories: { taxable: [], exempt: [] } },
+  "Tennessee": { status: "exempt", verified: "April 2026 (TN Sales & Use Tax Manual Aug 2022, Ch.5 & Ch.18)", source: "https://revenue.support.tn.gov/hc/en-us/articles/360058251372", rule: "IRC §501(c)(3) orgs broadly exempt with Certificate of Exemption applied BEFORE purchase. CRITICAL: Only enumerated services are taxable in TN — most professional services (legal, accounting, consulting, IT services) are NOT taxable. Personal payment is taxable even if reimbursed.", details: "TN Sales & Use Tax Manual (Aug 2022) Ch.18 §4: Qualified orgs under Tenn. Code Ann. §67-6-322 — including churches, schools, hospitals, volunteer fire departments, boys-girls clubs, orphanages, labor orgs, and IRC §501(c)(3) organizations — are exempt on purchases of tangible personal property, computer software, specified digital products, AND taxable services when they have a Certificate of Exemption. PAYMENT RULES: Non-cash purchases MUST be made with entity check or entity credit card (billed directly to entity). Personal check or personal credit card = TAXABLE even if reimbursed. Cash purchases: receipt must include purchaser name and amount. SERVICES: TN only taxes enumerated services per Ch.5: repair of tangible property/software, installation of tangible property/software, lodging/rooms, short-term space rental, cleaning tangible property/animal bathing, parking/storing motor vehicles, telecommunications, TV programming, ancillary services. ALL OTHER SERVICES ARE NOT TAXABLE in TN regardless of buyer status — legal, accounting, consulting, IT consulting, advertising, staffing, HR, architecture = NOT taxable. FOOD: Qualifying food/food ingredients taxed at 4% (reduced); prepared food at 7%. LODGING: Taxable for stays under 90 days; 90+ continuous days are exempt. Meeting rooms by non-hotel businesses = not taxable. OUT-OF-STATE ORG: May use federal 501(c)(3) determination letter instead of TN Certificate.", requirements: ["Apply for Certificate of Exemption from TN DOR BEFORE making any exempt purchases — application at TNTAP (tntap.tn.gov)", "Certificate valid 4 years — TN DOR reissues automatically", "Non-cash purchases: MUST use entity check or entity credit card billed directly to entity", "Cash purchases: vendor must record purchaser name and sale amount", "Personal check or personal credit card = TAXABLE even if employee will be reimbursed", "Out-of-state 501(c)(3): may use federal determination letter for exempt purchases", "Contractors CANNOT use nonprofit's exemption certificate for their own materials"], categories: { taxable: ["Repair services on tangible property or software", "Installation services on tangible property or software", "Hotel/lodging under 90 days (rooms, banquet rooms if hotel is primary business)", "Telecommunications services", "Parking and storing motor vehicles", "Cleaning tangible property and animal bathing", "Food & groceries at 4% reduced rate (not fully exempt)", "Prepared food at 7% full rate", "TV programming services", "Candy, dietary supplements, alcoholic beverages at 7% full rate"], exempt: ["Office supplies (TPP with certificate)", "Computer equipment/hardware (TPP with certificate)", "Furniture & fixtures (TPP with certificate)", "Computer software specified digital products (with certificate)", "Legal services (NOT a taxable service in TN)", "Accounting/CPA services (NOT a taxable service in TN)", "Consulting services (NOT a taxable service in TN)", "IT consulting (NOT a taxable service in TN — only repair/installation of software is taxable)", "Advertising services (NOT a taxable service in TN)", "Staffing/temp workers (NOT a taxable service in TN)", "Prescription drugs (exempt)", "Durable medical equipment — home use with prescription (exempt)", "Textbooks and workbooks (exempt)", "Newspapers and periodicals on newsprint (exempt)"] } },
   "Texas": { status: "conditional", verified: "April 2026", source: "https://comptroller.texas.gov/taxes/exempt", rule: "501(c)(3) orgs broadly exempt using Form 01-339. Hotel tax: only narrow charity types (food/shelter orgs, schools, churches) qualify — NOT general 501(c)(3)s.", details: "Texas provides broad sales tax exemption for 501(c)(3) organizations. Hotel occupancy tax exemption is much narrower — only orgs that provide food/shelter to the indigent, schools, and churches qualify.", requirements: [], categories: { taxable: [], exempt: [] } },
   "Utah": { status: "conditional", verified: "April 2026", source: "https://tax.utah.gov", rule: "Limited nonprofit exemptions. Purchases must be directly for charitable purposes.", details: "Utah provides limited sales tax exemptions for qualifying nonprofits when purchases are used for their exempt purpose.", requirements: [], categories: { taxable: [], exempt: [] } },
   "Vermont": { status: "exempt", verified: "April 2026 (live-searched VT DOR)", source: "https://tax.vermont.gov/business-and-corp/nonprofits/sales-and-use-tax", rule: "501(c)(3) only — 501(c)(4)-(13) NOT exempt. Must register for VT Business Tax Account first, then use Form S-3.", details: "VT DOR confirmed: Only 501(c)(3) qualifies — not 501(c)(4)-(13). Must register for Vermont Business Tax Account BEFORE making exempt purchases. Use Form S-3 at purchases. Out-of-state nonprofits doing business in VT must follow VT rules.", requirements: ["Register for Vermont Business Tax Account at tax.vermont.gov FIRST", "Use Form S-3 (Sales Tax Exemption Certificate) at purchases", "Only 501(c)(3) qualifies — 501(c)(4)-(13) are NOT exempt"], categories: { taxable: [], exempt: [] } },
@@ -869,7 +861,7 @@ const CATEGORY_RULES = {
   "Meeting Meals & Refreshments": { default: "taxable", note: "Meals at restaurants are taxable even for nonprofits. Groceries purchased for in-office meetings may be exempt in broad-exemption states." },
   "Airline Tickets / Flights": { default: "taxable", note: "Airline tickets are subject to 7.5% federal excise tax which no state exemption certificate can offset. Most states don't separately add state sales tax on top of airline tickets." },
   "Mileage / Fuel Reimbursement": { default: "taxable", note: "Motor fuel taxes are separate from sales tax and are generally not affected by nonprofit sales tax exemption certificates." },
-  "Parking & Tolls": { default: "taxable", note: "Parking and toll fees are generally not subject to state sales tax exemption in most states." },
+  "Parking & Tolls": { default: "taxable", note: "TN TAXABLE: Tennessee Sales & Use Tax Manual (Ch.5) explicitly lists 'parking and storing of motor vehicles' as an enumerated taxable service — parking charges ARE taxable in Tennessee, even for nonprofits with a Certificate of Exemption. This is a taxable service, not tangible property, so the exemption certificate does not override it. Toll fees are generally not subject to sales tax in most states. Parking is taxable in most states." },
   "Car Rental": { default: "taxable", note: "Car rentals are subject to rental excise taxes in most states separate from general sales tax. Nonprofit exemption certificates may not cover these taxes." },
 
   // BROADLY TAXABLE with select exceptions
@@ -877,22 +869,22 @@ const CATEGORY_RULES = {
     default: "taxable",
     exempt_states: ["Wisconsin", "New York", "Florida", "Colorado", "Connecticut", "Idaho", "Iowa", "Kansas", "Oklahoma", "Virginia"],
     conditional_states: ["Texas", "Illinois", "Maryland", "Massachusetts", "Minnesota", "New Jersey", "Vermont", "West Virginia"],
-    note: "Hotel occupancy tax is separate from general sales tax in most states and taxable even for nonprofits. Exceptions: Wisconsin, New York (Form ST-129), Florida explicitly include hotels. Illinois: hotel stays TAXABLE even for exempt nonprofits. NJ: ST-5 does NOT apply to hotel occupancy tax. Always confirm with hotel and state DOR."
+    note: "TN NOTE: TN Sales & Use Tax Manual (Ch.5 §3) — lodging under 90 days is TAXABLE in Tennessee even for nonprofits with a Certificate of Exemption (lodging is an enumerated taxable service). EXCEPTION: Accommodations furnished to the SAME PERSON for 90 or more continuous days are exempt. Meeting rooms rented by entities NOT primarily in the lodging business are NOT taxable in TN. IL: hotel stays TAXABLE even for exempt nonprofits [86 Ill. Adm. Code 480.101(b)(3)]. NJ: ST-5 does NOT apply to hotel occupancy. WI/NY/FL explicitly include hotels in nonprofit exemption."
   },
   "Conference / Event Registration Fees": {
     default: "taxable",
     exempt_states: ["New York", "Colorado", "Virginia", "Illinois", "Pennsylvania"],
-    note: "Registration fees for conferences are taxable as admission charges in many states. May be exempt if paid to another qualifying nonprofit in some states."
+    note: "GA TAXABLE: Georgia DOR explicitly lists sales of admissions and charges for participation in amusement activities as taxable services per O.C.G.A. §48-8-2(31). Conference/event registration fees that include admission to sessions, games, or activities are taxable in GA regardless of the nonprofit buyer's status. Registration fees for conferences are taxable as admission charges in many states."
   },
   "Staffing / Temporary Workers": {
     default: "conditional",
     taxable_states: ["Washington", "Hawaii", "New Mexico", "South Dakota"],
-    note: "IMPORTANT: Washington ESSB 5814 (Oct 2025) now taxes temporary staffing services for nonprofits. Most other states do not tax labor/staffing as a taxable service."
+    note: "TN EXEMPT: TN Sales & Use Tax Manual (Ch.5) lists only specific enumerated services as taxable — staffing/temp workers is NOT on the list and is NOT a taxable service in Tennessee. IL EXEMPT: IL ROT applies to tangible personal property, not services. IMPORTANT: Washington ESSB 5814 (Oct 2025) now taxes temporary staffing services. GA EXEMPT: services generally exempt per O.C.G.A. §48-8-2(31). Hawaii and South Dakota tax all services broadly."
   },
   "Advertising Services": {
     default: "conditional",
-    taxable_states: ["Washington", "Hawaii", "New Mexico", "South Dakota", "Tennessee"],
-    note: "IMPORTANT: Washington ESSB 5814 (Oct 2025) now taxes advertising services for nonprofits. Hawaii and South Dakota tax all services broadly."
+    taxable_states: ["Washington", "Hawaii", "New Mexico", "South Dakota"],
+    note: "TN EXEMPT: Tennessee Sales & Use Tax Manual (Ch.5) — advertising services are NOT on TN's enumerated taxable services list. Advertising is NOT taxable in Tennessee (previously listed in error). Physical promotional materials/merchandise remain taxable tangible personal property in TN. GA NOTE: Advertising service generally NOT taxable per O.C.G.A. §48-8-2(31); tangible promotional materials are taxable. Washington ESSB 5814 (Oct 2025) now taxes advertising services broadly."
   },
 
   // GENERALLY EXEMPT in broad-exemption states
@@ -918,28 +910,28 @@ const CATEGORY_RULES = {
   },
   "Ground Transportation (Taxi, Rideshare, Bus)": {
     default: "conditional",
-    taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
-    note: "Taxi, rideshare, and bus fares are generally transportation services not subject to state sales tax in most states. May include local surcharges."
+    taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Georgia"],
+    note: "GA TAXABLE: Georgia DOR explicitly lists 'in-state transportation of individuals (e.g., taxis, limos)' as a taxable service per O.C.G.A. §48-8-2(31). Taxi, rideshare, and limo charges ARE subject to GA sales tax regardless of nonprofit status. Hawaii and South Dakota tax all services broadly."
   },
   "Postage & Shipping": {
-    default: "exempt",
-    taxable_states: ["Hawaii"],
-    note: "USPS postage is generally not subject to sales tax. Private shipping (FedEx, UPS) charges are generally exempt in most states when underlying goods are exempt."
+    default: "conditional",
+    taxable_states: ["Hawaii", "Georgia"],
+    note: "GA TAXABLE: Georgia DOR explicitly states that delivery, transportation, freight, and shipping/handling charges are 'part of the sales price and subject to sales tax in the same manner as the underlying sale' per O.C.G.A. §48-8-2(34). If the underlying item is taxable, shipping IS taxable in GA — even if separately stated. CA EXEMPT: USPS postage and separately stated shipping charges excluded from gross receipts per CA R&TC §§6011-6012. Most other states: shipping is not taxable when separately stated."
   },
   "Software Subscriptions / SaaS": {
     default: "conditional",
-    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico", "Tennessee", "Texas", "New York", "Pennsylvania"],
-    note: "SaaS taxability varies significantly. Washington ESSB 5814 (Oct 2025) taxes many digital services. Texas, New York, Pennsylvania, and Tennessee tax many SaaS products. Most broad-exemption states that tax SaaS will still apply nonprofit exemptions."
+    taxable_states: ["California", "Washington", "Hawaii", "South Dakota", "New Mexico", "Tennessee", "Texas", "New York", "Pennsylvania", "Illinois"],
+    note: "TN TAXABLE (Ch.12 TN Manual): Tennessee taxes remotely accessed software (SaaS/cloud software) — 'remotely accessed software' is explicitly taxable in TN even for nonprofits with Certificate of Exemption. Taxable at full 7% rate. EXCEPTION: Software fabricated in-house by the nonprofit for its own internal use = exempt. IL TAXABLE: 'prewritten and canned computer software' listed as taxable general merchandise; custom software = nontaxable service. CA TAXABLE: Per CDTFA Pub.61 §6010.9 — custom programs excluded. WA ESSB 5814 (Oct 2025) taxes many digital services."
   },
   "Photography & Videography": {
     default: "conditional",
-    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico", "Tennessee", "Mississippi"],
-    note: "Photography and videography services vary by state. Some states tax services broadly. Washington now taxes many digital services under ESSB 5814."
+    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico", "Mississippi"],
+    note: "TN NOTE: Photography/videography services are NOT on Tennessee's enumerated taxable services list (Ch.5 TN Manual) — service charges generally not taxable in TN. However, tangible personal property transferred (physical prints, DVDs, physical media) IS taxable tangible property. GA NOTE: Photography service charges generally not taxable per O.C.G.A. §48-8-2(31); physical deliverables are taxable tangible property. Washington ESSB 5814 (Oct 2025) now taxes many digital/media services."
   },
   "Graphic Design Services": {
     default: "conditional",
-    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico", "Tennessee"],
-    note: "Design services are taxable in states that broadly tax services. Washington ESSB 5814 may tax certain design/digital services."
+    taxable_states: ["Washington", "Hawaii", "South Dakota", "New Mexico"],
+    note: "TN EXEMPT: Graphic design is a service NOT on Tennessee's enumerated taxable services list (TN Sales & Use Tax Manual Ch.5) — graphic design fees are NOT taxable in TN (previously listed in error). GA EXEMPT: Not taxable per O.C.G.A. §48-8-2(31). Washington ESSB 5814 (Oct 2025) taxes advertising and certain digital services."
   },
   "Event Venue Rental": {
     default: "conditional",
@@ -954,12 +946,12 @@ const CATEGORY_RULES = {
   "Printing & Publications": {
     default: "conditional",
     taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Tennessee", "Alabama", "Georgia", "South Carolina"],
-    note: "Printing is tangible personal property and generally exempt in broad-exemption states. Taxable in states without nonprofit exemptions."
+    note: "IL EXEMPT (newspapers/magazines): IL IDOR ROT page explicitly lists 'sales of newspapers and magazines' as exempt in Illinois. Commercial printing/publications of other kinds follow general rules. CA TAXABLE (generally): No general nonprofit exemption per CDTFA Pub.61; exceptions for member newsletters (§6362.8), printed sales messages mailed to others (§6379.5), and subscription periodicals by mail (§6362.7)."
   },
   "Donor Newsletters & Annual Reports": {
     default: "conditional",
     taxable_states: ["California", "Hawaii", "Mississippi", "Washington", "North Carolina", "Alabama", "Georgia", "South Carolina"],
-    note: "Printing costs for donor communications are generally exempt in broad-exemption states as mission-related materials."
+    note: "TN CONDITIONAL (Ch.18 TN Manual): Periodicals printed ENTIRELY on newsprint or bond paper, distributed no less frequently than MONTHLY, are exempt in Tennessee — this could cover qualifying donor newsletters or periodicals. Annual reports and other printed materials NOT meeting these criteria are taxable tangible property. IL EXEMPT: 'sales of newspapers and magazines' are exempt in IL statewide. CA CONDITIONAL: Member newsletters exempt per CA R&TC §6362.8 where printing cost < 10% of membership fee."
   },
   "Marketing & Promotional Materials": {
     default: "conditional",
@@ -978,13 +970,13 @@ const CATEGORY_RULES = {
   },
   "Food & Beverages (for events)": {
     default: "conditional",
-    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
-    note: "Food for org events is treated differently from restaurant meals. Generally exempt in broad-exemption states when purchased from a grocery/vendor for a nonprofit event."
+    taxable_states: ["Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "TN TAXABLE (at reduced rate): TN Sales & Use Tax Manual (Ch.17) — qualifying food/food ingredients are taxed at a REDUCED 4% state rate (NOT fully exempt) in Tennessee. Even nonprofits with Certificate of Exemption pay the 4% reduced rate on qualifying groceries/food. Prepared food, candy, dietary supplements, and alcoholic beverages are taxed at the full 7% rate. TN is listed as 'taxable' because the 4% rate still applies even for exempt orgs on food purchases. IL NOTE: Qualifying food now 0% state rate in IL (grocery tax eliminated Jan 1, 2026). CA CONDITIONAL: Unserved food for human consumption generally exempt per CA R&TC §6359."
   },
   "Catering Services": {
     default: "conditional",
     taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Washington", "North Carolina", "Alabama", "Georgia", "South Carolina"],
-    note: "Catering is often taxable as a food service even in exempt states. The service component may be taxable even where food purchases are exempt."
+    note: "TN TAXABLE: TN Sales & Use Tax Manual (Ch.17) — prepared food is taxed at the full 7% rate in Tennessee. Catering involves 'prepared food' which does not qualify for the reduced 4% food rate and is fully taxable in TN even for nonprofits with a Certificate of Exemption. Catering is often taxable as a food service even in exempt states."
   },
   "Furniture & Fixtures": {
     default: "conditional",
@@ -999,12 +991,12 @@ const CATEGORY_RULES = {
   "Telecommunications": {
     default: "conditional",
     taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
-    note: "Telephone and internet services subject to various federal and state taxes. Nonprofit exemptions may not cover all telecom taxes."
+    note: "TN TAXABLE: Tennessee Sales & Use Tax Manual (Ch.5) explicitly lists 'Telecommunication services' as an enumerated taxable service in TN — telecommunications is TAXABLE in Tennessee even for nonprofits with a Certificate of Exemption. The exemption does NOT override taxable telecom services. CA TAXABLE: No telecom exemption in CDTFA Pub.61 for nonprofit buyers. Note: phone/internet service bills are taxable; infrastructure lines 'in place' excluded from tangible property definition."
   },
   "Utilities (Electric, Gas, Water)": {
     default: "conditional",
-    taxable_states: ["California", "Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
-    note: "Utilities for org use generally exempt in broad-exemption states. Some states have separate utility tax structures."
+    taxable_states: ["Hawaii", "Mississippi", "Tennessee", "Arkansas", "Alabama", "Georgia", "South Carolina"],
+    note: "CA EXEMPT: Gas, electricity, and water delivered through mains/lines/pipes are exempt per CA R&TC §6353 (CDTFA Pub.61) — this item-level exemption applies regardless of nonprofit status. Most other no-exemption states are taxable. Telecom/internet are a separate question."
   },
   "Construction / Renovation Materials": {
     default: "conditional",
@@ -1014,12 +1006,12 @@ const CATEGORY_RULES = {
   "Medical / Healthcare Supplies": {
     default: "exempt",
     taxable_states: ["Hawaii", "Mississippi"],
-    note: "Medical and healthcare supplies are broadly exempt across most states, often even where general nonprofit exemptions are limited."
+    note: "TN NOTE (Ch.18 TN Manual): Prescription drugs = EXEMPT. Durable medical equipment for HOME use prescribed by physician = EXEMPT (includes hospital beds, blood pressure monitors, nebulizers). Mobility enhancing equipment (wheelchairs, canes, walkers) with prescription = EXEMPT. Prosthetic devices = EXEMPT. TAXABLE even in TN: disposable supplies (lancets, glucose test strips, control solutions, nebulizer replacement masks/tubing sold separately as replacements), corrective eyeglasses/contact lenses. IL NOTE: OTC medicines with medicinal value at reduced 1% rate; nonprofits with E-numbers purchase tax-free. CA EXEMPT: Medical supplies broadly exempt per CDTFA Pub.61 §§6369–6369.5."
   },
   "Educational Materials": {
     default: "exempt",
-    taxable_states: ["Hawaii", "Mississippi", "Tennessee"],
-    note: "Educational materials are broadly exempt and often specifically called out in state exemption statutes."
+    taxable_states: ["California", "Hawaii", "Mississippi"],
+    note: "TN CONDITIONAL (Ch.18 TN Manual): Tennessee exempts TEXTBOOKS and WORKBOOKS specifically — a textbook is a printed book with systematically organized educational content for a course of study (not published for sale to the general public). Workbook = printed booklet with problems for student to write in. NOT exempt in TN: reference books (dictionaries, thesauruses), general books published for the public (even if required for a class), computer software. CA TAXABLE: No general nonprofit exemption for educational materials per CDTFA Pub.61."
   },
   "Clothing / Uniforms": {
     default: "conditional",
@@ -1036,18 +1028,18 @@ const CATEGORY_RULES = {
   "Legal Services (Attorney / Law Firm)": {
     default: "exempt",
     taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
-    note: "Legal services are NOT subject to sales tax in most states. Washington ESSB 5814 (Oct 2025) explicitly kept legal services exempt. Only Hawaii, New Mexico, and South Dakota broadly tax all services."
+    note: "TN EXEMPT: Tennessee Sales & Use Tax Manual (Ch.5) confirms TN only taxes specifically enumerated services — legal services are NOT on the enumerated list and are NOT taxable in TN regardless of buyer status. IL EXEMPT: IL ROT taxes only tangible personal property. GA EXEMPT: services generally exempt per O.C.G.A. §48-8-2(31). Washington ESSB 5814 (Oct 2025) explicitly kept legal services exempt. Only Hawaii, New Mexico, and South Dakota broadly tax all services."
   },
   "Accounting & Audit Services (CPA)": {
     default: "exempt",
     taxable_states: ["Hawaii", "New Mexico", "South Dakota"],
-    note: "Accounting/CPA services NOT subject to sales tax in most states. Washington ESSB 5814 explicitly kept accounting and bookkeeping exempt."
+    note: "TN EXEMPT: TN Sales & Use Tax Manual (Ch.5) — accounting/CPA services are NOT on Tennessee's enumerated taxable services list and are NOT subject to TN sales tax. IL EXEMPT: IL ROT taxes only tangible personal property. GA EXEMPT: services generally exempt per O.C.G.A. §48-8-2(31). Washington ESSB 5814 kept accounting exempt. Only HI, NM, and SD broadly tax all services."
   },
   "Management Consulting": {
     default: "exempt",
     taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Texas"],
     conditional_states: ["Washington", "Iowa"],
-    note: "Pure advisory consulting generally not subject to sales tax. Texas taxes data processing and some consulting. Washington: check whether engagement is classified as taxable under ESSB 5814."
+    note: "TN EXEMPT: Management consulting is NOT on Tennessee's enumerated taxable services list (TN Manual Ch.5) — consulting fees are NOT subject to TN sales tax. Pure advisory consulting generally not subject to sales tax in most states. Texas taxes data processing and some consulting. Washington ESSB 5814: check whether engagement is classified as taxable."
   },
   "Financial Advisory / Investment Services": {
     default: "exempt",
@@ -1057,12 +1049,12 @@ const CATEGORY_RULES = {
   "HR / Payroll Services": {
     default: "conditional",
     taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Washington", "Iowa", "Nebraska", "Texas"],
-    note: "HR and payroll processing services are taxable in more states than traditional professional services. Texas taxes data processing (which may include payroll). Washington ESSB 5814 may tax certain HR technology services."
+    note: "TN EXEMPT: HR and payroll services are NOT on Tennessee's enumerated taxable services list (TN Manual Ch.5) — these service fees are NOT subject to TN sales tax. Texas taxes data processing (which may include payroll processing). Washington ESSB 5814 may tax certain HR technology services. HR/payroll services are taxable in more states than traditional professional services."
   },
   "IT Consulting & Managed Services": {
     default: "conditional",
     taxable_states: ["Hawaii", "New Mexico", "South Dakota", "Washington", "Texas"],
-    note: "IMPORTANT: Washington ESSB 5814 (Oct 2025) now taxes IT services including help desk, system integration, hosting, and data processing. Texas taxes data processing services. Hawaii and South Dakota tax all services."
+    note: "TN NOTE: TN Sales & Use Tax Manual (Ch.5) lists only REPAIR of software and INSTALLATION of software as taxable. Pure IT consulting, advisory, project management, help desk (not repair), system design, and managed services NOT involving repair or installation are generally NOT taxable in TN. WA: Washington ESSB 5814 (Oct 2025) now taxes IT services including help desk, system integration, hosting, and data processing for nonprofits. TX: taxes data processing services. IL NOTE: Pure IT consulting generally not taxable in IL; hardware/parts transfers are taxable."
   },
   "Architecture & Engineering Services": {
     default: "exempt",
@@ -1499,7 +1491,7 @@ const NEXUS_RULES = {
     physical: "Office, employees, inventory, sales agents, or trade show presence creates nexus.",
     economic: "$500,000 in California sales in current or prior year.",
     registration: "Register with CDTFA (cdtfa.ca.gov). Seller's permit or use tax account.",
-    nonprofit_nexus_note: "No general nonprofit purchase exemption. Even with nexus established, nonprofits cannot use a blanket exemption certificate. Only very specific items (e.g., items sold by specific welfare orgs) may qualify.",
+    nonprofit_nexus_note: "Per CDTFA Pub.61 (FY2023-24): CA law is explicit — no exemption merely because purchaser is a nonprofit. Item-level exemptions that apply universally regardless of org type: food products for human consumption §6359, prescription medicines/devices §§6369-6369.5, gas/electricity/water via mains §6353, custom computer programs §6010.9, USPS postage/transportation charges §§6011-6012, and meals to homebound elderly by nonprofit volunteer providers §6363.7. ALL other nonprofit operational purchases (office supplies, furniture, SaaS, printing, hotel, uniforms, construction) are TAXABLE.",
     local: {
       overview: "CA base rate 7.25%. District taxes (city/county) add 0.25%–3.25%. LA and SF among highest.",
       key_jurisdictions: [
@@ -1592,7 +1584,7 @@ const NEXUS_RULES = {
     physical: "Office, employees, inventory, or property in GA creates nexus.",
     economic: "$100,000 in sales or 200 transactions in prior or current year.",
     registration: "Register via Georgia Tax Center (GTC) online.",
-    nonprofit_nexus_note: "NO general exemption for nonprofit purchases. Even with nexus, general 501(c)(3)s cannot exempt purchases. Only licensed hospitals, orphanages, food banks, and specific statutory orgs qualify.",
+    nonprofit_nexus_note: "Per GA DOR (dor.georgia.gov): Georgia statute grants NO general nonprofit purchase exemption. GA only taxes tangible personal property and specific enumerated services — legal, accounting, consulting, IT, and advertising services are generally NOT taxable in GA regardless of buyer status. Taxable for all buyers including nonprofits: office supplies, furniture, computer equipment, clothing, flowers, AV equipment, newspapers, and accommodation/transportation/admissions charges. Only licensed orphanages, hospitals, nursing homes, nonprofit private schools (grades 1-12), food banks, job training orgs, and nonprofit health clinics qualify for purchase exemptions — apply via GA Tax Center with annual Letter of Authorization.",
     local: {
       overview: "GA has state 4% + county LOST (1%) + city taxes. Combined can reach 8–9%.",
       key_jurisdictions: [
@@ -1639,7 +1631,7 @@ const NEXUS_RULES = {
     physical: "Office, employees, inventory, or property in IL creates nexus.",
     economic: "$100,000 in sales only (200-transaction threshold dropped Jan 1, 2026). Quarterly review of preceding 12-month period. Effective Oct 1, 2018.",
     registration: "Register via MyTax Illinois. Apply for E-number (exemption number) same portal.",
-    nonprofit_nexus_note: "Broad exemption after receiving E-number from IDOR. CRITICAL: Hotel stays are TAXABLE even for exempt nonprofits — Hotel Operators Occupation Tax applies separately. Local ROT (Retailers Occupation Tax) rates vary.",
+    nonprofit_nexus_note: "Per IDOR ROT page & PIO-37 (R-09/24): Qualifying orgs (exclusively charitable, religious, educational — NOT civic/fraternal like Rotary, VFW, Chambers) receive E-number after applying via Form STAX-1 on MyTax Illinois (no fee, up to 90 days, NOT retroactive). Key taxability rules: (1) Prewritten/canned software and SaaS TAXABLE at full rate; custom software = nontaxable service. (2) Newspapers/magazines EXEMPT statewide. (3) Qualifying food at 0% state rate (grocery tax eliminated Jan 1, 2026); local rates may apply. (4) Medical appliances/OTC medicines at reduced 1% state rate — exempt with E-number. (5) HOTEL STAYS TAXABLE — 'even if the person paying for the room may be a church, charity, or school' [86 Ill. Adm. Code 480.101(b)(3)]. (6) Professional services (legal, accounting, IT consulting, staffing) NOT subject to IL sales tax — ROT applies only to tangible personal property. Home-rule city taxes (Chicago, etc.) require separate local registration.",
     local: {
       overview: "Illinois has complex multi-level taxes: state ROT (6.25%) + county + municipality + home-rule city taxes. Chicago is among the highest in the nation.",
       key_jurisdictions: [
@@ -2068,7 +2060,7 @@ const NEXUS_RULES = {
     physical: "Office, employees, inventory, or property in TN creates nexus.",
     economic: "$100,000 in TN sales in prior 12 months.",
     registration: "Register via Tennessee Taxpayer Access Point (TNTAP). Apply for Certificate of Exemption BEFORE making exempt purchases.",
-    nonprofit_nexus_note: "Broadly exempt after receiving Certificate of Exemption from TN DOR. Must apply BEFORE exempt purchases. Certificate valid 4 years. Personal payment is TAXABLE even if org reimburses.",
+    nonprofit_nexus_note: "Per TN Sales & Use Tax Manual (Aug 2022): Qualifying orgs under Tenn. Code Ann. §67-6-322 (churches, schools, hospitals, IRC §501(c)(3)s, and others) are exempt with Certificate of Exemption. PAYMENT RULES: Non-cash purchases MUST use entity check or entity credit card billed directly to entity — personal payment is TAXABLE even if reimbursed. ENUMERATED TAXABLE SERVICES (not covered by exemption): repair/installation of tangible property or software, lodging <90 days, short-term space rental, cleaning tangible property, parking/storing motor vehicles, telecommunications, TV programming, ancillary telecom services. NOT TAXABLE in TN regardless: legal, accounting, consulting, advertising, staffing, IT advisory, HR, architecture, graphic design, photography (service charges). FOOD: qualifying food taxed at 4% even for exempt orgs; prepared food at 7%. SaaS/remotely accessed software: TAXABLE. Newspapers/newsprint periodicals distributed monthly+: EXEMPT. Textbooks/workbooks: EXEMPT.",
     local: {
       overview: "TN has state 7% (9.75% on food) + local rates (1%–2.75%). Combined can reach 9.75%.",
       key_jurisdictions: [
@@ -2225,7 +2217,33 @@ function renderNexusTable() {
   let states = stateFilter ? [stateFilter] : Object.keys(NEXUS_RULES);
   if (!stateFilter && Object.keys(NEXUS_RULES).length > 20) states = states.slice(0, 51);
 
+  // Build category-relevant info when a spend category is selected
+  const catCategoryList = catFilter && NEXUS_CATEGORIES[catFilter] ? NEXUS_CATEGORIES[catFilter] : null;
+
+  // When filtering by category, determine per-state verdict for those categories
+  function getCatSummary(stateName) {
+    if (!catCategoryList) return null;
+    const sd = STATE_DATA[stateName];
+    if (!sd) return null;
+    sd.stateName = stateName;
+    const verdicts = catCategoryList.map(cat => getCategoryVerdict(sd, cat));
+    const taxableCount = verdicts.filter(v => v === 'not_exempt').length;
+    const exemptCount = verdicts.filter(v => v === 'exempt').length;
+    const condCount = verdicts.filter(v => v === 'conditional').length;
+    const notes = [...new Set(catCategoryList.map(cat => {
+      const rule = CATEGORY_RULES[cat];
+      return rule ? rule.note : null;
+    }).filter(Boolean))];
+    const verdictLabel = taxableCount === catCategoryList.length ? 'Taxable' :
+                         exemptCount === catCategoryList.length ? 'Exempt' : 'Mixed — see details';
+    const verdictColor = taxableCount === catCategoryList.length ? 'var(--red-dark)' :
+                         exemptCount === catCategoryList.length ? 'var(--green-dark)' : 'var(--amber-dark)';
+    return { taxableCount, exemptCount, condCount, total: catCategoryList.length, verdictLabel, verdictColor, notes,
+      breakdown: catCategoryList.map((cat, i) => ({ cat, verdict: verdicts[i] })) };
+  }
+
   let html = '';
+  let visibleCount = 0;
   for (const state of states) {
     const nexus = NEXUS_RULES[state];
     if (!nexus) continue;
@@ -2233,15 +2251,30 @@ function renderNexusTable() {
     const badgeClass = sd ? (sd.status === 'exempt' ? 'badge-exempt' : sd.status === 'taxable' ? 'badge-taxable' : 'badge-conditional') : 'badge-conditional';
     const badgeText = sd ? (sd.status === 'exempt' ? 'Broad Exempt' : sd.status === 'taxable' ? 'Taxable' : 'Conditional') : 'Conditional';
 
-    // Filter local jurisdictions by category if filter active
-    let localRows = nexus.local.key_jurisdictions;
-    // (category filter doesn't deeply filter local rows, just shows relevant note)
+    const catSummary = getCatSummary(state);
 
+    // If category filter active and state is taxable (no exemption), show relevant note only
+    let localRows = nexus.local.key_jurisdictions;
+
+    visibleCount++;
     html += `<div class="update-card" style="flex-direction:column;cursor:default;margin-bottom:1.25rem;border-radius:var(--radius)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem">
         <span style="font-size:1.05rem;font-weight:700">${state}</span>
         <span class="state-badge ${badgeClass}">${badgeText}</span>
+        ${catSummary ? `<span style="margin-left:auto;font-size:0.78rem;font-weight:700;color:${catSummary.verdictColor};padding:2px 10px;border-radius:20px;background:rgba(0,0,0,0.05)">${catFilter}: ${catSummary.verdictLabel}</span>` : ''}
       </div>
+      ${catSummary ? `<div style="background:var(--gray-light);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.875rem;font-size:0.825rem">
+        <div style="font-weight:600;margin-bottom:0.4rem;color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Spend Category Analysis — ${catFilter}</div>
+        <div style="display:flex;gap:1rem;margin-bottom:0.5rem">
+          ${catSummary.exemptCount > 0 ? `<span style="color:var(--green-dark)">✓ ${catSummary.exemptCount} Exempt</span>` : ''}
+          ${catSummary.taxableCount > 0 ? `<span style="color:var(--red-dark)">✗ ${catSummary.taxableCount} Taxable</span>` : ''}
+          ${catSummary.condCount > 0 ? `<span style="color:var(--amber-dark)">~ ${catSummary.condCount} Conditional</span>` : ''}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:${catSummary.notes.length ? '0.5rem' : '0'}">
+          ${catSummary.breakdown.map(({cat, verdict}) => `<span style="font-size:0.72rem;padding:2px 7px;border-radius:10px;background:${verdict==='exempt'?'var(--green-light)':verdict==='not_exempt'?'var(--red-light)':'var(--amber-light)'};color:${verdict==='exempt'?'var(--green-dark)':verdict==='not_exempt'?'var(--red-dark)':'var(--amber-dark)'}">${cat}</span>`).join('')}
+        </div>
+        ${catSummary.notes.length ? `<div style="font-size:0.775rem;color:var(--text-muted);margin-top:0.4rem;line-height:1.5">${catSummary.notes[0]}</div>` : ''}
+      </div>` : ''}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;font-size:0.85rem;margin-bottom:1rem">
         <div><span style="color:var(--text-muted);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Physical Nexus</span><br>${nexus.physical}</div>
         <div><span style="color:var(--text-muted);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Economic Nexus Threshold</span><br>${nexus.economic}</div>
@@ -2271,7 +2304,12 @@ function renderNexusTable() {
     </div>`;
   }
 
-  container.innerHTML = html || '<p style="color:var(--text-muted)">No matching states found.</p>';
+  if (!html) {
+    container.innerHTML = '<p style="color:var(--text-muted)">No matching states found.</p>';
+  } else {
+    const countNote = catFilter ? `<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem">Showing <strong>${visibleCount}</strong> state${visibleCount!==1?'s':''} — spend category filter: <strong>${catFilter}</strong></div>` : '';
+    container.innerHTML = countNote + html;
+  }
 }
 
 // showPage patched above to include nexus
